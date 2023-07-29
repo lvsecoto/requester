@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:requester/app/theme/theme.dart';
+import 'package:requester/domain/client/client.dart';
 
 class ContentWidget extends StatelessWidget {
   const ContentWidget({super.key});
@@ -11,6 +12,14 @@ class ContentWidget extends StatelessWidget {
         SearchBar(
           hintText: '搜索请求',
           elevation: MaterialStatePropertyAll(4),
+        ),
+        SizedBox(height: 16),
+        ButtonBar(
+          children: [
+            ElevatedButton(onPressed: () {
+              TestClient().test();
+            }, child: Text('测试')),
+          ],
         ),
         SizedBox(height: 16),
         Expanded(
