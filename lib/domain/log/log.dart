@@ -73,7 +73,7 @@ class Log with _$Log {
 }
 
 @freezed
-class LogElement with _$LogElement {
+sealed class LogElement with _$LogElement {
   /// 请求日志
   const factory LogElement.request({
     required String uri,
