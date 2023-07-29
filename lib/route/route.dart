@@ -27,7 +27,7 @@ class MonitorRoute extends ShellRouteData {
   Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
     return ListDetailsNavigation(
       navigator: navigator,
-      isDetailsEmpty: state.uri.path == const ListDetailsEmptyRoute().location,
+      isDetailsEmpty: state.location == const ListDetailsEmptyRoute().location,
       list: const MonitorScreen(),
     );
   }

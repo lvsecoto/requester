@@ -48,6 +48,20 @@ class RequesterLogInterceptor extends Interceptor {
     super.onResponse(response, handler);
   }
 
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    final id = err.requestOptions.extra['requester_id'];
+    _sendData(
+      jsonEncode(
+        Log(
+          id: id,
+          element: LogElement.fromException(err),
+        ),
+      ),
+    );
+    super.onError(err, handler);
+  }
+
   Future<void> _sendData(String data) async {
     try {
       final socket = await Socket.connect('localhost', 5000);
@@ -57,7 +71,6 @@ class RequesterLogInterceptor extends Interceptor {
       debugPrint(e.toString());
     }
   }
-
 }
 
 const _uuid = Uuid();
@@ -112,6 +125,16 @@ sealed class LogElement with _$LogElement {
       statusCode: response.statusCode,
       data: logData,
       headers: response.headers.map,
+    );
+  }
+
+  const factory LogElement.error({
+    required DioExceptionType type,
+  }) = LogException;
+
+  static LogException fromException(DioException exception) {
+    return LogException(
+      type: exception.type,
     );
   }
 

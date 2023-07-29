@@ -1,4 +1,5 @@
 import 'package:common/common.dart';
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/domain/monitor/provider.dart';
@@ -16,14 +17,19 @@ class RequestListWidget extends ConsumerWidget {
     return CustomScrollView(
       slivers: [
         SliverPadding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           sliver: DiffSliverAnimatedList(
             items: request,
-            itemBuilder: (context, item) {
-              return ListTile(
-                title: Text(item.toString()),
-              );
-            },
+            keySelector: (item) => item.id,
+            indexedItemBuilder: (context, item, index) => Column(
+              children: [
+                RequestItemWidget(
+                  request: item,
+                ),
+                if (index != request.lastIndex)
+                  const Divider(indent: 16, endIndent: 16, height: 0),
+              ],
+            ),
           ),
         ),
       ],

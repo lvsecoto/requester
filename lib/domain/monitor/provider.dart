@@ -32,12 +32,21 @@ class MonitorRequestList extends _$MonitorRequestList {
 
       /// 响应日志
       case LogResponse():
-
         /// 找到对应的请求日志，把响应记录填充进去
         _cache = _cache.update(
           (it) => it.id == log.id,
           (it) => it.copyWith(
             logResponse: element,
+          ),
+        );
+        state = AsyncData(_cache);
+        break;
+      case LogException():
+      /// 找到对应的请求日志，把响应记录填充进去
+        _cache = _cache.update(
+              (it) => it.id == log.id,
+              (it) => it.copyWith(
+            logException: element,
           ),
         );
         state = AsyncData(_cache);

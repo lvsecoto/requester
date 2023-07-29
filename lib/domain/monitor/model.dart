@@ -11,5 +11,8 @@ class MonitorRequest with _$MonitorRequest {
     required LogRequest logRequest,
     /// 响应日志，可能为空，因为正在请求中
     LogResponse? logResponse,
+
+    /// 响应日志，可能为空，因为正在请求中
+    LogException? logException,
 }) = _MonitorRequest;
 }

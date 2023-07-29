@@ -15,13 +15,23 @@ class ContentWidget extends StatelessWidget {
           elevation: MaterialStatePropertyAll(4),
         ),
         SizedBox(height: 16),
-        ButtonBar(
+        Row(
           children: [
             ElevatedButton(
                 onPressed: () {
-                  TestClient().test();
+                  TestClient().testGet();
                 },
-                child: Text('测试')),
+                child: const Text('测试Get'),),
+            ElevatedButton(
+              onPressed: () {
+                TestClient().testPost();
+              },
+              child: const Text('测试Post'),),
+            ElevatedButton(
+              onPressed: () {
+                TestClient().test();
+              },
+              child: const Text('测试'),),
           ],
         ),
         SizedBox(height: 16),
