@@ -97,10 +97,10 @@ class ListDetailsNavigation extends HookConsumerWidget {
   final bool isDetailsEmpty;
 
   /// 列表在多panel情况下的宽度
-  static const kListWidth = 320.0;
+  static const kListWidth = 300.0;
 
   /// 边距
-  static const kPadding = 24.0;
+  static const kPadding = 12.0;
 
   @override
   Widget build(BuildContext context, ref) {

@@ -158,7 +158,7 @@ class ResponsiveLayoutNavigation extends HookConsumerWidget {
                   ),
                 ),
                 Expanded(
-                  child: navigator,
+                  child: Container(child: navigator),
                 ),
               ],
             ),

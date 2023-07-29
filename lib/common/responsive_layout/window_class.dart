@@ -20,8 +20,8 @@ class WindowClassNotifier extends _$WindowClassNotifier {
 
 /// 窗口大小类别
 enum WindowClass {
-  compact(maxWidth: 600.0),
-  medium(maxWidth: 800.0),
+  compact(maxWidth: 400.0),
+  medium(maxWidth: 600.0),
   expand(maxWidth: double.infinity);
 
   final double maxWidth;
@@ -66,7 +66,7 @@ class WindowClassNotifierWidget extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     final width = MediaQuery.of(context).size.width;
     final size = useRef<WindowClass>(WindowClass.expand);
-    if (width > 800) {
+    if (width > WindowClass.medium.maxWidth) {
       size.value = WindowClass.expand;
     } else {
       size.value = WindowClass.compact;
