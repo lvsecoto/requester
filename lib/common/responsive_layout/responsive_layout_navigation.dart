@@ -104,7 +104,7 @@ class ResponsiveLayoutNavigation extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     final isCompact =
         ref.watch(windowClassNotifierProvider) == WindowClass.compact;
-    final containerColor = AppTheme.of(context).surfaceContainer;
+    final containerColor = AppTheme.of(context).surfaceContainerHighest;
     var data = MediaQuery.of(context);
     if (Platform.isMacOS) {
       data = data.copyWith(

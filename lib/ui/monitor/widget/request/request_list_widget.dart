@@ -25,8 +25,11 @@ class RequestListWidget extends ConsumerWidget {
             indexedItemBuilder: (context, item, index) => Column(
               children: [
                 InkWell(
-                  onTap: () {
-                    RequestRoute(item.id).go(context);
+                  onTap: () async {
+                    await ref.watch(getMonitorRequestProvider(item.id).future);
+                    if (context.mounted) {
+                      RequestRoute(item.id).go(context);
+                    }
                   },
                   child: RequestItemWidget(
                     request: item,

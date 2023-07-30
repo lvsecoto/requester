@@ -54,3 +54,13 @@ class MonitorRequestList extends _$MonitorRequestList {
     }
   }
 }
+
+@riverpod
+Future<MonitorRequest> getMonitorRequest(GetMonitorRequestRef ref, String requestId) async {
+  final request = ref.watch(monitorRequestListProvider.select(
+        (it) => it.requireValue.firstWhere(
+          (it) => it.id == requestId,
+    ),
+  ));
+  return request;
+}

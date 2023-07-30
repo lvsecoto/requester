@@ -107,7 +107,7 @@ sealed class LogElement with _$LogElement {
       uri: request.uri.toString(),
       method: request.method,
       data: logData,
-      headers: request.headers.mapValues((it) => it.toString()),
+      headers: request.headers.mapValues((it) => it.value.toString()),
     );
   }
 

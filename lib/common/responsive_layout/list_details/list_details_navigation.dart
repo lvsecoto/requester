@@ -124,98 +124,97 @@ class ListDetailsNavigation extends HookConsumerWidget {
 
     /// 详情页面
     final details = ClipRRect(
-      borderRadius: isCompact
-          ? BorderRadius.zero
-          : BorderRadius.circular(12),
+      borderRadius: isCompact ? BorderRadius.zero : BorderRadius.circular(12),
       child: IgnorePointer(
         ignoring: isDetailsEmpty,
         child: AnimatedVisibilityWidget(
-          animationWidgetBuilder: AnimatedVisibilityWidget
-              .fadeAnimationWidgetBuilder,
+          animationWidgetBuilder:
+              AnimatedVisibilityWidget.fadeAnimationWidgetBuilder,
           isVisible: !isDetailsEmpty,
           child: FadeTransition(
-            opacity:
-            WindowClassNotifierWidget.animation(context),
+            opacity: WindowClassNotifierWidget.animation(context),
             child: MediaQuery(
-              data: data.copyWith(
-                padding: data.padding.copyWith(
-                  top: isCompact && Platform.isMacOS
-                      ? appWindow.titleBarHeight
-                      : null,
-                ),
-              ),
+              data: data,
               child: Portal(
                   child: MediaQuery(
-                    data: data,
-                    child: navigator,
-                  )),
+                data: data,
+                child: navigator,
+              )),
             ),
           ),
         ),
       ),
     );
-    return Material(
-      color: AppTheme.of(context).surfaceContainer,
-      child: LayoutBuilder(
-          builder: (context, constraint) {
-            return Stack(
-                children: [
-                  // 列表，在大屏幕宽度固定，在小屏幕宽度全屏
-                  Positioned(
-                    left: isCompact ? 16 : kPadding,
-                    width: isCompact ? constraint.maxWidth - 16 * 2 : kListWidth,
-                    top: isCompact ? 0 : savePaddingTop.coerceAtLeast(kPadding),
-                    bottom:
-                        isCompact ? 0 : savePaddingBottom.coerceAtLeast(kPadding),
-                    child: AnimatedVisibilityWidget(
-                      // 在小屏幕，被详情覆盖的时候，也要隐藏，在WindowClass切换动画时，列表和详情一起显示，视觉上很奇怪
-                      isVisible: !(isCompact && !isDetailsEmpty),
-                      animationWidgetBuilder:
-                          AnimatedVisibilityWidget.fadeAnimationWidgetBuilder,
-                      duration: kThemeAnimationDuration,
-                      child: FadeTransition(
-                        opacity: WindowClassNotifierWidget.animation(context),
-                        child: MediaQuery(
-                          data: data,
-                          child: list,
-                        ),
+    return Padding(
+      padding: isCompact
+          ? EdgeInsets.zero
+          : EdgeInsets.only(
+              top: Platform.isMacOS ? appWindow.titleBarHeight : 16,
+              bottom: 16,
+            ),
+      child: Material(
+        color: AppTheme.of(context).surfaceContainerHigh,
+        borderRadius: isCompact ? BorderRadius.zero : BorderRadius.circular(28),
+        child: LayoutBuilder(builder: (context, constraint) {
+          return Stack(
+            children: [
+              // 列表，在大屏幕宽度固定，在小屏幕宽度全屏
+              Positioned(
+                left: isCompact ? 16 : kPadding,
+                width: isCompact ? constraint.maxWidth - 16 * 2 : kListWidth,
+                top: isCompact ? 0 : savePaddingTop.coerceAtLeast(kPadding),
+                bottom:
+                    isCompact ? 0 : savePaddingBottom.coerceAtLeast(kPadding),
+                child: AnimatedVisibilityWidget(
+                  // 在小屏幕，被详情覆盖的时候，也要隐藏，在WindowClass切换动画时，列表和详情一起显示，视觉上很奇怪
+                  isVisible: !(isCompact && !isDetailsEmpty),
+                  animationWidgetBuilder:
+                      AnimatedVisibilityWidget.fadeAnimationWidgetBuilder,
+                  duration: kThemeAnimationDuration,
+                  child: FadeTransition(
+                    opacity: WindowClassNotifierWidget.animation(context),
+                    child: MediaQuery(
+                      data: data,
+                      child: list,
+                    ),
+                  ),
+                ),
+              ),
+              // 详情(子路由)，小屏幕填充整个页面
+              Positioned(
+                left: isCompact ? 0 : kListWidth + kPadding * 2,
+                top: isCompact ? 0 : savePaddingTop.coerceAtLeast(kPadding),
+                bottom:
+                    isCompact ? 0 : savePaddingBottom.coerceAtLeast(kPadding),
+                width: isCompact
+                    ? constraint.maxWidth
+                    : (constraint.maxWidth - kListWidth - 3 * kPadding)
+                        .coerceAtLeast(
+                        WindowClass.medium.maxWidth -
+                            kListWidth -
+                            3 * kPadding -
+                            72,
                       ),
-                    ),
-                  ),
-                  // 详情(子路由)，小屏幕填充整个页面
-                  Positioned(
-                    left: isCompact ? 0 : kListWidth + kPadding * 2,
-                    top: isCompact ? 0 : savePaddingTop.coerceAtLeast(kPadding),
-                    bottom:
-                        isCompact ? 0 : savePaddingBottom.coerceAtLeast(kPadding),
-                    width: isCompact
-                        ? constraint.maxWidth
-                        : (constraint.maxWidth - kListWidth - 3 * kPadding)
-                            .coerceAtLeast(
-                            WindowClass.medium.maxWidth -
-                                kListWidth -
-                                3 * kPadding -
-                                72,
-                          ),
-                    child: PortalTarget(
-                      portalCandidateLabels: const [
-                        kResponsiveLayoutNavigationPortalLabel,
-                      ],
-                      anchor: isCompact
-                          ? const Filled()
-                          : const Aligned(
-                              follower: Alignment.topLeft,
-                              target: Alignment.topLeft,
-                              widthFactor: 1.0,
-                              heightFactor: 1.0,
-                            ),
-                      portalFollower: isCompact ? details : const SizedBox.shrink(),
-                      child: !isCompact ? details : const SizedBox.shrink(),
-                    ),
-                  ),
-                ],
-              );
-          }),
+                child: PortalTarget(
+                  portalCandidateLabels: const [
+                    kResponsiveLayoutNavigationPortalLabel,
+                  ],
+                  anchor: isCompact
+                      ? const Filled()
+                      : const Aligned(
+                          follower: Alignment.topLeft,
+                          target: Alignment.topLeft,
+                          widthFactor: 1.0,
+                          heightFactor: 1.0,
+                        ),
+                  portalFollower: isCompact ? details : const SizedBox.shrink(),
+                  child: !isCompact ? details : const SizedBox.shrink(),
+                ),
+              ),
+            ],
+          );
+        }),
+      ),
     );
   }
 }

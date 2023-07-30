@@ -11,10 +11,9 @@ class ResponsePanel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final exception =
-        ref.watch(loadMonitorRequestProvider).valueOrNull?.logException;
-    final response =
-        ref.watch(loadMonitorRequestProvider).valueOrNull?.logResponse;
+    final request = loadMonitorRequest(ref);
+    final exception = request?.logException;
+    final response = request?.logResponse;
 
     Widget title;
 
@@ -67,6 +66,7 @@ class ResponsePanel extends ConsumerWidget {
         childKey: [state],
         child: SizedBox(
           width: double.maxFinite,
+          height: double.maxFinite,
           child: child,
         ),
       ),

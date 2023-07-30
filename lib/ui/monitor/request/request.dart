@@ -4,7 +4,7 @@ import 'package:requester/ui/monitor/request/provider/provider.dart';
 
 import 'widget/content_widget.dart';
 
-class RequestScreen extends StatelessWidget {
+class RequestScreen extends ConsumerWidget {
   const RequestScreen({
     super.key,
     required this.requestId,
@@ -13,8 +13,9 @@ class RequestScreen extends StatelessWidget {
   final String requestId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ProviderScope(
+      parent: ProviderScope.containerOf(context),
       overrides: [
         requestIdProvider.overrideWithValue(requestId)
       ],
