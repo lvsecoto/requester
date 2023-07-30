@@ -97,14 +97,16 @@ sealed class LogElement with _$LogElement {
 
   static LogRequest fromRequest(RequestOptions request) {
     final requestData = request.data;
-    String logRequestData = '';
-    if (requestData is Map || requestData is String) {
-      logRequestData = jsonEncode(requestData);
+    String logData = '';
+    if (requestData is Map) {
+      logData = jsonEncode(requestData);
+    } else if (requestData is String) {
+      logData = requestData;
     }
     return LogRequest(
       uri: request.uri.toString(),
       method: request.method,
-      data: logRequestData,
+      data: logData,
       headers: request.headers.mapValues((it) => it.toString()),
     );
   }
@@ -118,8 +120,10 @@ sealed class LogElement with _$LogElement {
   static LogResponse fromResponse(Response response) {
     final data = response.data;
     String logData = '';
-    if (data is Map || data is String) {
+    if (data is Map) {
       logData = jsonEncode(data);
+    } else if (data is String) {
+      logData = data;
     }
     return LogResponse(
       statusCode: response.statusCode,

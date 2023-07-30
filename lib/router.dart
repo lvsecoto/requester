@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:requester/ui/monitor/monitor.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'common/responsive_layout/responsive_layout.dart';
@@ -14,7 +13,7 @@ part 'router.g.dart';
 @riverpod
 // ignore: unsupported_provider_value
 GoRouter router(RouterRef ref) => GoRouter(
-  initialLocation: const RequestRoute('1').location,
+  initialLocation: const MonitorRoute().location,
   debugLogDiagnostics: true,
   routes: [
     ResponsiveLayoutShellRoute(

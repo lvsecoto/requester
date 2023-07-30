@@ -3,6 +3,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/domain/monitor/provider.dart';
+import 'package:requester/route/route.dart';
 
 import 'item/item.dart';
 
@@ -23,8 +24,13 @@ class RequestListWidget extends ConsumerWidget {
             keySelector: (item) => item.id,
             indexedItemBuilder: (context, item, index) => Column(
               children: [
-                RequestItemWidget(
-                  request: item,
+                InkWell(
+                  onTap: () {
+                    RequestRoute(item.id).go(context);
+                  },
+                  child: RequestItemWidget(
+                    request: item,
+                  ),
                 ),
                 if (index != request.lastIndex)
                   const Divider(indent: 16, endIndent: 16, height: 0),

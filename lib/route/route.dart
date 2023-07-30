@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:requester/common/responsive_layout/list_details/list_details_navigation.dart';
 import 'package:requester/ui/ui.dart';
+import 'package:animations/animations.dart';
 
 part 'route.g.dart';
 
@@ -41,11 +42,20 @@ class RequestRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     // 仅仅改变:requestId，路由不会有变化，也不会有路由动画，这里我们自己加上去
-    return AnimatedSwitcher(
+    return PageTransitionSwitcher(
       duration: kThemeAnimationDuration,
+      transitionBuilder: (Widget child, Animation<double> primaryAnimation,
+          Animation<double> secondaryAnimation) {
+        return SharedAxisTransition(
+          animation: primaryAnimation,
+          secondaryAnimation: secondaryAnimation,
+          transitionType: SharedAxisTransitionType.horizontal,
+          child: child,
+        );
+      },
       child: RequestScreen(
         key: ValueKey(requestId),
-        // issueId: issueId,
+        requestId: requestId,
       ),
     );
   }

@@ -10,11 +10,11 @@ class ContentWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SearchBar(
+        const SearchBar(
           hintText: '搜索请求',
           elevation: MaterialStatePropertyAll(4),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Row(
           children: [
             ElevatedButton(
@@ -34,13 +34,13 @@ class ContentWidget extends StatelessWidget {
               child: const Text('测试'),),
           ],
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Expanded(
           child: Material(
             color: AppTheme.of(context).surfaceContainerLow,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            child: RequestListWidget(),
+            child: const RequestListWidget(),
           ),
         ),
       ],
