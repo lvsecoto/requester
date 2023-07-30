@@ -22,16 +22,16 @@ GoRouter router(RouterRef ref) => GoRouter(
           const MonitorRoute().location,
           $monitorRoute,
           ResponsiveLayoutNavigationDestination(
-            icon: const Icon(Icons.build),
-            title: '修复',
+            icon: const Icon(Icons.monitor_heart),
+            title: '监视',
           ),
         ),
         ResponsiveLayoutNavigationDestinationRoute(
           const SettingsRoute().location,
           $settingsRoute,
           ResponsiveLayoutNavigationDestination(
-            icon: const Icon(Icons.remove_red_eye),
-            title: '审核',
+            icon: const Icon(Icons.settings),
+            title: '设置',
           ),
         ),
       ],

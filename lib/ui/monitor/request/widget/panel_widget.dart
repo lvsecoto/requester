@@ -30,7 +30,7 @@ class PanelWidget extends StatelessWidget {
           const SizedBox(height: 8),
           Expanded(
             child: Material(
-              color: AppTheme.of(context).surface,
+              color: AppTheme.of(context).surfaceContainerLow,
               clipBehavior: Clip.antiAlias,
               borderRadius: BorderRadius.circular(16),
               child: child,

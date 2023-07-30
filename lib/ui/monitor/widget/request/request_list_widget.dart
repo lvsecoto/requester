@@ -17,28 +17,25 @@ class RequestListWidget extends ConsumerWidget {
     final request = ref.watch(monitorRequestListProvider).valueOrNull ?? [];
     return CustomScrollView(
       slivers: [
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          sliver: DiffSliverAnimatedList(
-            items: request,
-            keySelector: (item) => item.id,
-            indexedItemBuilder: (context, item, index) => Column(
-              children: [
-                InkWell(
-                  onTap: () async {
-                    await ref.watch(getMonitorRequestProvider(item.id).future);
-                    if (context.mounted) {
-                      RequestRoute(item.id).go(context);
-                    }
-                  },
-                  child: RequestItemWidget(
-                    request: item,
-                  ),
+        DiffSliverAnimatedList(
+          items: request,
+          keySelector: (item) => item.id,
+          indexedItemBuilder: (context, item, index) => Column(
+            children: [
+              InkWell(
+                onTap: () async {
+                  await ref.watch(getMonitorRequestProvider(item.id).future);
+                  if (context.mounted) {
+                    RequestRoute(item.id).go(context);
+                  }
+                },
+                child: RequestItemWidget(
+                  request: item,
                 ),
-                if (index != request.lastIndex)
-                  const Divider(indent: 16, endIndent: 16, height: 0),
-              ],
-            ),
+              ),
+              if (index != request.lastIndex)
+                const Divider(indent: 16, endIndent: 16, height: 0),
+            ],
           ),
         ),
       ],

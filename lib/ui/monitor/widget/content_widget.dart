@@ -9,11 +9,11 @@ class ContentWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SearchBar(
-          hintText: '搜索请求',
-          elevation: MaterialStatePropertyAll(4),
-        ),
-        const SizedBox(height: 16),
+        // const SearchBar(
+        //   hintText: '搜索请求',
+        //   elevation: MaterialStatePropertyAll(4),
+        // ),
+        // const SizedBox(height: 16),
         Row(
           children: [
             ElevatedButton(

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:multi_split_view/multi_split_view.dart';
 import 'package:requester/domain/monitor/model.dart';
 import 'package:requester/domain/monitor/monitor.dart';
 import 'package:requester/domain/monitor/provider.dart';
@@ -16,8 +17,13 @@ MonitorRequest? loadMonitorRequest(WidgetRef ref) {
   return ref.watch(getMonitorRequestProvider(requestId)).valueOrNull;
 }
 
-// @Riverpod(dependencies: [requestId])
-// Future<MonitorRequest> loadMonitorRequest(LoadMonitorRequestRef ref) async {
-//   final requestId = ref.watch(requestIdProvider);
-//   return ref.watch(getMonitorRequestProvider(requestId).future);
-// }
+final kDefaultMonitorSplitAreas = [
+  Area(minimalSize: 200), Area(minimalSize: 200)
+];
+
+@riverpod
+Raw<MultiSplitViewController> splitViewController(SplitViewControllerRef ref) {
+  return MultiSplitViewController(
+    areas: kDefaultMonitorSplitAreas
+  );
+}
