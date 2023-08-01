@@ -1,8 +1,9 @@
 import 'package:common_dc/common_dc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class ParametersTableWidget extends StatelessWidget {
+class ParametersTableWidget extends HookWidget {
   /// 表格
   const ParametersTableWidget({super.key, required this.data});
 
@@ -16,46 +17,54 @@ class ParametersTableWidget extends StatelessWidget {
         child: Text('没有内容'),
       );
     }
-    return Table(
-      columnWidths: const {
-        0: IntrinsicColumnWidth(),
-      },
-      children: [
-        ...data.entries.map(
-          (entry) => TableRow(children: [
-            TableCell(
-              child: ListTile(
-                onTap: () {
-                  Clipboard.setData(ClipboardData(text: entry.key));
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(const SnackBar(content: Text('内容已复制')));
-                },
-                title: Text(
-                  entry.key,
-                  style: theme.textTheme.titleMedium!.withColor(
-                    theme.colorScheme.primary,
+    final controller = useScrollController();
+    return Scrollbar(
+      controller: controller,
+      child: SingleChildScrollView(
+        controller: controller,
+        child: Table(
+          columnWidths: const {
+            0: IntrinsicColumnWidth(),
+            1: FlexColumnWidth(),
+          },
+          children: [
+            ...data.entries.map(
+              (entry) => TableRow(children: [
+                TableCell(
+                  child: ListTile(
+                    onTap: () {
+                      Clipboard.setData(ClipboardData(text: entry.key));
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(const SnackBar(content: Text('内容已复制')));
+                    },
+                    title: Text(
+                      entry.key,
+                      style: theme.textTheme.titleMedium!.withColor(
+                        theme.colorScheme.primary,
+                      ),
+                      textAlign: TextAlign.end,
+                    ),
                   ),
-                  textAlign: TextAlign.end,
                 ),
-              ),
-            ),
-            TableCell(
-              child: ListTile(
-                onTap: () {
-                  Clipboard.setData(ClipboardData(text: entry.value));
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(const SnackBar(content: Text('内容已复制')));
-                },
-                title: Text(
-                  entry.value.toString(),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
+                TableCell(
+                  child: ListTile(
+                    onTap: () {
+                      Clipboard.setData(ClipboardData(text: entry.value));
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(const SnackBar(content: Text('内容已复制')));
+                    },
+                    title: Text(
+                      entry.value.toString(),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
+                  ),
                 ),
-              ),
+              ]),
             ),
-          ]),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

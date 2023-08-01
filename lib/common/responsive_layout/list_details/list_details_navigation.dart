@@ -145,13 +145,15 @@ class ListDetailsNavigation extends HookConsumerWidget {
         ),
       ),
     );
-    return Padding(
-      padding: isCompact
-          ? EdgeInsets.zero
-          : EdgeInsets.only(
-              top: Platform.isMacOS ? appWindow.titleBarHeight : 16,
-              bottom: 16,
-            ),
+    return SafeArea(
+      top: !isCompact,
+      right: true,
+      bottom: true,
+      minimum: EdgeInsets.only(
+        top: Platform.isMacOS ? appWindow.titleBarHeight : 16,
+        right: 16,
+        bottom: 16,
+      ),
       child: Material(
         color: AppTheme.of(context).surfaceContainerHigh,
         borderRadius: isCompact ? BorderRadius.zero : BorderRadius.circular(28),

@@ -4,6 +4,7 @@ import 'package:requester/ui/monitor/common/host_widget.dart';
 import 'package:requester/ui/monitor/common/method_widget.dart';
 import 'package:requester/ui/monitor/common/network_status.dart';
 import 'package:requester/ui/monitor/common/path_widget.dart';
+import 'package:requester/ui/monitor/common/status_code_widget.dart';
 
 class RequestItemWidget extends StatelessWidget {
   const RequestItemWidget({
@@ -20,12 +21,17 @@ class RequestItemWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              MethodWidget(request: request),
-              const SizedBox(width: 8),
-              PathWidget(request: request),
-            ],
+          PathWidget(
+            leading: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: MethodWidget(request: request),
+                ),
+                DCStatusCodeWidget(request: request),
+              ],
+            ),
+            request: request,
           ),
           const SizedBox(height: 4),
           Row(

@@ -4,7 +4,13 @@ import 'package:requester/domain/monitor/model.dart';
 
 class PathWidget extends StatelessWidget {
   /// 请求路径
-  const PathWidget({Key? key, required this.request}) : super(key: key);
+  const PathWidget({
+    Key? key,
+    required this.request,
+    this.leading,
+  }) : super(key: key);
+
+  final Widget? leading;
 
   final MonitorRequest request;
 
@@ -16,15 +22,15 @@ class PathWidget extends StatelessWidget {
       return const Text('/');
     }
 
-    final lastSegment = segments.lastOrNull;
-    final preSegments = segments.take(segments.length - 1);
+    final lastSegment = segments.lastOrNull ?? '';
     final textTheme = Theme.of(context).textTheme;
     return Text.rich(
       TextSpan(children: [
+        if (leading != null) WidgetSpan(child: leading!,alignment: PlaceholderAlignment.middle),
+        TextSpan(text: '\u{200B}/$lastSegment', style: textTheme.titleMedium!.bold),
         TextSpan(
-            text: '/${preSegments.map((it) => '$it/').join()}',
-            style: textTheme.bodyLarge),
-        TextSpan(text: lastSegment, style: textTheme.titleMedium!.bold),
+            text: '\n${segments.map((it) => '\u{200B}/$it').join()}',
+            style: textTheme.bodyMedium),
       ]),
     );
   }

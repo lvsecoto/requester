@@ -2,6 +2,7 @@ import 'package:common_dc/common_dc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/ui/monitor/common/data_widget.dart';
+import 'package:requester/ui/monitor/common/status_code_widget.dart';
 import 'package:requester/ui/monitor/request/provider/provider.dart';
 
 import 'panel_widget.dart';
@@ -60,7 +61,16 @@ class ResponsePanel extends ConsumerWidget {
       title: DCAnimatedSizeAndFade(
         childKey: [state],
         alignment: Alignment.centerLeft,
-        child: title,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            title,
+            if (request != null) ...[
+              const SizedBox(width: 12),
+              DCStatusCodeWidget(request: request),
+            ]
+          ],
+        ),
       ),
       child: DCAnimatedSizeAndFade(
         childKey: [state],

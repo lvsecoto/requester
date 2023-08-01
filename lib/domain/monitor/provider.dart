@@ -12,7 +12,8 @@ class MonitorRequestList extends _$MonitorRequestList {
 
   @override
   FutureOr<List<MonitorRequest>> build() async {
-    return [];
+    ref.keepAlive();
+    return _cache;
   }
 
   /// 收到一个新的日志
@@ -32,6 +33,7 @@ class MonitorRequestList extends _$MonitorRequestList {
 
       /// 响应日志
       case LogResponse():
+
         /// 找到对应的请求日志，把响应记录填充进去
         _cache = _cache.update(
           (it) => it.id == log.id,
@@ -42,10 +44,11 @@ class MonitorRequestList extends _$MonitorRequestList {
         state = AsyncData(_cache);
         break;
       case LogException():
-      /// 找到对应的请求日志，把响应记录填充进去
+
+        /// 找到对应的请求日志，把响应记录填充进去
         _cache = _cache.update(
-              (it) => it.id == log.id,
-              (it) => it.copyWith(
+          (it) => it.id == log.id,
+          (it) => it.copyWith(
             logException: element,
           ),
         );
@@ -55,12 +58,22 @@ class MonitorRequestList extends _$MonitorRequestList {
   }
 }
 
+const kLatestRequestId = 'latest';
+
 @riverpod
-Future<MonitorRequest> getMonitorRequest(GetMonitorRequestRef ref, String requestId) async {
-  final request = ref.watch(monitorRequestListProvider.select(
-        (it) => it.requireValue.firstWhere(
-          (it) => it.id == requestId,
-    ),
-  ));
+Future<MonitorRequest> getMonitorRequest(
+    GetMonitorRequestRef ref, String requestId) async {
+  MonitorRequest request;
+  if (requestId == kLatestRequestId) {
+    request = ref.watch(monitorRequestListProvider.select(
+      (it) => it.requireValue.first,
+    ));
+  } else {
+    request = ref.watch(monitorRequestListProvider.select(
+      (it) => it.requireValue.firstWhere(
+        (it) => it.id == requestId,
+      ),
+    ));
+  }
   return request;
 }

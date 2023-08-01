@@ -6,7 +6,6 @@ import 'package:requester/domain/log/log.dart';
 import 'package:requester/domain/monitor/provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import 'model.dart';
 export 'model.dart';
 
 part 'monitor.g.dart';
@@ -33,7 +32,7 @@ class Monitor {
     final server = await ServerSocket.bind(InternetAddress.anyIPv4, 5000);
     server.listen((client) {
       client.listen((event) {
-        final json = String.fromCharCodes(event);
+        final json = utf8.decode(event);
         try {
           onLog(
             Log.fromJson(jsonDecode(json)),

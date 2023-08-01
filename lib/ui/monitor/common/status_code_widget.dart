@@ -22,9 +22,9 @@ class DCStatusCodeWidget extends StatelessWidget {
       final json = jsonDecode(data);
       final code = json['code'];
       if (code == 200) {
-        child = TagWidget.green(label: Text('DC:($code)'));
+        child = const TagWidget.green(label: Text('DC: OK'));
       } else if (code != 200) {
-        child = TagWidget.green(label: Text('DC:($code)${json['message']}'));
+        child = TagWidget.red(label: Text('DC: $code'));
       }
     }
     return DCAnimatedSizeAndFade(

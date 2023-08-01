@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/domain/client/client.dart';
+import 'package:requester/ui/monitor/provider/provider.dart';
 import 'package:requester/ui/monitor/widget/request/request_list_widget.dart';
 
 class ContentWidget extends StatelessWidget {
@@ -9,18 +11,22 @@ class ContentWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // const SearchBar(
-        //   hintText: '搜索请求',
-        //   elevation: MaterialStatePropertyAll(4),
-        // ),
-        // const SizedBox(height: 16),
+        Consumer(
+          builder: (context, ref, child) => SearchBar(
+              shadowColor: const MaterialStatePropertyAll(Colors.transparent),
+              hintText: '搜索请求',
+              elevation: const MaterialStatePropertyAll(4),
+              controller: ref.watch(editQueryProvider.notifier).controller,
+            ),
+        ),
+        const SizedBox(height: 16),
         Row(
           children: [
             ElevatedButton(
-                onPressed: () {
-                  TestClient().testGet();
-                },
-                child: const Text('测试Get'),),
+              onPressed: () {
+                TestClient().testGet();
+              },
+              child: const Text('测试Get'),),
             ElevatedButton(
               onPressed: () {
                 TestClient().testPost();
@@ -33,7 +39,6 @@ class ContentWidget extends StatelessWidget {
               child: const Text('测试'),),
           ],
         ),
-        const SizedBox(height: 16),
         Expanded(
           child: const RequestListWidget(),
         ),

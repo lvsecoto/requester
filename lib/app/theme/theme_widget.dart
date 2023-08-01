@@ -1,5 +1,6 @@
-import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'theme.dart';
 
 class ThemeWidget extends StatelessWidget {
@@ -30,6 +31,13 @@ class ThemeWidget extends StatelessWidget {
       ],
     );
     return themeData.copyWith(
+      appBarTheme: themeData.appBarTheme.copyWith(
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        foregroundColor: Colors.black,
+        iconTheme: themeData.iconTheme.copyWith(
+          color: Colors.black,
+        ),
+      ),
       hoverColor: themeData.colorScheme.onSurface.withOpacity(0.08),
       focusColor: themeData.colorScheme.onSurface.withOpacity(0.12),
       splashColor: themeData.colorScheme.onSurface.withOpacity(0.12),
