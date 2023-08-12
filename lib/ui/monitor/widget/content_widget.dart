@@ -23,14 +23,14 @@ class ContentWidget extends ConsumerWidget {
         const SizedBox(height: 16),
         Row(
           children: [
-            IconButton.outlined(
+            IconButton(
               onPressed: () {
                 ref.read(monitorRequestListProvider.notifier).addDivider();
               },
               icon: const Icon(Icons.vertical_align_center_outlined),
             ),
             const SizedBox(width: 8),
-            IconButton.outlined(
+            IconButton(
               onPressed: () {
                 TestClient().test();
                 TestClient().testGet();
@@ -39,11 +39,42 @@ class ContentWidget extends ConsumerWidget {
               icon: const Icon(Icons.network_ping),
               tooltip: '测试',
             ),
+            const Spacer(),
+            IconButton.outlined(
+              onPressed: () async {
+                final confirmed = await showDialog<bool>(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                          title: const Text('清除所有记录'),
+                          content: const Text('请确认清除操作'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('取消'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(true);
+                              },
+                              child: const Text('确认清除'),
+                            ),
+                          ],
+                        ));
+
+                if (confirmed == true) {
+                  ref.read(monitorRequestListProvider.notifier).clean();
+                }
+              },
+              icon: const Icon(Icons.cleaning_services),
+              tooltip: '清除',
+            ),
           ],
         ),
         const SizedBox(height: 8),
-        Expanded(
-          child: const RequestListWidget(),
+        const Expanded(
+          child: RequestListWidget(),
         ),
       ],
     );

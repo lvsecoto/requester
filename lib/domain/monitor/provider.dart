@@ -74,6 +74,11 @@ class MonitorRequestList extends _$MonitorRequestList {
       ]);
     }
   }
+
+  /// 清除所有记录
+  void clean() {
+    state = const AsyncData([]);
+  }
 }
 
 const kLatestRequestId = 'latest';
