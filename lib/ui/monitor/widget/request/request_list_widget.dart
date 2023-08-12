@@ -25,15 +25,20 @@ class RequestListWidget extends ConsumerWidget {
                   MonitorLogRequest() => item.id,
                   MonitorLogDivider() => item.dateTime,
                 },
-            indexedItemBuilder: (context, item, index) => switch (item) {
-                  MonitorLogRequest() => _RequestItem(
-                      item: item,
-                      index: index,
-                    ),
-                  MonitorLogDivider() => DividerItemWidget(
-                      divider: item,
-                    ),
-                }),
+            indexedItemBuilder: (context, item, index) => Column(
+              children: [
+                if (index != 0) const Divider(indent: 16, endIndent: 16, height: 1),
+                switch (item) {
+                      MonitorLogRequest() => _RequestItem(
+                          item: item,
+                          index: index,
+                        ),
+                      MonitorLogDivider() => DividerItemWidget(
+                          divider: item,
+                        ),
+                    },
+              ],
+            )),
       ],
     );
   }
@@ -41,7 +46,6 @@ class RequestListWidget extends ConsumerWidget {
 
 class _RequestItem extends ConsumerWidget {
   const _RequestItem({
-    super.key,
     required this.item,
     required this.index,
   });
@@ -53,37 +57,32 @@ class _RequestItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentId = GoRouterState.of(context).pathParameters['requestId'];
-    return Column(
-      children: [
-        if (index != 0) const Divider(indent: 16, endIndent: 16, height: 1),
-        Material(
-          animationDuration: const Duration(seconds: 1),
-          color: item.id == currentId ||
-                  (index == 0 && kLatestRequestId == currentId)
-              ? Theme.of(context).colorScheme.primaryContainer
-              : Colors.transparent,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          child: InkWell(
-            onTap: () async {
-              final String targetRequestId;
-              if (index == 0) {
-                targetRequestId = kLatestRequestId;
-              } else {
-                targetRequestId = item.id;
-              }
-              await ref
-                  .watch(getMonitorRequestProvider(targetRequestId).future);
-              if (context.mounted) {
-                RequestRoute(targetRequestId).go(context);
-              }
-            },
-            child: RequestItemWidget(
-              request: item,
-            ),
-          ),
+    return Material(
+      animationDuration: const Duration(seconds: 1),
+      color: item.id == currentId ||
+              (index == 0 && kLatestRequestId == currentId)
+          ? Theme.of(context).colorScheme.primaryContainer
+          : Colors.transparent,
+      shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: InkWell(
+        onTap: () async {
+          final String targetRequestId;
+          if (index == 0) {
+            targetRequestId = kLatestRequestId;
+          } else {
+            targetRequestId = item.id;
+          }
+          await ref
+              .watch(getMonitorRequestProvider(targetRequestId).future);
+          if (context.mounted) {
+            RequestRoute(targetRequestId).go(context);
+          }
+        },
+        child: RequestItemWidget(
+          request: item,
         ),
-      ],
+      ),
     );
   }
 }

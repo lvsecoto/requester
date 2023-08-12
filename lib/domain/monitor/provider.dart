@@ -1,4 +1,5 @@
 import 'package:dartx/dartx.dart';
+import 'package:flutter/material.dart';
 import 'package:requester/domain/log/log.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -17,6 +18,14 @@ class MonitorRequestList extends _$MonitorRequestList {
     return _cache;
   }
 
+  @override
+  set state(AsyncValue<List<MonitorLog>> newState) {
+    if (newState.hasValue) {
+      _cache = newState.requireValue;
+    }
+    super.state = newState;
+  }
+
   /// 收到一个新的日志
   void onReceivedNew(Log log) {
     final element = log.element;
@@ -25,36 +34,44 @@ class MonitorRequestList extends _$MonitorRequestList {
       case LogRequest():
 
         /// 创建一个请求记录
-        _cache = [
+        state = AsyncData([
           MonitorLogRequest(id: log.id, logRequest: element),
           ..._cache,
-        ];
-        state = AsyncData(_cache);
+        ]);
         break;
 
       /// 响应日志
       case LogResponse():
 
         /// 找到对应的请求日志，把响应记录填充进去
-        _cache = _cache.update(
+        state = AsyncData(_cache.update(
           (it) => (it as MonitorLogRequest).id == log.id,
           (it) => (it as MonitorLogRequest).copyWith(
             logResponse: element,
           ),
-        );
-        state = AsyncData(_cache);
+        ));
         break;
       case LogException():
 
         /// 找到对应的请求日志，把响应记录填充进去
-        _cache = _cache.update(
+        state = AsyncData(_cache.update(
           (it) => (it as MonitorLogRequest).id == log.id,
           (it) => (it as MonitorLogRequest).copyWith(
             logException: element,
           ),
-        );
-        state = AsyncData(_cache);
+        ));
         break;
+    }
+  }
+
+  /// 添加一个分割线
+  void addDivider() {
+    final list = state.value;
+    if (list != null) {
+      state = AsyncData([
+        MonitorLogDivider(color: Colors.grey, dateTime: DateTime.now()),
+        ...list,
+      ]);
     }
   }
 }

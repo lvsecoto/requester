@@ -14,12 +14,21 @@ class DividerItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Divider(),
-        Text(_dataTimeFormat.format(divider.dateTime)),
-        const Divider(),
-      ],
+    return Container(
+      height: 64,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(width: 24, child: Divider()),
+          const SizedBox(width: 12),
+          Text(
+            _dataTimeFormat.format(divider.dateTime),
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(width: 12),
+          const SizedBox(width: 24, child: Divider()),
+        ],
+      ),
     );
   }
 }
