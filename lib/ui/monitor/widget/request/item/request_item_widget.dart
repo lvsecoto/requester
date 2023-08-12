@@ -22,14 +22,9 @@ class RequestItemWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           PathWidget(
-            leading: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: MethodWidget(request: request),
-                ),
-                DCStatusCodeWidget(request: request),
-              ],
+            leading: Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: MethodWidget(request: request),
             ),
             request: request,
           ),
@@ -39,6 +34,8 @@ class RequestItemWidget extends StatelessWidget {
               NetworkStatus(request: request),
               const SizedBox(width: 8),
               HostWidget(request: request),
+              const SizedBox(width: 8),
+              DCStatusCodeWidget(request: request),
             ],
           ),
         ],
