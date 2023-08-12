@@ -23,7 +23,7 @@ class RequestListWidget extends ConsumerWidget {
             items: request,
             keySelector: (item) => switch (item) {
                   MonitorLogRequest() => item.id,
-                  MonitorLogDivider() => item.dateTime,
+                  MonitorLogDivider() => item.time,
                 },
             indexedItemBuilder: (context, item, index) => Column(
               children: [

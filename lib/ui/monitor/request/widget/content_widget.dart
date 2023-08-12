@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 import 'package:requester/app/theme/theme.dart';
 import 'package:requester/ui/monitor/common/method_widget.dart';
-import 'package:requester/ui/monitor/common/path_widget.dart';
+import 'package:requester/ui/monitor/common/request_summary_widget.dart';
 import 'package:requester/ui/monitor/request/provider/provider.dart';
 import 'package:requester/ui/monitor/request/widget/request_panel.dart';
 import 'package:requester/ui/monitor/request/widget/response_panel.dart';
@@ -91,7 +91,7 @@ class _Title extends ConsumerWidget {
             padding: const EdgeInsets.only(top: 16),
             child: SizedBox(
         width: double.infinity,
-              child: PathWidget(
+              child: RequestSummaryWidget(
                   request: request,
                   leading: MethodWidget(
                     request: request,

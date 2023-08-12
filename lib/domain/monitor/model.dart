@@ -9,6 +9,9 @@ sealed class MonitorLog with _$MonitorLog {
   const factory MonitorLog.Request({
     required String id,
 
+    /// 日志发生时间
+    required DateTime time,
+
     /// 请求日志
     required LogRequest logRequest,
 
@@ -22,6 +25,6 @@ sealed class MonitorLog with _$MonitorLog {
   /// 一个分割线
   const factory MonitorLog.divider({
     required Color color,
-    required DateTime dateTime,
+    required DateTime time,
   }) = MonitorLogDivider;
 }

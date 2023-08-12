@@ -1,5 +1,9 @@
+import 'dart:ui';
+
+import 'package:common/common.dart';
 import 'package:common_dc/common_dc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:requester/domain/monitor/model.dart';
 
 class NetworkStatus extends StatelessWidget {
@@ -14,11 +18,32 @@ class NetworkStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget child;
+    String durationStr(Duration duration) {
+      if (duration >= const Duration(seconds: 1)) {
+        return '${(duration.inSeconds + duration.inMilliseconds / 1000).toStringAsFixed(2)}s';
+      } else {
+        return '${duration.inMilliseconds}ms';
+      }
+    }
+
     if (request.logResponse != null) {
-      child = const _Circle(
-        color: Colors.green,
+      final duration =
+          request.logResponse!.time.difference(request.logRequest.time);
+      child = DefaultTextStyle(
+        style: Theme.of(context).textTheme.labelMedium!.withColor(Colors.green),
+        child: Row(
+          children: [
+            const _Circle(
+              color: Colors.green,
+            ),
+            const SizedBox(width: 4),
+            Text(durationStr(duration)),
+          ],
+        ),
       );
     } else if (request.logException != null) {
+      final duration =
+          request.logException!.time.difference(request.logRequest.time);
       child = Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -27,7 +52,7 @@ class NetworkStatus extends StatelessWidget {
           ),
           const SizedBox(width: 4),
           Text(
-            request.logException!.type.toString().split('.').last,
+            '${request.logException!.type.toString().split('.').last}(${durationStr(duration)})',
             style: Theme.of(context).textTheme.labelMedium!.withColor(
                   Colors.red,
                 ),
@@ -35,8 +60,31 @@ class NetworkStatus extends StatelessWidget {
         ],
       );
     } else {
-      child = _Circle(
-        color: Colors.grey[300]!,
+      child = Row(
+        children: [
+          const SizedBox.square(
+            dimension: 8,
+            child: CircularProgressIndicator(
+              strokeWidth: 1,
+            ),
+          ),
+          const SizedBox(width: 4),
+          HookBuilder(builder: (context) {
+            final loadSpentTime =
+                useState(DateTime.now().difference(request.time));
+            useInterval(() {
+              loadSpentTime.value = DateTime.now().difference(request.time);
+            }, const Duration(seconds: 1));
+            return Text(
+              '${loadSpentTime.value.inSeconds}s',
+              style: Theme.of(context).textTheme.labelMedium!.disabled.copyWith(
+                fontFeatures: [
+                  const FontFeature.tabularFigures(),
+                ]
+              ),
+            );
+          })
+        ],
       );
     }
     return DCAnimatedSizeAndFade(

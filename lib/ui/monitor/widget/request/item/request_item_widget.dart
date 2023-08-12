@@ -3,7 +3,7 @@ import 'package:requester/domain/monitor/model.dart';
 import 'package:requester/ui/monitor/common/host_widget.dart';
 import 'package:requester/ui/monitor/common/method_widget.dart';
 import 'package:requester/ui/monitor/common/network_status.dart';
-import 'package:requester/ui/monitor/common/path_widget.dart';
+import 'package:requester/ui/monitor/common/request_summary_widget.dart';
 import 'package:requester/ui/monitor/common/status_code_widget.dart';
 
 class RequestItemWidget extends StatelessWidget {
@@ -21,7 +21,7 @@ class RequestItemWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PathWidget(
+          RequestSummaryWidget(
             leading: Padding(
               padding: const EdgeInsets.only(right: 8),
               child: MethodWidget(request: request),

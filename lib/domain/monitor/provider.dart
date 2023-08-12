@@ -35,7 +35,7 @@ class MonitorRequestList extends _$MonitorRequestList {
 
         /// 创建一个请求记录
         state = AsyncData([
-          MonitorLogRequest(id: log.id, logRequest: element),
+          MonitorLogRequest(id: log.id, logRequest: element, time: DateTime.now()),
           ..._cache,
         ]);
         break;
@@ -69,7 +69,7 @@ class MonitorRequestList extends _$MonitorRequestList {
     final list = state.value;
     if (list != null) {
       state = AsyncData([
-        MonitorLogDivider(color: Colors.grey, dateTime: DateTime.now()),
+        MonitorLogDivider(color: Colors.grey, time: DateTime.now()),
         ...list,
       ]);
     }

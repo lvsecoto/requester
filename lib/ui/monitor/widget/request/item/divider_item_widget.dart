@@ -22,7 +22,7 @@ class DividerItemWidget extends StatelessWidget {
           const SizedBox(width: 24, child: Divider()),
           const SizedBox(width: 12),
           Text(
-            _dataTimeFormat.format(divider.dateTime),
+            _dataTimeFormat.format(divider.time),
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(width: 12),

@@ -14,12 +14,16 @@ part 'log.g.dart';
 class RequesterLogInterceptor extends Interceptor {
   RequesterLogInterceptor() {}
 
+  /// 记录请求时间
+  static const kRequestTime = 'request_time';
+
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final id = _uuid.v1();
     final newOptions = options.copyWith(extra: {
       ...options.extra,
       'requester_id': id,
+      kRequestTime: DateTime.now(),
     });
     () async {
       await _sendData(
@@ -93,6 +97,8 @@ sealed class LogElement with _$LogElement {
     required String method,
     required String data,
     required Map<String, String> headers,
+    /// 请求时间
+    required DateTime time,
   }) = LogRequest;
 
   static LogRequest fromRequest(RequestOptions request) {
@@ -108,6 +114,7 @@ sealed class LogElement with _$LogElement {
       method: request.method,
       data: logData,
       headers: request.headers.mapValues((it) => it.value.toString()),
+      time: DateTime.now()
     );
   }
 
@@ -115,6 +122,8 @@ sealed class LogElement with _$LogElement {
     required int? statusCode,
     required String data,
     required Map<String, List<String>> headers,
+    /// 响应时间
+    required DateTime time,
   }) = LogResponse;
 
   static LogResponse fromResponse(Response response) {
@@ -129,16 +138,19 @@ sealed class LogElement with _$LogElement {
       statusCode: response.statusCode,
       data: logData,
       headers: response.headers.map,
+      time: DateTime.now(),
     );
   }
 
   const factory LogElement.error({
     required DioExceptionType type,
+    required DateTime time,
   }) = LogException;
 
   static LogException fromException(DioException exception) {
     return LogException(
       type: exception.type,
+      time: DateTime.now(),
     );
   }
 
