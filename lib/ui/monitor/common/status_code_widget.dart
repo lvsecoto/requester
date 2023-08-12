@@ -23,6 +23,8 @@ class DCStatusCodeWidget extends StatelessWidget {
       final code = json['code'];
       if (code == 200) {
         child = const TagWidget.green(label: Text('DC: OK'));
+      } else if (code == null) {
+        return const SizedBox.shrink();
       } else if (code != 200) {
         child = TagWidget.red(label: Text('DC: $code'));
       }
