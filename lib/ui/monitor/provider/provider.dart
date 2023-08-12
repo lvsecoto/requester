@@ -20,8 +20,13 @@ class EditQuery extends _$EditQuery with TextEditNotifier {
 }
 
 @riverpod
-Future<List<MonitorRequest>> filteredRequest(FilteredRequestRef ref) async {
+Future<List<MonitorLog>> filteredRequest(FilteredRequestRef ref) async {
   var list = ref.watch(monitorRequestListProvider).valueOrNull ?? [];
   final query = ref.watch(editQueryProvider);
-  return list.filter((it) => it.logRequest.uri.contains(query)).toList();
+  return list
+      .filter((it) => switch (it) {
+            MonitorLogRequest() => it.logRequest.uri.contains(query),
+            _ => true,
+          })
+      .toList();
 }

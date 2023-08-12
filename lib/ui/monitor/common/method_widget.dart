@@ -5,7 +5,7 @@ import 'package:requester/domain/monitor/monitor.dart';
 class MethodWidget extends StatelessWidget {
   const MethodWidget({Key? key, required this.request}) : super(key: key);
 
-  final MonitorRequest request;
+  final MonitorLogRequest request;
 
   @override
   Widget build(BuildContext context) {

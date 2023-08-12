@@ -12,7 +12,7 @@ String requestId(RequestIdRef ref) {
   throw UnimplementedError();
 }
 
-MonitorRequest? loadMonitorRequest(WidgetRef ref) {
+MonitorLogRequest? loadMonitorRequest(WidgetRef ref) {
   final requestId = ref.watch(requestIdProvider);
   return ref.watch(getMonitorRequestProvider(requestId)).valueOrNull;
 }

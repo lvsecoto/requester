@@ -12,7 +12,7 @@ class RequestItemWidget extends StatelessWidget {
     required this.request,
   });
 
-  final MonitorRequest request;
+  final MonitorLogRequest request;
 
   @override
   Widget build(BuildContext context) {

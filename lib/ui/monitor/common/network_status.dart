@@ -9,7 +9,7 @@ class NetworkStatus extends StatelessWidget {
     required this.request,
   }) : super(key: key);
 
-  final MonitorRequest request;
+  final MonitorLogRequest request;
 
   @override
   Widget build(BuildContext context) {

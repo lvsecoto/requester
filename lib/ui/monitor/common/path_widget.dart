@@ -12,7 +12,7 @@ class PathWidget extends StatelessWidget {
 
   final Widget? leading;
 
-  final MonitorRequest request;
+  final MonitorLogRequest request;
 
   @override
   Widget build(BuildContext context) {
