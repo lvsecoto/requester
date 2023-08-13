@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,20 +22,36 @@ class ThemeWidget extends StatelessWidget {
   /// 生成以[primaryColor]为主色调的颜色主题
   ThemeData _buildTheme(Color primaryColor) {
     const colorSeed = Colors.lightBlue;
-    final themeData = ThemeData(
-      colorSchemeSeed: colorSeed,
+    var appTheme = AppTheme.from(colorSeed: colorSeed);
+    final colorTheme = ColorScheme.fromSeed(
+      seedColor: colorSeed,
+      background: appTheme.surfaceContainerLow,
+    );
+    final themeData = ThemeData.from(
+      colorScheme: colorTheme,
       useMaterial3: true,
+    );
+    return themeData.copyWith(
       snackBarTheme: const SnackBarThemeData(
           behavior: SnackBarBehavior.floating, showCloseIcon: true),
       extensions: [
-        AppTheme.from(colorSeed: colorSeed),
+        appTheme,
         // LoadingStateTheme(emptyBuilder: emptyBuilder),
       ],
-    );
-    return themeData.copyWith(
+      colorScheme: themeData.colorScheme.copyWith(
+        background: appTheme.surfaceContainerLow,
+      ),
+      platform: Platform.isWindows
+          // Windows向macOS靠拢
+          ? TargetPlatform.macOS
+          : Platform.isAndroid
+              // android向iOS靠拢
+              ? TargetPlatform.iOS
+              : null,
       appBarTheme: themeData.appBarTheme.copyWith(
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         foregroundColor: Colors.black,
+        backgroundColor: appTheme.surfaceContainerLow,
         iconTheme: themeData.iconTheme.copyWith(
           color: Colors.black,
         ),

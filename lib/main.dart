@@ -12,7 +12,7 @@ void main() async {
 
   if (Platform.isMacOS || Platform.isWindows) {
     doWhenWindowReady(() {
-      const initialSize = Size(800, 600);
+      const initialSize = Size(600, 600);
       appWindow.minSize = initialSize;
       appWindow.alignment = Alignment.center;
       appWindow.maximize();

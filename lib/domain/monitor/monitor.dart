@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:requester/domain/log/log.dart';
 import 'package:requester/domain/monitor/provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:synchronized/synchronized.dart';
 
 export 'model.dart';
 
@@ -13,23 +14,48 @@ part 'monitor.g.dart';
 @riverpod
 Monitor monitor(MonitorRef ref) {
   ref.keepAlive();
-  return Monitor(onLog: (log) {
-    ref.read(monitorRequestListProvider.notifier).onReceivedNew(log);
-  })
-    ..start();
+  final port = ref.watch(monitorPortProvider);
+  if (port == null) {
+    return Monitor._stop();
+  }
+  final monitor = Monitor(
+    port: port,
+    onLog: (log) {
+      ref.read(monitorRequestListProvider.notifier).onReceivedNew(log);
+    },
+  )..start();
+  ref.onDispose(() {
+    monitor.stop();
+  });
+  return monitor;
 }
 
 class Monitor {
+
+  static final lock = Lock();
+
+  /// 不能做任何操作
+  static Monitor _stop() {
+    return Monitor(onLog: (_) {}, port: 0);
+  }
+
   Monitor({
     required this.onLog,
+    required this.port,
   });
 
   /// 收到日志后的回调
   final void Function(Log) onLog;
 
+  /// 监听端口
+  final int port;
+
+  /// 设别
+  late ServerSocket server;
+
   /// 启动服务
-  void start() async {
-    final server = await ServerSocket.bind(InternetAddress.anyIPv4, 5000);
+  Future<void> start() => lock.synchronized(() async {
+    server = await ServerSocket.bind(InternetAddress.anyIPv4, port);
     server.listen((client) {
       client.listen((event) {
         final json = utf8.decode(event);
@@ -42,5 +68,9 @@ class Monitor {
         }
       });
     });
-  }
+  });
+
+  Future<void> stop() => lock.synchronized(() async {
+    await server.close();
+  });
 }

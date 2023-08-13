@@ -1,12 +1,33 @@
+import 'package:common/common.dart';
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:requester/domain/log/log.dart';
+import 'package:requester/domain/persistence/persistence.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'monitor.dart';
 import 'utils.dart';
 
 part 'provider.g.dart';
+
+/// 监视器端口
+@riverpod
+class MonitorPort extends _$MonitorPort with StreamValueNotifier<int> {
+  @override
+  int? build() {
+    return super.build();
+  }
+
+  @override
+  Stream<int> buildStream() {
+    return ref.watch(appPersistenceProvider).observeMonitorPort();
+  }
+
+  /// 设置的端口
+  set port(int port) {
+    ref.read(appPersistenceProvider).setMonitorPort(port);
+  }
+}
 
 @riverpod
 class MonitorRequestList extends _$MonitorRequestList {
