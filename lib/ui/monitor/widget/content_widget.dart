@@ -4,6 +4,7 @@ import 'package:requester/domain/client/client.dart';
 import 'package:requester/domain/monitor/provider.dart';
 import 'package:requester/ui/monitor/provider/provider.dart';
 import 'package:requester/ui/monitor/widget/request/request_list_widget.dart';
+import 'package:requester/ui/settings/monitor/provider/provider.dart';
 
 class ContentWidget extends ConsumerWidget {
   const ContentWidget({super.key});
@@ -30,14 +31,19 @@ class ContentWidget extends ConsumerWidget {
               icon: const Icon(Icons.vertical_align_center_outlined),
             ),
             const SizedBox(width: 8),
-            IconButton(
-              onPressed: () {
-                TestClient().test();
-                TestClient().testGet();
-                TestClient().testPost();
-              },
-              icon: const Icon(Icons.network_ping),
-              tooltip: '测试',
+            Consumer(
+              builder: (context, ref, _) {
+                final testClient = ref.watch(testClientProvider);
+                return IconButton(
+                  onPressed: () {
+                    testClient.test();
+                    testClient.testGet();
+                    testClient.testPost();
+                  },
+                  icon: const Icon(Icons.network_ping),
+                  tooltip: '测试',
+                );
+              }
             ),
             const Spacer(),
             IconButton.outlined(

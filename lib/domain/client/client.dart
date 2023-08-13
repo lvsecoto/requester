@@ -2,14 +2,24 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:requester/domain/log/log.dart';
+import 'package:requester/domain/monitor/provider.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'client.g.dart';
+
+@riverpod
+TestClient testClient(TestClientRef ref) {
+  final hostPort = ref.watch(monitorHostPortProvider).valueOrNull;
+  return TestClient(hostPort);
+}
 
 class TestClient {
   late Dio _dio;
 
-  TestClient() {
+  TestClient(String? hostPort) {
     _dio = Dio()
       ..interceptors.addAll(
-        [RequesterLogInterceptor()],
+        [RequesterLogInterceptor(hostPort: hostPort)],
       );
   }
 
@@ -30,5 +40,4 @@ class TestClient {
       'c': 'd',
     });
   }
-
 }

@@ -11,18 +11,3 @@ part 'provider.g.dart';
 String monitor(MonitorRef ref) {
   return 'monitor';
 }
-
-@riverpod
-Future<String> monitorHostPort(MonitorHostPortRef ref) async {
-  ref.keepAlive();
-  final port = await ref.watch(monitorPortProvider.notifier).future;
-  final String? ip;
-  if (Platform.isWindows) {
-    final result = await Process.run('ipconfig', []);
-    final out = result.stdout as String;
-    ip = out.split('\r\n').filter((it) => it.contains('IPv4')).first.split(':').last.trim();
-  } else {
-    ip = await NetworkInfo().getWifiIP();
-  }
-  return '$ip:$port';
-}

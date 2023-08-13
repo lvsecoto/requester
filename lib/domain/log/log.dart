@@ -5,6 +5,7 @@ import 'package:dartx/dartx.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
 
 part 'log.freezed.dart';
@@ -12,63 +13,85 @@ part 'log.freezed.dart';
 part 'log.g.dart';
 
 class RequesterLogInterceptor extends Interceptor {
-  RequesterLogInterceptor() {}
+  RequesterLogInterceptor({
+    this.hostPort = 'localhost:5000',
+  });
 
-  /// 记录请求时间
-  static const kRequestTime = 'request_time';
+  /// 记录请求时的端口
+  static const kRequestPort = 'request_port';
+
+  /// 端口配置
+  final String? hostPort;
+
+  void onDispose() {}
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final id = _uuid.v1();
-    final newOptions = options.copyWith(extra: {
-      ...options.extra,
-      'requester_id': id,
-      kRequestTime: DateTime.now(),
-    });
-    () async {
-      await _sendData(
-        jsonEncode(
-          Log(
-            id: id,
-            element: LogElement.fromRequest(options),
-          ).toJson(),
-        ),
-      );
-    }();
-    super.onRequest(newOptions, handler);
+    final hostPort = this.hostPort;
+    if (hostPort != null) {
+      final id = _uuid.v1();
+      final newOptions = options.copyWith(extra: {
+        ...options.extra,
+        'requester_id': id,
+        kRequestPort: hostPort,
+      });
+      () async {
+        await _sendData(
+          jsonEncode(
+            Log(
+              id: id,
+              element: LogElement.fromRequest(options),
+            ).toJson(),
+          ),
+          hostPort,
+        );
+      }();
+      super.onRequest(newOptions, handler);
+    } else {
+      super.onRequest(options, handler);
+    }
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    final id = response.requestOptions.extra['requester_id'];
-    _sendData(
-      jsonEncode(
-        Log(
-          id: id,
-          element: LogElement.fromResponse(response),
+    final hostPort = response.requestOptions.extra[kRequestPort];
+    if (hostPort != null) {
+      final id = response.requestOptions.extra['requester_id'];
+      _sendData(
+        jsonEncode(
+          Log(
+            id: id,
+            element: LogElement.fromResponse(response),
+          ),
         ),
-      ),
-    );
+        hostPort,
+      );
+    }
     super.onResponse(response, handler);
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    final id = err.requestOptions.extra['requester_id'];
-    _sendData(
-      jsonEncode(
-        Log(
-          id: id,
-          element: LogElement.fromException(err),
+    final hostPort = err.requestOptions.extra[kRequestPort];
+    if (hostPort != null) {
+      final id = err.requestOptions.extra['requester_id'];
+      _sendData(
+        jsonEncode(
+          Log(
+            id: id,
+            element: LogElement.fromException(err),
+          ),
         ),
-      ),
-    );
+        hostPort,
+      );
+    }
     super.onError(err, handler);
   }
 
-  Future<void> _sendData(String data) async {
+  Future<void> _sendData(String data, String hostPort) async {
     try {
-      final socket = await Socket.connect('localhost', 5000);
+      final segments = hostPort.split(':');
+      final socket = await Socket.connect(segments.first, segments.second.toInt());
       socket.add(data.toUtf8());
       await socket.close();
     } catch (e) {
@@ -97,6 +120,7 @@ sealed class LogElement with _$LogElement {
     required String method,
     required String data,
     required Map<String, String> headers,
+
     /// 请求时间
     required DateTime time,
   }) = LogRequest;
@@ -110,18 +134,18 @@ sealed class LogElement with _$LogElement {
       logData = requestData;
     }
     return LogRequest(
-      uri: request.uri.toString(),
-      method: request.method,
-      data: logData,
-      headers: request.headers.mapValues((it) => it.value.toString()),
-      time: DateTime.now()
-    );
+        uri: request.uri.toString(),
+        method: request.method,
+        data: logData,
+        headers: request.headers.mapValues((it) => it.value.toString()),
+        time: DateTime.now());
   }
 
   const factory LogElement.response({
     required int? statusCode,
     required String data,
     required Map<String, List<String>> headers,
+
     /// 响应时间
     required DateTime time,
   }) = LogResponse;

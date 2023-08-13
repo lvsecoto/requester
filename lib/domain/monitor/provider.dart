@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:common/common.dart';
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:network_info_plus/network_info_plus.dart';
 import 'package:requester/domain/log/log.dart';
 import 'package:requester/domain/persistence/persistence.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -27,6 +30,22 @@ class MonitorPort extends _$MonitorPort with StreamValueNotifier<int> {
   set port(int port) {
     ref.read(appPersistenceProvider).setMonitorPort(port);
   }
+}
+
+@riverpod
+Future<String> monitorHostPort(MonitorHostPortRef ref) async {
+  ref.keepAlive();
+  await ref.watch(monitorPortProvider.notifier).future;
+  final port = ref.watch(monitorPortProvider);
+  final String? ip;
+  if (Platform.isWindows) {
+    final result = await Process.run('ipconfig', []);
+    final out = result.stdout as String;
+    ip = out.split('\r\n').filter((it) => it.contains('IPv4')).first.split(':').last.trim();
+  } else {
+    ip = await NetworkInfo().getWifiIP();
+  }
+  return '$ip:$port';
 }
 
 @riverpod
