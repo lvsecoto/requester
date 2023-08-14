@@ -305,6 +305,22 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.5"
+  curl_converter:
+    dependency: "direct main"
+    description:
+      name: curl_converter
+      sha256: e1ec2f2a6812d0bab6c44fdec9e1b148e38b272dcadb0fb5d976eade6d322a61
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.1"
+  curl_generator:
+    dependency: "direct main"
+    description:
+      name: curl_generator
+      sha256: f016baf926c58181b083e20fe908c9fc90e46f2c5b6dc7015ca3c9a6b7c6f133
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.13"
   custom_lint:
     dependency: "direct dev"
     description:
@@ -385,6 +401,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.0"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.5"
   extended_image:
     dependency: transitive
     description:
