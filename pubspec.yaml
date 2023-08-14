@@ -77,7 +77,6 @@ dependencies:
   network_info_plus: ^3.0.5
   qr_flutter: ^4.1.0
   synchronized: ^3.1.0
-  curl_generator: ^0.0.13
   curl_converter: ^1.0.1
 
 dev_dependencies:

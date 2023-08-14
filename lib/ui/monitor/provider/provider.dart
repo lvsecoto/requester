@@ -28,7 +28,9 @@ Future<List<MonitorLog>> filteredRequest(FilteredRequestRef ref) async {
   }
   return all
       .filter((it) => switch (it) {
-            MonitorLogRequest() => it.logRequest.uri.contains(query),
+            MonitorLogRequest() => it.logRequest.uri.contains(query) ||
+                it.logRequest.data.contains(query) ||
+                (it.logResponse?.data.contains(query) ?? false),
             _ => true,
           })
       .toList();
