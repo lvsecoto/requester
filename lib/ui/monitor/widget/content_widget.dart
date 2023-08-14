@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:requester/app/theme/theme.dart';
 import 'package:requester/domain/client/client.dart';
 import 'package:requester/domain/monitor/provider.dart';
 import 'package:requester/ui/monitor/provider/provider.dart';
 import 'package:requester/ui/monitor/widget/request/request_list_widget.dart';
-import 'package:requester/ui/settings/monitor/provider/provider.dart';
 
 class ContentWidget extends ConsumerWidget {
   const ContentWidget({super.key});
@@ -14,11 +14,19 @@ class ContentWidget extends ConsumerWidget {
     return Column(
       children: [
         Consumer(
-          builder: (context, ref, child) => SearchBar(
-            shadowColor: const MaterialStatePropertyAll(Colors.transparent),
-            hintText: '搜索请求',
-            elevation: const MaterialStatePropertyAll(4),
-            controller: ref.watch(editQueryProvider.notifier).controller,
+          builder: (context, ref, child) => Material(
+            color: AppTheme.of(context).surfaceContainerLow,
+            elevation: 1,
+            shape: const StadiumBorder(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              child: TextField(
+                decoration: const InputDecoration.collapsed(
+                  hintText: '搜索请求',
+                ),
+                controller: ref.watch(editQueryProvider.notifier).controller,
+              ),
+            ),
           ),
         ),
         const SizedBox(height: 16),
