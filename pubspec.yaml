@@ -103,9 +103,9 @@ dev_dependencies:
       url: git@codeup.aliyun.com:6240585956f85235f7dd77d1/app/persistence.git
       ref: 8eb9a021edde655a8ff09565343ace2dbcaa5d54
 
-dependency_overrides:
-  common_dc:
-    path: ../common_dc
+#dependency_overrides:
+#  common_dc:
+#    path: ../common_dc
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

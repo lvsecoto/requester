@@ -269,9 +269,11 @@ packages:
   common_dc:
     dependency: "direct main"
     description:
-      path: "../common_dc"
-      relative: true
-    source: path
+      path: "."
+      ref: b756d5bf9599a596a792b19023998281dbf0bc71
+      resolved-ref: b756d5bf9599a596a792b19023998281dbf0bc71
+      url: "git@codeup.aliyun.com:6240585956f85235f7dd77d1/app/flutter_common_dc.git"
+    source: git
     version: "0.0.1"
   convert:
     dependency: transitive
