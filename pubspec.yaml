@@ -40,13 +40,13 @@ dependencies:
   common:
     git:
       url: git@codeup.aliyun.com:6240585956f85235f7dd77d1/app/flutter_common.git
-      ref: 8c85688f8f2152eeb30515db640f64b234f56158
+      ref: 4b8f62040fb85470175430dcadc3a1c3d12ae8e1
 
   # dc公共库
   common_dc:
     git:
       url: git@codeup.aliyun.com:6240585956f85235f7dd77d1/app/flutter_common_dc.git
-      ref: b756d5bf9599a596a792b19023998281dbf0bc71
+      ref: 3b30592b2bed9fbea43dce0721019d55822fe1ad
 
   # 自动代码生成
   persistence_annotation:
@@ -57,9 +57,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.18.0
-  flutter_riverpod: ^2.3.6
-  hooks_riverpod: ^2.3.7
-  riverpod_annotation: ^2.1.1
+  flutter_riverpod: ^2.3.7
+  hooks_riverpod: ^2.3.8
+  riverpod_annotation: ^2.1.2
   freezed_annotation: ^2.4.1
   rxdart: ^0.27.7
   hive: ^3.0.0-dev
@@ -72,11 +72,12 @@ dependencies:
   uuid: ^3.0.7
   animations: ^2.0.7
   flutter_highlight: ^0.7.0
-  flutter_hooks: ^0.18.6
+  flutter_hooks: ^0.20.0
   multi_split_view: ^2.4.0
-  network_info_plus: ^3.0.5
+  network_info_plus: ^4.0.2
   qr_flutter: ^4.1.0
   synchronized: ^3.1.0
+  nsd: ^2.3.1
 
 dev_dependencies:
   flutter_test:
@@ -87,13 +88,13 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.2
   flutter_launcher_icons: "^0.13.1"
   freezed: ^2.4.1
-  riverpod_generator: ^2.2.4
-  riverpod_lint: ^1.4.0
-  custom_lint: ^0.4.0
-  build_runner: ^2.4.0
+  riverpod_generator: ^2.2.6
+  riverpod_lint: ^2.0.1
+  custom_lint: ^0.5.2
+  build_runner: ^2.4.6
   json_serializable: ^6.7.1
   go_router_builder:
 
@@ -101,11 +102,33 @@ dev_dependencies:
   persistence:
     git:
       url: git@codeup.aliyun.com:6240585956f85235f7dd77d1/app/persistence.git
-      ref: 8eb9a021edde655a8ff09565343ace2dbcaa5d54
+      ref: 21c99137e02cded9c22ed5efb5f726bf72fd914b
 
-#dependency_overrides:
+dependency_overrides:
 #  common_dc:
 #    path: ../common_dc
+  bitsdojo_window:
+    git:
+      url: https://github.com/DartGit-dev/bitsdojo_window.git
+      path: bitsdojo_window
+  bitsdojo_window_platform_interface:
+    git:
+      url: https://github.com/DartGit-dev/bitsdojo_window.git
+      path: bitsdojo_window_platform_interface
+  bitsdojo_window_macos:
+    git:
+      url: https://github.com/DartGit-dev/bitsdojo_window.git
+      path: bitsdojo_window_macos
+  bitsdojo_window_linux:
+    git:
+      url: https://github.com/DartGit-dev/bitsdojo_window.git
+      path: bitsdojo_window_linux
+  bitsdojo_window_windows:
+    git:
+      url: https://github.com/DartGit-dev/bitsdojo_window.git
+      path: bitsdojo_window_windows
+
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

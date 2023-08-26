@@ -30,7 +30,7 @@ class ResponsiveLayoutShellRoute extends ShellRoute {
           routes: routes.map((it) => it.route).toList(),
           builder: (context, state, child) {
             var matchedIndex = 0;
-            final path = state.location;
+            final path = state.uri.path;
 
             matchedIndex = routes.indexWhere((it) {
               return path.startsWith(it.basePath);
