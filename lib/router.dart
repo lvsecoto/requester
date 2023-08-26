@@ -27,6 +27,14 @@ GoRouter router(RouterRef ref) => GoRouter(
           ),
         ),
         ResponsiveLayoutNavigationDestinationRoute(
+          const DeviceListDetailsEmptyRoute().location,
+          $deviceListRoute,
+          ResponsiveLayoutNavigationDestination(
+            icon: const Icon(Icons.devices),
+            title: '设备',
+          ),
+        ),
+        ResponsiveLayoutNavigationDestinationRoute(
           const SettingsRoute().location,
           $settingsRoute,
           ResponsiveLayoutNavigationDestination(

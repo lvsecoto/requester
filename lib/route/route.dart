@@ -8,11 +8,9 @@ part 'route.g.dart';
 
 @TypedShellRoute<MonitorRoute>(
   routes: [
-    // 必须包含一个repair的根路由，跳转到这个路由时，子路由不不显示任何东西
     TypedGoRoute<ListDetailsEmptyRoute>(
       path: '/monitor',
     ),
-    // 允许从/repair/:issueId返回到/repair，这在小屏幕，从详情跳回到列表时有用
     TypedGoRoute<RequestRoute>(
       path: '/monitor/:requestId',
     ),
@@ -28,7 +26,7 @@ class MonitorRoute extends ShellRouteData {
   Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
     return ListDetailsNavigation(
       navigator: navigator,
-      isDetailsEmpty: state.location == const ListDetailsEmptyRoute().location,
+      isDetailsEmpty: state.uri.path == const ListDetailsEmptyRoute().location,
       list: const MonitorScreen(),
     );
   }
@@ -61,11 +59,9 @@ class RequestRoute extends GoRouteData {
   }
 }
 
-const _settingsTypedRoute = TypedShellRoute<SettingsRoute>(
-  routes: [
-    _monitorSettingsTypedRoute,
-  ]
-);
+const _settingsTypedRoute = TypedShellRoute<SettingsRoute>(routes: [
+  _monitorSettingsTypedRoute,
+]);
 
 /// 设置
 @_settingsTypedRoute
@@ -79,15 +75,14 @@ class SettingsRoute extends ShellRouteData {
   Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
     return ListDetailsNavigation(
       navigator: navigator,
-      isDetailsEmpty: state.location == const ListDetailsEmptyRoute().location,
+      isDetailsEmpty: state.uri.path == const ListDetailsEmptyRoute().location,
       list: const SettingsScreen(),
     );
   }
 }
 
-const _monitorSettingsTypedRoute = TypedGoRoute<MonitorSettingsRoute>(
-  path: '/settings/monitor'
-);
+const _monitorSettingsTypedRoute =
+    TypedGoRoute<MonitorSettingsRoute>(path: '/settings/monitor');
 
 /// 设置监视器
 class MonitorSettingsRoute extends GoRouteData {
@@ -96,5 +91,62 @@ class MonitorSettingsRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const MonitorSettingsScreen();
+  }
+}
+
+class DeviceListDetailsEmptyRoute extends ListDetailsEmptyRoute {
+  const DeviceListDetailsEmptyRoute();
+}
+
+@TypedShellRoute<DeviceListRoute>(
+  routes: [
+    TypedGoRoute<DeviceListDetailsEmptyRoute>(
+      path: '/device',
+    ),
+    TypedGoRoute<DeviceDetailsRoute>(
+      path: '/device/:deviceId',
+    ),
+  ],
+)
+class DeviceListRoute extends ShellRouteData {
+  const DeviceListRoute();
+
+  // 默认的位置是没选择任何列表内容
+  String get location => const DeviceListDetailsEmptyRoute().location;
+
+  @override
+  Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
+    return ListDetailsNavigation(
+      navigator: navigator,
+      isDetailsEmpty: state.uri.path == const ListDetailsEmptyRoute().location,
+      list: const DeviceListScreen(),
+    );
+  }
+}
+
+class DeviceDetailsRoute extends GoRouteData {
+  final String deviceId;
+
+  const DeviceDetailsRoute(this.deviceId);
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    // 仅仅改变:deviceId，路由不会有变化，也不会有路由动画，这里我们自己加上去
+    return PageTransitionSwitcher(
+      duration: kThemeAnimationDuration,
+      transitionBuilder: (Widget child, Animation<double> primaryAnimation,
+          Animation<double> secondaryAnimation) {
+        return SharedAxisTransition(
+          animation: primaryAnimation,
+          secondaryAnimation: secondaryAnimation,
+          transitionType: SharedAxisTransitionType.horizontal,
+          child: child,
+        );
+      },
+      child: DeviceDetailsScreen(
+        key: ValueKey(deviceId),
+        // requestId: requestId,
+      ),
+    );
   }
 }
