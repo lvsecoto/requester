@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.requester_device";
+option java_outer_classname = "HelloWorldProto";
+option objc_class_prefix = "HLW";
+
+package requester_device;
+
+// 设备服务
+service RequesterDeviceService {
+  // Sends a greeting
+  rpc GetInfo (RequesterDeviceInfoRequest) returns (RequesterDeviceInfoResponse) {}
+}
+
+// 获取设备信息
+message RequesterDeviceInfoRequest {
+}
+
+// The response message containing the greetings
+message RequesterDeviceInfoResponse {
+
+  // token
+  string token = 1;
+
+  // 设备id
+  string deviceUID = 2;
+
+  // 其他信息
+  map<string, string> meta = 3;
+}

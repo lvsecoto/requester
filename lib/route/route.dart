@@ -104,7 +104,7 @@ class DeviceListDetailsEmptyRoute extends ListDetailsEmptyRoute {
       path: '/device',
     ),
     TypedGoRoute<DeviceDetailsRoute>(
-      path: '/device/:deviceId',
+      path: '/device/:hostPort',
     ),
   ],
 )
@@ -125,9 +125,10 @@ class DeviceListRoute extends ShellRouteData {
 }
 
 class DeviceDetailsRoute extends GoRouteData {
-  final String deviceId;
+  /// 设备的主机地址和端口
+  final String hostPort;
 
-  const DeviceDetailsRoute(this.deviceId);
+  const DeviceDetailsRoute(this.hostPort);
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
@@ -144,8 +145,8 @@ class DeviceDetailsRoute extends GoRouteData {
         );
       },
       child: DeviceDetailsScreen(
-        key: ValueKey(deviceId),
-        // requestId: requestId,
+        key: ValueKey(hostPort),
+        hostPort: hostPort,
       ),
     );
   }
