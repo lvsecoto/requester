@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:requester/domain/log/log.dart';
 import 'package:requester/domain/monitor/provider.dart';
@@ -60,8 +61,9 @@ class Monitor {
         }
         server = await ServerSocket.bind(InternetAddress.anyIPv4, port);
         this.server = server..listen((client) {
-          client.listen((event) {
-            final json = utf8.decode(event);
+          client.toList().then((event) {
+            final data = event.flatMap((it) => it).toList();
+            final json = utf8.decode(data);
             try {
               onLog(
                 Log.fromJson(jsonDecode(json)),

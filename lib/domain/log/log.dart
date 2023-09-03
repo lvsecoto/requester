@@ -5,11 +5,9 @@ import 'package:dartx/dartx.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
 
 part 'log.freezed.dart';
-
 part 'log.g.dart';
 
 class RequesterLogInterceptor extends Interceptor {
@@ -80,7 +78,7 @@ class RequesterLogInterceptor extends Interceptor {
           Log(
             id: id,
             element: LogElement.fromException(err),
-          ),
+          ).toJson(),
         ),
         hostPort,
       );
