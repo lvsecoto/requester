@@ -25,6 +25,14 @@ class RequesterDeviceServiceClient extends $grpc.Client {
       '/requester_device.RequesterDeviceService/GetInfo',
       ($0.RequesterDeviceInfoRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.RequesterDeviceInfoResponse.fromBuffer(value));
+  static final _$setLogHostPort = $grpc.ClientMethod<$0.RequesterDeviceLogHostPort, $0.Empty>(
+      '/requester_device.RequesterDeviceService/SetLogHostPort',
+      ($0.RequesterDeviceLogHostPort value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
+  static final _$getLogHostPort = $grpc.ClientMethod<$0.Empty, $0.RequesterDeviceLogHostPort>(
+      '/requester_device.RequesterDeviceService/GetLogHostPort',
+      ($0.Empty value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.RequesterDeviceLogHostPort.fromBuffer(value));
 
   RequesterDeviceServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -34,6 +42,14 @@ class RequesterDeviceServiceClient extends $grpc.Client {
 
   $grpc.ResponseFuture<$0.RequesterDeviceInfoResponse> getInfo($0.RequesterDeviceInfoRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getInfo, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Empty> setLogHostPort($0.RequesterDeviceLogHostPort request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$setLogHostPort, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.RequesterDeviceLogHostPort> getLogHostPort($0.Empty request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getLogHostPort, request, options: options);
   }
 }
 
@@ -49,11 +65,35 @@ abstract class RequesterDeviceServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.RequesterDeviceInfoRequest.fromBuffer(value),
         ($0.RequesterDeviceInfoResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.RequesterDeviceLogHostPort, $0.Empty>(
+        'SetLogHostPort',
+        setLogHostPort_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.RequesterDeviceLogHostPort.fromBuffer(value),
+        ($0.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Empty, $0.RequesterDeviceLogHostPort>(
+        'GetLogHostPort',
+        getLogHostPort_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
+        ($0.RequesterDeviceLogHostPort value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.RequesterDeviceInfoResponse> getInfo_Pre($grpc.ServiceCall call, $async.Future<$0.RequesterDeviceInfoRequest> request) async {
     return getInfo(call, await request);
   }
 
+  $async.Future<$0.Empty> setLogHostPort_Pre($grpc.ServiceCall call, $async.Future<$0.RequesterDeviceLogHostPort> request) async {
+    return setLogHostPort(call, await request);
+  }
+
+  $async.Future<$0.RequesterDeviceLogHostPort> getLogHostPort_Pre($grpc.ServiceCall call, $async.Future<$0.Empty> request) async {
+    return getLogHostPort(call, await request);
+  }
+
   $async.Future<$0.RequesterDeviceInfoResponse> getInfo($grpc.ServiceCall call, $0.RequesterDeviceInfoRequest request);
+  $async.Future<$0.Empty> setLogHostPort($grpc.ServiceCall call, $0.RequesterDeviceLogHostPort request);
+  $async.Future<$0.RequesterDeviceLogHostPort> getLogHostPort($grpc.ServiceCall call, $0.Empty request);
 }

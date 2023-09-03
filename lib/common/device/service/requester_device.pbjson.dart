@@ -13,6 +13,15 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use emptyDescriptor instead')
+const Empty$json = {
+  '1': 'Empty',
+};
+
+/// Descriptor for `Empty`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List emptyDescriptor = $convert.base64Decode(
+    'CgVFbXB0eQ==');
+
 @$core.Deprecated('Use requesterDeviceInfoRequestDescriptor instead')
 const RequesterDeviceInfoRequest$json = {
   '1': 'RequesterDeviceInfoRequest',
@@ -49,4 +58,17 @@ final $typed_data.Uint8List requesterDeviceInfoResponseDescriptor = $convert.bas
     'RldmljZVVJRBgCIAEoCVIJZGV2aWNlVUlEEksKBG1ldGEYAyADKAsyNy5yZXF1ZXN0ZXJfZGV2'
     'aWNlLlJlcXVlc3RlckRldmljZUluZm9SZXNwb25zZS5NZXRhRW50cnlSBG1ldGEaNwoJTWV0YU'
     'VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAE=');
+
+@$core.Deprecated('Use requesterDeviceLogHostPortDescriptor instead')
+const RequesterDeviceLogHostPort$json = {
+  '1': 'RequesterDeviceLogHostPort',
+  '2': [
+    {'1': 'hostPort', '3': 1, '4': 1, '5': 9, '10': 'hostPort'},
+  ],
+};
+
+/// Descriptor for `RequesterDeviceLogHostPort`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List requesterDeviceLogHostPortDescriptor = $convert.base64Decode(
+    'ChpSZXF1ZXN0ZXJEZXZpY2VMb2dIb3N0UG9ydBIaCghob3N0UG9ydBgBIAEoCVIIaG9zdFBvcn'
+    'Q=');
 

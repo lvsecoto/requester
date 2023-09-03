@@ -25,7 +25,7 @@ class ContentWidget extends HookConsumerWidget {
             DiffSliverAnimatedList(
               items: services,
               itemBuilder: (context, device) {
-                final host = utf8.decode(device.txt!['host']!.toList());
+                final host = utf8.decode(device.txt?['host']?.toList() ?? []);
                 return ListTile(
                 leading: const Icon(Icons.phone_android_sharp),
                 title: Text(device.name ?? ''),

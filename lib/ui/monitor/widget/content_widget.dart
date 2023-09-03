@@ -1,16 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:requester/app/theme/theme.dart';
 import 'package:requester/domain/client/client.dart';
+import 'package:requester/domain/monitor/monitor.dart';
 import 'package:requester/domain/monitor/provider.dart';
 import 'package:requester/ui/monitor/provider/provider.dart';
 import 'package:requester/ui/monitor/widget/request/request_list_widget.dart';
 
-class ContentWidget extends ConsumerWidget {
+class ContentWidget extends HookConsumerWidget {
   const ContentWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final logMonitor = ref.watch(monitorProvider);
+    bool isAppForeground(AppLifecycleState? appState) {
+      return [AppLifecycleState.inactive, AppLifecycleState.resumed]
+          .contains(appState);
+    }
+    useOnAppLifecycleStateChange((previous, next) {
+      if (!isAppForeground(previous) && isAppForeground(next)) {
+        logMonitor.start();
+      } else if (isAppForeground(previous) && !isAppForeground(next)) {
+        logMonitor.stop();
+      }
+    });
+
     return Column(
       children: [
         Consumer(
@@ -39,20 +55,18 @@ class ContentWidget extends ConsumerWidget {
               icon: const Icon(Icons.vertical_align_center_outlined),
             ),
             const SizedBox(width: 8),
-            Consumer(
-              builder: (context, ref, _) {
-                final testClient = ref.watch(testClientProvider);
-                return IconButton(
-                  onPressed: () {
-                    testClient.test();
-                    testClient.testGet();
-                    testClient.testPost();
-                  },
-                  icon: const Icon(Icons.network_ping),
-                  tooltip: '测试',
-                );
-              }
-            ),
+            Consumer(builder: (context, ref, _) {
+              final testClient = ref.watch(testClientProvider);
+              return IconButton(
+                onPressed: () {
+                  testClient.test();
+                  testClient.testGet();
+                  testClient.testPost();
+                },
+                icon: const Icon(Icons.network_ping),
+                tooltip: '测试',
+              );
+            }),
             const Spacer(),
             IconButton.outlined(
               onPressed: () async {

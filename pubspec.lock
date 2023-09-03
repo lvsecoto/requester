@@ -320,14 +320,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.1"
-  curl_generator:
-    dependency: "direct main"
-    description:
-      name: curl_generator
-      sha256: f016baf926c58181b083e20fe908c9fc90e46f2c5b6dc7015ca3c9a6b7c6f133
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.0.13"
   custom_lint:
     dependency: "direct dev"
     description:

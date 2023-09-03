@@ -9,15 +9,22 @@ package requester_device;
 
 // 设备服务
 service RequesterDeviceService {
-  // Sends a greeting
+  // 获取设备信息
   rpc GetInfo (RequesterDeviceInfoRequest) returns (RequesterDeviceInfoResponse) {}
+
+  // 设置日志接收HostPort
+  rpc SetLogHostPort(RequesterDeviceLogHostPort) returns (Empty) {};
+
+  // 设置日志接收HostPort
+  rpc GetLogHostPort(Empty) returns (RequesterDeviceLogHostPort) {};
 }
 
-// 获取设备信息
-message RequesterDeviceInfoRequest {
-}
+message Empty {}
 
-// The response message containing the greetings
+// 获取设备信息请求
+message RequesterDeviceInfoRequest {}
+
+// 获取设备信息响应
 message RequesterDeviceInfoResponse {
 
   // token
@@ -28,4 +35,9 @@ message RequesterDeviceInfoResponse {
 
   // 其他信息
   map<string, string> meta = 3;
+}
+
+/// Requester日志接受端口，设置/获取
+message RequesterDeviceLogHostPort {
+  string hostPort = 1;
 }

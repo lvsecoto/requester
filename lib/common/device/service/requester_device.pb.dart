@@ -13,7 +13,39 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-/// 获取设备信息
+class Empty extends $pb.GeneratedMessage {
+  factory Empty() => create();
+  Empty._() : super();
+  factory Empty.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Empty.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Empty', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_device'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Empty clone() => Empty()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Empty copyWith(void Function(Empty) updates) => super.copyWith((message) => updates(message as Empty)) as Empty;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static Empty create() => Empty._();
+  Empty createEmptyInstance() => create();
+  static $pb.PbList<Empty> createRepeated() => $pb.PbList<Empty>();
+  @$core.pragma('dart2js:noInline')
+  static Empty getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Empty>(create);
+  static Empty? _defaultInstance;
+}
+
+/// 获取设备信息请求
 class RequesterDeviceInfoRequest extends $pb.GeneratedMessage {
   factory RequesterDeviceInfoRequest() => create();
   RequesterDeviceInfoRequest._() : super();
@@ -46,7 +78,7 @@ class RequesterDeviceInfoRequest extends $pb.GeneratedMessage {
   static RequesterDeviceInfoRequest? _defaultInstance;
 }
 
-/// The response message containing the greetings
+/// 获取设备信息响应
 class RequesterDeviceInfoResponse extends $pb.GeneratedMessage {
   factory RequesterDeviceInfoResponse({
     $core.String? token,
@@ -120,6 +152,57 @@ class RequesterDeviceInfoResponse extends $pb.GeneratedMessage {
   /// 其他信息
   @$pb.TagNumber(3)
   $core.Map<$core.String, $core.String> get meta => $_getMap(2);
+}
+
+/// / Requester日志接受端口，设置/获取
+class RequesterDeviceLogHostPort extends $pb.GeneratedMessage {
+  factory RequesterDeviceLogHostPort({
+    $core.String? hostPort,
+  }) {
+    final $result = create();
+    if (hostPort != null) {
+      $result.hostPort = hostPort;
+    }
+    return $result;
+  }
+  RequesterDeviceLogHostPort._() : super();
+  factory RequesterDeviceLogHostPort.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RequesterDeviceLogHostPort.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RequesterDeviceLogHostPort', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_device'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'hostPort', protoName: 'hostPort')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RequesterDeviceLogHostPort clone() => RequesterDeviceLogHostPort()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RequesterDeviceLogHostPort copyWith(void Function(RequesterDeviceLogHostPort) updates) => super.copyWith((message) => updates(message as RequesterDeviceLogHostPort)) as RequesterDeviceLogHostPort;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static RequesterDeviceLogHostPort create() => RequesterDeviceLogHostPort._();
+  RequesterDeviceLogHostPort createEmptyInstance() => create();
+  static $pb.PbList<RequesterDeviceLogHostPort> createRepeated() => $pb.PbList<RequesterDeviceLogHostPort>();
+  @$core.pragma('dart2js:noInline')
+  static RequesterDeviceLogHostPort getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RequesterDeviceLogHostPort>(create);
+  static RequesterDeviceLogHostPort? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get hostPort => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set hostPort($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasHostPort() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearHostPort() => clearField(1);
 }
 
 

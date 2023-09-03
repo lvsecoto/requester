@@ -31,7 +31,6 @@ Monitor monitor(MonitorRef ref) {
 }
 
 class Monitor {
-
   static final lock = Lock();
 
   /// 不能做任何操作
@@ -51,26 +50,30 @@ class Monitor {
   final int port;
 
   /// 设别
-  late ServerSocket server;
+  ServerSocket? server;
 
   /// 启动服务
   Future<void> start() => lock.synchronized(() async {
-    server = await ServerSocket.bind(InternetAddress.anyIPv4, port);
-    server.listen((client) {
-      client.listen((event) {
-        final json = utf8.decode(event);
-        try {
-          onLog(
-            Log.fromJson(jsonDecode(json)),
-          );
-        } catch (e) {
-          debugPrint(e.toString());
+        var server = this.server;
+        if (server != null) {
+          server.close();
         }
+        server = await ServerSocket.bind(InternetAddress.anyIPv4, port);
+        this.server = server..listen((client) {
+          client.listen((event) {
+            final json = utf8.decode(event);
+            try {
+              onLog(
+                Log.fromJson(jsonDecode(json)),
+              );
+            } catch (e) {
+              debugPrint(e.toString());
+            }
+          });
+        });
       });
-    });
-  });
 
   Future<void> stop() => lock.synchronized(() async {
-    await server.close();
-  });
+        await server?.close();
+      });
 }
