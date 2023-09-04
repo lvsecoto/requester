@@ -17,7 +17,7 @@ class RequesterDeviceDiscoveryService {
     if (_discovery != null) {
       await stopDiscovery(_discovery!);
     }
-    _discovery = await startDiscovery('_http._tcp')
+    _discovery = await startDiscovery('_requester._tcp')
       ..addListener(() {
         onServiceUpdate(_discovery!.services);
       });

@@ -32,7 +32,7 @@
     <string>Required to discover local network devices</string>
     <key>NSBonjourServices</key>
     <array>
-        <string>_http._tcp</string>
+        <string>_requester._tcp</string>
     </array>
 </dict>
 </plist>
