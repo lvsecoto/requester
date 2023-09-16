@@ -5,6 +5,7 @@ import 'package:requester/ui/device/details/provider/provider.dart';
 
 import 'log/log.dart';
 import 'info/info.dart';
+import 'api/api.dart';
 
 class ContentWidget extends ConsumerWidget {
   const ContentWidget({super.key});
@@ -15,7 +16,7 @@ class ContentWidget extends ConsumerWidget {
     return ScaffoldMessenger(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('设备详情'),
+          title: const Text('设备信息'),
           actions: [
             IconButton(
               onPressed: () {
@@ -37,6 +38,8 @@ class ContentWidget extends ConsumerWidget {
                   DeviceInfoWidget(),
                   SizedBox(height: 16),
                   LogInfoWidget(),
+                  SizedBox(height: 16),
+                  APIInfoWidget(),
                 ],
               ),
             ),

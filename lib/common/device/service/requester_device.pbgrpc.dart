@@ -33,6 +33,14 @@ class RequesterDeviceServiceClient extends $grpc.Client {
       '/requester_device.RequesterDeviceService/GetLogHostPort',
       ($0.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.RequesterDeviceLogHostPort.fromBuffer(value));
+  static final _$setApiHostPortOverride = $grpc.ClientMethod<$0.RequesterDeviceApiHostPortOverride, $0.Empty>(
+      '/requester_device.RequesterDeviceService/SetApiHostPortOverride',
+      ($0.RequesterDeviceApiHostPortOverride value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
+  static final _$getApiHostPortOverride = $grpc.ClientMethod<$0.Empty, $0.RequesterDeviceLogHostPort>(
+      '/requester_device.RequesterDeviceService/GetApiHostPortOverride',
+      ($0.Empty value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.RequesterDeviceLogHostPort.fromBuffer(value));
 
   RequesterDeviceServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -50,6 +58,14 @@ class RequesterDeviceServiceClient extends $grpc.Client {
 
   $grpc.ResponseFuture<$0.RequesterDeviceLogHostPort> getLogHostPort($0.Empty request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getLogHostPort, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Empty> setApiHostPortOverride($0.RequesterDeviceApiHostPortOverride request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$setApiHostPortOverride, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.RequesterDeviceLogHostPort> getApiHostPortOverride($0.Empty request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getApiHostPortOverride, request, options: options);
   }
 }
 
@@ -79,6 +95,20 @@ abstract class RequesterDeviceServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
         ($0.RequesterDeviceLogHostPort value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.RequesterDeviceApiHostPortOverride, $0.Empty>(
+        'SetApiHostPortOverride',
+        setApiHostPortOverride_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.RequesterDeviceApiHostPortOverride.fromBuffer(value),
+        ($0.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Empty, $0.RequesterDeviceLogHostPort>(
+        'GetApiHostPortOverride',
+        getApiHostPortOverride_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
+        ($0.RequesterDeviceLogHostPort value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.RequesterDeviceInfoResponse> getInfo_Pre($grpc.ServiceCall call, $async.Future<$0.RequesterDeviceInfoRequest> request) async {
@@ -93,7 +123,17 @@ abstract class RequesterDeviceServiceBase extends $grpc.Service {
     return getLogHostPort(call, await request);
   }
 
+  $async.Future<$0.Empty> setApiHostPortOverride_Pre($grpc.ServiceCall call, $async.Future<$0.RequesterDeviceApiHostPortOverride> request) async {
+    return setApiHostPortOverride(call, await request);
+  }
+
+  $async.Future<$0.RequesterDeviceLogHostPort> getApiHostPortOverride_Pre($grpc.ServiceCall call, $async.Future<$0.Empty> request) async {
+    return getApiHostPortOverride(call, await request);
+  }
+
   $async.Future<$0.RequesterDeviceInfoResponse> getInfo($grpc.ServiceCall call, $0.RequesterDeviceInfoRequest request);
   $async.Future<$0.Empty> setLogHostPort($grpc.ServiceCall call, $0.RequesterDeviceLogHostPort request);
   $async.Future<$0.RequesterDeviceLogHostPort> getLogHostPort($grpc.ServiceCall call, $0.Empty request);
+  $async.Future<$0.Empty> setApiHostPortOverride($grpc.ServiceCall call, $0.RequesterDeviceApiHostPortOverride request);
+  $async.Future<$0.RequesterDeviceLogHostPort> getApiHostPortOverride($grpc.ServiceCall call, $0.Empty request);
 }

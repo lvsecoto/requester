@@ -15,8 +15,14 @@ service RequesterDeviceService {
   // 设置日志接收HostPort
   rpc SetLogHostPort(RequesterDeviceLogHostPort) returns (Empty) {};
 
-  // 设置日志接收HostPort
+  // 获取日志接收HostPort
   rpc GetLogHostPort(Empty) returns (RequesterDeviceLogHostPort) {};
+
+  // 设置重载主机域名
+  rpc SetApiHostPortOverride(RequesterDeviceApiHostPortOverride) returns (Empty) {};
+
+  // 获取重载主机域名
+  rpc GetApiHostPortOverride(Empty) returns (RequesterDeviceLogHostPort) {};
 }
 
 message Empty {}
@@ -37,7 +43,12 @@ message RequesterDeviceInfoResponse {
   map<string, string> meta = 3;
 }
 
-/// Requester日志接受端口，设置/获取
+/// Requester日志接收端口，设置/获取
 message RequesterDeviceLogHostPort {
+  string hostPort = 1;
+}
+
+/// 主机域名重载
+message RequesterDeviceApiHostPortOverride {
   string hostPort = 1;
 }

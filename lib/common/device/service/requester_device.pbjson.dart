@@ -72,3 +72,16 @@ final $typed_data.Uint8List requesterDeviceLogHostPortDescriptor = $convert.base
     'ChpSZXF1ZXN0ZXJEZXZpY2VMb2dIb3N0UG9ydBIaCghob3N0UG9ydBgBIAEoCVIIaG9zdFBvcn'
     'Q=');
 
+@$core.Deprecated('Use requesterDeviceApiHostPortOverrideDescriptor instead')
+const RequesterDeviceApiHostPortOverride$json = {
+  '1': 'RequesterDeviceApiHostPortOverride',
+  '2': [
+    {'1': 'hostPort', '3': 1, '4': 1, '5': 9, '10': 'hostPort'},
+  ],
+};
+
+/// Descriptor for `RequesterDeviceApiHostPortOverride`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List requesterDeviceApiHostPortOverrideDescriptor = $convert.base64Decode(
+    'CiJSZXF1ZXN0ZXJEZXZpY2VBcGlIb3N0UG9ydE92ZXJyaWRlEhoKCGhvc3RQb3J0GAEgASgJUg'
+    'hob3N0UG9ydA==');
+
