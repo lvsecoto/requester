@@ -1,4 +1,3 @@
-import 'package:common_dc/common_dc.dart';
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,7 +31,8 @@ class APIInfoWidget extends StatelessWidget {
               children: [
                 Text(state.valueOrNull ?? ''),
                 switch (state) {
-                  AsyncData(:final value) => DCAnimatedSizeAndFade(
+                  AsyncData(:final value) => AnimatedSwitcher(
+                      duration: kThemeAnimationDuration,
                       child: value.isNullOrBlank
                           ? const TagWidget.grey(
                               label: Text('默认'),

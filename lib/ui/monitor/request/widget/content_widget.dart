@@ -1,4 +1,3 @@
-import 'package:common_dc/common_dc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -111,23 +110,25 @@ class _Title extends ConsumerWidget {
           ),
         );
       },
-      child: DCAnimatedSizeAndFade(
-        childKey: request == null,
-        alignment: Alignment.centerLeft,
-        child: request == null
-            ? const SizedBox.shrink()
-            : Padding(
-                padding: const EdgeInsets.all(4),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: RequestSummaryWidget(
-                    request: request,
-                    leading: MethodWidget(
+      child: AnimatedSwitcher(
+        duration: kThemeAnimationDuration,
+        child: KeyedSubtree(
+          key: ValueKey(request == null),
+          child: request == null
+              ? const SizedBox.shrink()
+              : Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: RequestSummaryWidget(
                       request: request,
+                      leading: MethodWidget(
+                        request: request,
+                      ),
                     ),
                   ),
                 ),
-              ),
+        ),
       ),
     );
   }

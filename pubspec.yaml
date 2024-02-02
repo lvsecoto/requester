@@ -39,19 +39,13 @@ dependencies:
   # 公共库
   common:
     git:
-      url: git@codeup.aliyun.com:6240585956f85235f7dd77d1/app/flutter_common.git
+      url: git@github.com:lvsecoto/flutter_common.git
       ref: 4b8f62040fb85470175430dcadc3a1c3d12ae8e1
-
-  # dc公共库
-  common_dc:
-    git:
-      url: git@codeup.aliyun.com:6240585956f85235f7dd77d1/app/flutter_common_dc.git
-      ref: 3b30592b2bed9fbea43dce0721019d55822fe1ad
 
   # 自动代码生成
   persistence_annotation:
     git:
-      url: git@codeup.aliyun.com:6240585956f85235f7dd77d1/app/persistence_annotation.git
+      url: 'git@git.sqlce.cn:TreeM/flutter_persistence_annotation.git'
       ref: 7732f6cfd0a1dcce9e228f30d941bb2a6c3fbe8b
 
   flutter_localizations:
@@ -104,8 +98,8 @@ dev_dependencies:
   # 自动代码生成
   persistence:
     git:
-      url: git@codeup.aliyun.com:6240585956f85235f7dd77d1/app/persistence.git
-      ref: 21c99137e02cded9c22ed5efb5f726bf72fd914b
+      url: 'git@git.sqlce.cn:TreeM/flutter_persistence.git'
+      ref: b16f043b1186a9d24802b7b3737808dd0fe8b392
 
 dependency_overrides:
 #  common_dc:

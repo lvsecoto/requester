@@ -1,4 +1,3 @@
-import 'package:common_dc/common_dc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -39,8 +38,8 @@ class ParametersTableWidget extends HookWidget {
                     },
                     title: Text(
                       entry.key,
-                      style: theme.textTheme.titleMedium!.withColor(
-                        theme.colorScheme.primary,
+                      style: theme.textTheme.titleMedium!.copyWith(
+                        color: theme.colorScheme.primary,
                       ),
                       textAlign: TextAlign.end,
                     ),

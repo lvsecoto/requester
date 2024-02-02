@@ -1,4 +1,3 @@
-import 'package:common_dc/common_dc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/common/progress/progress.dart';
@@ -49,17 +48,19 @@ class LogInfoWidget extends StatelessWidget {
             constraints: BoxConstraints(
               minHeight: Theme.of(context).textTheme.titleSmall!.fontSize! * 2,
             ),
-            child: DCAnimatedSizeAndFade(
-              alignment: Alignment.topLeft,
-              childKey: ref.watch(loadDeviceLogHostPortProvider),
-              child: switch ((ref.watch(loadDeviceLogHostPortProvider))) {
-                AsyncData(:final value) => switch (value) {
-                    '' => const Text('未设置'),
-                    _ => const LogHostPortWidget(),
-                  },
-                AsyncError() => const Text('获取失败'),
-                _ => const CircularProgressIndicator(),
-              },
+            child: AnimatedSwitcher(
+              duration: kThemeAnimationDuration,
+              child: KeyedSubtree(
+                key: ValueKey(ref.watch(loadDeviceLogHostPortProvider)),
+                child: switch ((ref.watch(loadDeviceLogHostPortProvider))) {
+                  AsyncData(:final value) => switch (value) {
+                      '' => const Text('未设置'),
+                      _ => const LogHostPortWidget(),
+                    },
+                  AsyncError() => const Text('获取失败'),
+                  _ => const CircularProgressIndicator(),
+                },
+              ),
             ),
           ),
         ),

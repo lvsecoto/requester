@@ -1,4 +1,3 @@
-import 'package:common_dc/common_dc.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:requester/domain/monitor/model.dart';
@@ -33,10 +32,12 @@ class RequestSummaryWidget extends StatelessWidget {
         if (leading != null) WidgetSpan(child: leading!,alignment: PlaceholderAlignment.middle),
 
         // 最后个路径
-        TextSpan(text: '\u{200B}/$lastSegment', style: textTheme.titleMedium!.bold),
+        TextSpan(text: '\u{200B}/$lastSegment', style: textTheme.titleMedium!.copyWith(
+          fontWeight: FontWeight.bold,
+        )),
 
         // 请求时间
-        TextSpan(text: '\n$requestTime:', style: textTheme.labelMedium!.disabled),
+        TextSpan(text: '\n$requestTime:', style: textTheme.labelMedium),
 
         // 全路径
         TextSpan(

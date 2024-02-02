@@ -1,4 +1,4 @@
-import 'package:common_dc/common_dc.dart';
+// import 'package:common_dc/common_dc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,30 +10,31 @@ class DeviceInfoWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final info = ref.watch(loadDeviceInfoProvider).valueOrNull;
-    return DCCollapsedGroupWidget(
-      max: 3,
-      children: [
-        _InfoTile(
-          title: const Text('请求Token'),
-          valueText: info?.token ?? '',
-        ),
-        _InfoTile(
-          title: const Text('设备uid'),
-          valueText: info?.deviceUID ?? '',
-        ),
-        ...(info?.meta ?? {}).entries.map(
-              (entry) => _InfoTile(
-                title: Text(entry.key),
-                valueText: entry.value,
-              ),
-            ),
-      ],
-      builder: (context, children, _) {
-        return Column(
-          children: children,
-        );
-      },
-    );
+    return SizedBox.shrink();
+    // return DCCollapsedGroupWidget(
+    //   max: 3,
+    //   children: [
+    //     _InfoTile(
+    //       title: const Text('请求Token'),
+    //       valueText: info?.token ?? '',
+    //     ),
+    //     _InfoTile(
+    //       title: const Text('设备uid'),
+    //       valueText: info?.deviceUID ?? '',
+    //     ),
+    //     ...(info?.meta ?? {}).entries.map(
+    //           (entry) => _InfoTile(
+    //             title: Text(entry.key),
+    //             valueText: entry.value,
+    //           ),
+    //         ),
+    //   ],
+    //   builder: (context, children, _) {
+    //     return Column(
+    //       children: children,
+    //     );
+    //   },
+    // );
   }
 }
 

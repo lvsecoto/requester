@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:common_dc/common_dc.dart';
 import 'package:flutter/material.dart';
 import 'package:requester/common/tag_widget.dart';
 import 'package:requester/domain/monitor/model.dart';
@@ -29,7 +28,8 @@ class DCStatusCodeWidget extends StatelessWidget {
         child = TagWidget.red(label: Text('DC: $code'));
       }
     }
-    return DCAnimatedSizeAndFade(
+    return AnimatedSwitcher(
+      duration: kThemeAnimationDuration,
       child: KeyedSubtree(
         key: ValueKey(request.logResponse == null),
         child: child,

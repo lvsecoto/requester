@@ -1,4 +1,3 @@
-import 'package:common_dc/common_dc.dart';
 import 'package:flutter/material.dart';
 import 'package:requester/app/theme/theme.dart';
 
@@ -24,7 +23,9 @@ class PanelWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           DefaultTextStyle(
-            style: Theme.of(context).textTheme.headlineSmall!.bold,
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
             child: title,
           ),
           const SizedBox(height: 8),

@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:common/common.dart';
-import 'package:common_dc/common_dc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:requester/domain/monitor/model.dart';
@@ -30,7 +29,7 @@ class NetworkStatus extends StatelessWidget {
       final duration =
           request.logResponse!.time.difference(request.logRequest.time);
       child = DefaultTextStyle(
-        style: Theme.of(context).textTheme.labelMedium!.withColor(Colors.green),
+        style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Colors.green),
         child: Row(
           children: [
             const _Circle(
@@ -53,8 +52,8 @@ class NetworkStatus extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             '${request.logException!.type.toString().split('.').last}(${durationStr(duration)})',
-            style: Theme.of(context).textTheme.labelMedium!.withColor(
-                  Colors.red,
+            style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                  color: Colors.red,
                 ),
           )
         ],
@@ -77,21 +76,18 @@ class NetworkStatus extends StatelessWidget {
             }, const Duration(seconds: 1));
             return Text(
               '${loadSpentTime.value.inSeconds}s',
-              style: Theme.of(context).textTheme.labelMedium!.disabled.copyWith(
-                fontFeatures: [
-                  const FontFeature.tabularFigures(),
-                ]
-              ),
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium!
+                  .copyWith(fontFeatures: [
+                const FontFeature.tabularFigures(),
+              ]),
             );
           })
         ],
       );
     }
-    return DCAnimatedSizeAndFade(
-      alignment: Alignment.centerLeft,
-      childKey: request.logResponse != null || request.logException != null,
-      child: child,
-    );
+    return child;
   }
 }
 
