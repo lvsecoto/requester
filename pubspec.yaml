@@ -64,6 +64,11 @@ dependencies:
   protobuf: ^3.1.0
   curl_converter: ^1.0.4
 
+  requester_client:
+    path: packages/requester_client
+  requester_common:
+    path: packages/requester_common
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

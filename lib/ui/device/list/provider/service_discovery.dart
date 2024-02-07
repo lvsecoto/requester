@@ -7,6 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'service_discovery.g.dart';
 
+@Deprecated('废弃')
 class ServiceDiscoveryController extends HookConsumerWidget {
   /// 提供给予App生命周期开关的设备发现组件
   const ServiceDiscoveryController({

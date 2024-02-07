@@ -119,7 +119,7 @@ class DeviceListRoute extends ShellRouteData {
     return ListDetailsNavigation(
       navigator: navigator,
       isDetailsEmpty: state.uri.path == const ListDetailsEmptyRoute().location,
-      list: const DeviceListScreen(),
+      list: const ClientDeviceListScreen(),
     );
   }
 }
