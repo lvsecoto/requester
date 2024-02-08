@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package requester_client;
+
+import "common/common.proto";
+
+// 基本设备服务
+// 由Requester Client提供
+service RequesterClientService {
+
+  // 让设备返回设备信息
+  rpc GetClientInfo (common.Empty) returns (ClientInfo) {}
+
+  // 设置，让设备发送日志到本Requester
+  rpc SetLogHostPort(LogHostPort) returns (common.Empty) {};
+
+  // 获取设备当前发送日志到本Requester
+  rpc GetLogHostPort(common.Empty) returns (LogHostPort) {};
+}
+
+// 获取设备信息响应
+message ClientInfo {
+  // 信息，客户端以key-value形式上报
+  map<string, ClientMetaValue> meta = 2;
+}
+
+message ClientMetaValue {
+  string value = 1;
+}
+
+/// Requester日志接收端口，设置/获取
+message LogHostPort {
+  string host = 1;
+  int32 port = 2;
+}

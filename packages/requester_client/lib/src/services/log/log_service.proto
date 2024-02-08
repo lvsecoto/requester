@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.requester_device";
+option java_outer_classname = "HelloWorldProto";
+option objc_class_prefix = "HLW";
+
+package requester_client;
+
+import "common/common.proto";
+
+// Requester日志服务
+// 由Requester提供
+service RequesterLogService {
+
+  // 客户端向Requester发送请求日志
+  rpc SendRequest (LogRequest) returns (common.Empty) {}
+
+  // 客户端向Requester发送响应日志
+  rpc SendResponse(LogResponse) returns (common.Empty) {};
+
+}
+
+// 请求日志
+message LogRequest {
+  // 方法
+  string method = 1;
+
+  // 路径
+  string path = 2;
+
+  // 请求头
+  map<string, string> headers = 3;
+
+  // queries
+  map<string, string> queries = 4;
+
+  // 请求体
+  string body = 5;
+}
+
+// 响应日志
+message LogResponse {
+  // 返回代码，一般是200
+  // 如果是-1，那么代表错误不是服务器返回的，而是客户端内部原因，比如：网络失去连接
+  uint32 code = 1;
+
+  // 请求体
+  oneof content {
+    string body = 3;
+    string reason = 4;
+  }
+
+  // 返回头
+  map<string, string> headers = 5;
+}
