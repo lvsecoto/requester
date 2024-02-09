@@ -107,8 +107,10 @@ flutter:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  windows: true
-  macOS: true
+  windows:
+    generate: true
+  macos:
+    generate: true
   remove_alpha_ios: true
   image_path: "icon.png"
   min_sdk_android: 21

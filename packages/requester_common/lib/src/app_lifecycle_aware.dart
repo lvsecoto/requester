@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:synchronized/synchronized.dart';
 
@@ -16,26 +17,26 @@ abstract class AppLifecycleAware {
 }
 
 /// 让[appLifecycleAware]感受App的周期变化
-void useAppLifecycleAware(AppLifecycleAware appLifecycleAware) {
+void useAppLifecycleAware(AppLifecycleAware? appLifecycleAware) {
   final isResumed = useRef(true);
   final lock = useMemoized(() => Lock());
   useMemoized(() {
-    appLifecycleAware.onAppResume();
-  });
+    appLifecycleAware?.onAppResume();
+  }, [appLifecycleAware]);
   useOnAppLifecycleStateChange((previous, current) {
     if (!_isAppForeground(previous) && _isAppForeground(current)) {
       lock.synchronized(() async {
         if (isResumed.value) {
-          appLifecycleAware.onAppPause();
+          appLifecycleAware?.onAppPause();
         }
-        appLifecycleAware.onAppResume();
+        appLifecycleAware?.onAppResume();
       });
     } else if (_isAppForeground(previous) && !_isAppForeground(current)) {
       lock.synchronized(() async {
         if (!isResumed.value) {
-          appLifecycleAware.onAppResume();
+          appLifecycleAware?.onAppResume();
         }
-        appLifecycleAware.onAppPause();
+        appLifecycleAware?.onAppPause();
       });
     }
   });

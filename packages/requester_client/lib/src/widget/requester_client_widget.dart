@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:requester_client/requester_client.dart';
 import 'package:requester_common/requester_common.dart';
 
 import '../controller.dart';
@@ -26,22 +27,28 @@ class RequesterClientWidget extends HookWidget {
   const RequesterClientWidget({
     super.key,
     required this.child,
+    required this.clientInfoProvider,
   });
 
   final Widget child;
+
+  /// 向requester提供客户端信息
+  final ClientInfoProvider clientInfoProvider;
 
   @override
   Widget build(BuildContext context) {
     final controller = useMemoized(
       () => RequesterClientController(
-        port: 5000,
+        port: 5005,
+        clientInfoProvider: clientInfoProvider,
       ),
     );
     useEffect(
-        () => () {
-              controller.dispose();
-            },
-        [controller]);
+      () => () {
+        controller.dispose();
+      },
+      [controller],
+    );
     useAppLifecycleAware(controller);
     return _RequesterControllerHolder(
       controller: controller,

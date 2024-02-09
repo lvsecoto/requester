@@ -1,13 +1,9 @@
-import 'dart:convert';
-
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:requester/app/theme/theme.dart';
 import 'package:requester/discovery/discovery.dart';
 import 'package:requester/route/route.dart';
-import 'package:requester/ui/device/list/provider/service_discovery.dart';
 import 'package:requester_client/requester_client.dart';
 
 class ContentWidget extends HookWidget {
@@ -55,7 +51,9 @@ class _Item extends StatelessWidget {
       title: Text(client.hostPort.host),
       subtitle: Text(client.hostPort.port.toString()),
       onTap: () {
-        // DeviceDetailsRoute('$host:50051').go(context);
+        RequesterClientDetailsRoute.fromClient(client).go(
+          context,
+        );
       },
     );
   }

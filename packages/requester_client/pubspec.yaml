@@ -42,6 +42,8 @@ dependencies:
     path: ../requester_common
   synchronized: ^3.1.0+1
   network_info_plus: ^4.1.0+1
+  protobuf: ^3.1.0
+  grpc: ^3.2.4
 
 dev_dependencies:
   flutter_test:

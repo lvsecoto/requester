@@ -3,6 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:requester/common/responsive_layout/list_details/list_details_navigation.dart';
 import 'package:requester/ui/ui.dart';
 import 'package:animations/animations.dart';
+import 'package:requester_client/requester_client.dart';
+
+part 'client.dart';
 
 part 'route.g.dart';
 
@@ -91,63 +94,5 @@ class MonitorSettingsRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const MonitorSettingsScreen();
-  }
-}
-
-class DeviceListDetailsEmptyRoute extends ListDetailsEmptyRoute {
-  const DeviceListDetailsEmptyRoute();
-}
-
-@TypedShellRoute<DeviceListRoute>(
-  routes: [
-    TypedGoRoute<DeviceListDetailsEmptyRoute>(
-      path: '/device',
-    ),
-    TypedGoRoute<DeviceDetailsRoute>(
-      path: '/device/:hostPort',
-    ),
-  ],
-)
-class DeviceListRoute extends ShellRouteData {
-  const DeviceListRoute();
-
-  // 默认的位置是没选择任何列表内容
-  String get location => const DeviceListDetailsEmptyRoute().location;
-
-  @override
-  Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
-    return ListDetailsNavigation(
-      navigator: navigator,
-      isDetailsEmpty: state.uri.path == const ListDetailsEmptyRoute().location,
-      list: const ClientDeviceListScreen(),
-    );
-  }
-}
-
-class DeviceDetailsRoute extends GoRouteData {
-  /// 设备的主机地址和端口
-  final String hostPort;
-
-  const DeviceDetailsRoute(this.hostPort);
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    // 仅仅改变:deviceId，路由不会有变化，也不会有路由动画，这里我们自己加上去
-    return PageTransitionSwitcher(
-      duration: kThemeAnimationDuration,
-      transitionBuilder: (Widget child, Animation<double> primaryAnimation,
-          Animation<double> secondaryAnimation) {
-        return SharedAxisTransition(
-          animation: primaryAnimation,
-          secondaryAnimation: secondaryAnimation,
-          transitionType: SharedAxisTransitionType.horizontal,
-          child: child,
-        );
-      },
-      child: DeviceDetailsScreen(
-        key: ValueKey(hostPort),
-        hostPort: hostPort,
-      ),
-    );
   }
 }
