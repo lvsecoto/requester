@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:requester/common/responsive_layout/responsive_column.dart';
 import 'package:requester/ui/client/details/provider/provider.dart' as provider;
 
+import 'client_id_widget.dart';
 import 'client_infos_widget.dart';
 
 class ContentWidget extends HookConsumerWidget {
@@ -26,7 +28,13 @@ class ContentWidget extends HookConsumerWidget {
           height: double.infinity,
           child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                ResponsiveColumn(
+                  children: [
+                    ClientIdWidget(),
+                  ],
+                ),
                 ClientInfosWidget(),
               ],
             ),
@@ -36,4 +44,3 @@ class ContentWidget extends HookConsumerWidget {
     );
   }
 }
-

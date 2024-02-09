@@ -16,6 +16,23 @@ void actionRefresh(WidgetRef ref) {
   ref.invalidate(observeClientInfoProvider);
 }
 
+/// 加载客户端Id
+@Riverpod(dependencies: [clientService])
+Future<String> loadClientId(LoadClientIdRef ref) async {
+  final client = ref.watch(clientServiceProvider)!;
+  return (await client.getClientId(rpc.Empty())).id;
+}
+
+/// 更新客户端id
+Future<void> actionUpdateClientId(
+  WidgetRef ref, {
+  required String clientId,
+}) async {
+  final client = ref.read(clientServiceProvider)!;
+  await client.setClientId(rpc.ClientId(id: clientId));
+  ref.invalidate(loadClientIdProvider);
+}
+
 /// 观察Requester客户端信息
 @Riverpod(dependencies: [clientService])
 Stream<Map<String, String>> observeClientInfo(ObserveClientInfoRef ref) async* {

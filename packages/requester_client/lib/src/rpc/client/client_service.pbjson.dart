@@ -13,6 +13,18 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use clientIdDescriptor instead')
+const ClientId$json = {
+  '1': 'ClientId',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+  ],
+};
+
+/// Descriptor for `ClientId`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List clientIdDescriptor = $convert.base64Decode(
+    'CghDbGllbnRJZBIOCgJpZBgBIAEoCVICaWQ=');
+
 @$core.Deprecated('Use clientInfoDescriptor instead')
 const ClientInfo$json = {
   '1': 'ClientInfo',

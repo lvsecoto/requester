@@ -15,29 +15,37 @@ import 'dart:core' as $core;
 import 'package:grpc/service_api.dart' as $grpc;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../common/common.pb.dart' as $0;
-import 'client_service.pb.dart' as $1;
+import '../common/common.pb.dart' as $1;
+import 'client_service.pb.dart' as $0;
 
 export 'client_service.pb.dart';
 
 @$pb.GrpcServiceName('requester_client.RequesterClientService')
 class RequesterClientServiceClient extends $grpc.Client {
-  static final _$observeClientInfo = $grpc.ClientMethod<$0.Empty, $1.ClientInfo>(
+  static final _$setClientId = $grpc.ClientMethod<$0.ClientId, $1.Empty>(
+      '/requester_client.RequesterClientService/SetClientId',
+      ($0.ClientId value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
+  static final _$getClientId = $grpc.ClientMethod<$1.Empty, $0.ClientId>(
+      '/requester_client.RequesterClientService/GetClientId',
+      ($1.Empty value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.ClientId.fromBuffer(value));
+  static final _$observeClientInfo = $grpc.ClientMethod<$1.Empty, $0.ClientInfo>(
       '/requester_client.RequesterClientService/ObserveClientInfo',
-      ($0.Empty value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $1.ClientInfo.fromBuffer(value));
-  static final _$updateClientInfo = $grpc.ClientMethod<$1.ClientInfoEntry, $0.Empty>(
+      ($1.Empty value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.ClientInfo.fromBuffer(value));
+  static final _$updateClientInfo = $grpc.ClientMethod<$0.ClientInfoEntry, $1.Empty>(
       '/requester_client.RequesterClientService/UpdateClientInfo',
-      ($1.ClientInfoEntry value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
-  static final _$setLogHostPort = $grpc.ClientMethod<$1.LogHostPort, $0.Empty>(
+      ($0.ClientInfoEntry value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
+  static final _$setLogHostPort = $grpc.ClientMethod<$0.LogHostPort, $1.Empty>(
       '/requester_client.RequesterClientService/SetLogHostPort',
-      ($1.LogHostPort value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
-  static final _$getLogHostPort = $grpc.ClientMethod<$0.Empty, $1.LogHostPort>(
+      ($0.LogHostPort value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
+  static final _$getLogHostPort = $grpc.ClientMethod<$1.Empty, $0.LogHostPort>(
       '/requester_client.RequesterClientService/GetLogHostPort',
-      ($0.Empty value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $1.LogHostPort.fromBuffer(value));
+      ($1.Empty value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.LogHostPort.fromBuffer(value));
 
   RequesterClientServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -45,19 +53,27 @@ class RequesterClientServiceClient extends $grpc.Client {
       : super(channel, options: options,
         interceptors: interceptors);
 
-  $grpc.ResponseStream<$1.ClientInfo> observeClientInfo($0.Empty request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$1.Empty> setClientId($0.ClientId request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$setClientId, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.ClientId> getClientId($1.Empty request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getClientId, request, options: options);
+  }
+
+  $grpc.ResponseStream<$0.ClientInfo> observeClientInfo($1.Empty request, {$grpc.CallOptions? options}) {
     return $createStreamingCall(_$observeClientInfo, $async.Stream.fromIterable([request]), options: options);
   }
 
-  $grpc.ResponseFuture<$0.Empty> updateClientInfo($1.ClientInfoEntry request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$1.Empty> updateClientInfo($0.ClientInfoEntry request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateClientInfo, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Empty> setLogHostPort($1.LogHostPort request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$1.Empty> setLogHostPort($0.LogHostPort request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$setLogHostPort, request, options: options);
   }
 
-  $grpc.ResponseFuture<$1.LogHostPort> getLogHostPort($0.Empty request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.LogHostPort> getLogHostPort($1.Empty request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getLogHostPort, request, options: options);
   }
 }
@@ -67,54 +83,78 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
   $core.String get $name => 'requester_client.RequesterClientService';
 
   RequesterClientServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.Empty, $1.ClientInfo>(
+    $addMethod($grpc.ServiceMethod<$0.ClientId, $1.Empty>(
+        'SetClientId',
+        setClientId_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.ClientId.fromBuffer(value),
+        ($1.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.Empty, $0.ClientId>(
+        'GetClientId',
+        getClientId_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.Empty.fromBuffer(value),
+        ($0.ClientId value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.Empty, $0.ClientInfo>(
         'ObserveClientInfo',
         observeClientInfo_Pre,
         false,
         true,
-        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
-        ($1.ClientInfo value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$1.ClientInfoEntry, $0.Empty>(
+        ($core.List<$core.int> value) => $1.Empty.fromBuffer(value),
+        ($0.ClientInfo value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.ClientInfoEntry, $1.Empty>(
         'UpdateClientInfo',
         updateClientInfo_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $1.ClientInfoEntry.fromBuffer(value),
-        ($0.Empty value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$1.LogHostPort, $0.Empty>(
+        ($core.List<$core.int> value) => $0.ClientInfoEntry.fromBuffer(value),
+        ($1.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.LogHostPort, $1.Empty>(
         'SetLogHostPort',
         setLogHostPort_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $1.LogHostPort.fromBuffer(value),
-        ($0.Empty value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.Empty, $1.LogHostPort>(
+        ($core.List<$core.int> value) => $0.LogHostPort.fromBuffer(value),
+        ($1.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.Empty, $0.LogHostPort>(
         'GetLogHostPort',
         getLogHostPort_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
-        ($1.LogHostPort value) => value.writeToBuffer()));
+        ($core.List<$core.int> value) => $1.Empty.fromBuffer(value),
+        ($0.LogHostPort value) => value.writeToBuffer()));
   }
 
-  $async.Stream<$1.ClientInfo> observeClientInfo_Pre($grpc.ServiceCall call, $async.Future<$0.Empty> request) async* {
+  $async.Future<$1.Empty> setClientId_Pre($grpc.ServiceCall call, $async.Future<$0.ClientId> request) async {
+    return setClientId(call, await request);
+  }
+
+  $async.Future<$0.ClientId> getClientId_Pre($grpc.ServiceCall call, $async.Future<$1.Empty> request) async {
+    return getClientId(call, await request);
+  }
+
+  $async.Stream<$0.ClientInfo> observeClientInfo_Pre($grpc.ServiceCall call, $async.Future<$1.Empty> request) async* {
     yield* observeClientInfo(call, await request);
   }
 
-  $async.Future<$0.Empty> updateClientInfo_Pre($grpc.ServiceCall call, $async.Future<$1.ClientInfoEntry> request) async {
+  $async.Future<$1.Empty> updateClientInfo_Pre($grpc.ServiceCall call, $async.Future<$0.ClientInfoEntry> request) async {
     return updateClientInfo(call, await request);
   }
 
-  $async.Future<$0.Empty> setLogHostPort_Pre($grpc.ServiceCall call, $async.Future<$1.LogHostPort> request) async {
+  $async.Future<$1.Empty> setLogHostPort_Pre($grpc.ServiceCall call, $async.Future<$0.LogHostPort> request) async {
     return setLogHostPort(call, await request);
   }
 
-  $async.Future<$1.LogHostPort> getLogHostPort_Pre($grpc.ServiceCall call, $async.Future<$0.Empty> request) async {
+  $async.Future<$0.LogHostPort> getLogHostPort_Pre($grpc.ServiceCall call, $async.Future<$1.Empty> request) async {
     return getLogHostPort(call, await request);
   }
 
-  $async.Stream<$1.ClientInfo> observeClientInfo($grpc.ServiceCall call, $0.Empty request);
-  $async.Future<$0.Empty> updateClientInfo($grpc.ServiceCall call, $1.ClientInfoEntry request);
-  $async.Future<$0.Empty> setLogHostPort($grpc.ServiceCall call, $1.LogHostPort request);
-  $async.Future<$1.LogHostPort> getLogHostPort($grpc.ServiceCall call, $0.Empty request);
+  $async.Future<$1.Empty> setClientId($grpc.ServiceCall call, $0.ClientId request);
+  $async.Future<$0.ClientId> getClientId($grpc.ServiceCall call, $1.Empty request);
+  $async.Stream<$0.ClientInfo> observeClientInfo($grpc.ServiceCall call, $1.Empty request);
+  $async.Future<$1.Empty> updateClientInfo($grpc.ServiceCall call, $0.ClientInfoEntry request);
+  $async.Future<$1.Empty> setLogHostPort($grpc.ServiceCall call, $0.LogHostPort request);
+  $async.Future<$0.LogHostPort> getLogHostPort($grpc.ServiceCall call, $1.Empty request);
 }

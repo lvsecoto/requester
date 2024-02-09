@@ -27,16 +27,14 @@ class RequesterClient with _$RequesterClient {
     required HostPort hostPort,
   }) = _RequesterClient;
 
+  static const _kClientId = 'client_id';
+
   static Future<RequesterClient> create(HostPort hostPort) async {
     final info = await PackageInfo.fromPlatform();
     return RequesterClient(
       appName: info.appName,
       appVersion: '${info.version}+${info.buildNumber}',
-      clientId: await getObject(
-        'client_id',
-        decode: (input) => input,
-        defaultValue: _getRandomString(6),
-      ),
+      clientId: await getClientId(),
       hostPort: hostPort,
     );
   }
@@ -72,6 +70,21 @@ class RequesterClient with _$RequesterClient {
 
   static String _decode(nsd.Service service, String key) {
     return utf8.decode(service.txt?[key]?.toList() ?? []);
+  }
+
+  /// 设置客户端Id
+  static Future<void> setClientId(String id) async {
+    await saveObject(_kClientId, id, encode: (it) => it);
+  }
+
+  /// 获取客户端Id
+  static Future<String> getClientId() async {
+    return await getObject(
+      _kClientId,
+      decode: (input) => input,
+      encode: (input) => input,
+      defaultValue: _getRandomString(6),
+    );
   }
 }
 

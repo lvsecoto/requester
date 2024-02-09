@@ -28,7 +28,7 @@ Future<T> getObject<T>(
   if (!await file.exists()) {
     final object = defaultValue;
     if (encode != null) {
-      saveObject(key, object);
+      await saveObject(key, object);
     }
     return object;
   }
@@ -38,7 +38,11 @@ Future<T> getObject<T>(
 }
 
 Future<File> _getFile(String key) async {
-  final dir = await getApplicationDocumentsDirectory();
-  final file = File('${dir.path}/requester/$key');
+  var dir = await getApplicationDocumentsDirectory();
+  dir = Directory('${dir.path}/requester');
+  if (!await dir.exists()) {
+    await dir.create();
+  }
+  final file = File('${dir.path}/$key');
   return file;
 }

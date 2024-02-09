@@ -37,9 +37,8 @@ class RequesterClientController extends ChangeNotifier
 
   @override
   Future<void> onAppResume() async {
-    final info = NetworkInfo();
-
     // nsd
+    final info = NetworkInfo();
     final client = await RequesterClient.create(
       HostPort(
         host: await info.getWifiIP() ?? '',
@@ -50,7 +49,12 @@ class RequesterClientController extends ChangeNotifier
 
     // rpc服务
     _rpcServer = grpc.Server.create(services: [
-      RequesterClientService(clientInfoProvider: clientInfoProvider),
+      RequesterClientService(
+        clientInfoProvider: clientInfoProvider,
+        onClientIdChanged: () {
+          _restartNsd();
+        },
+      ),
     ]);
     _rpcServer!.serve(
       port: port,
@@ -59,20 +63,37 @@ class RequesterClientController extends ChangeNotifier
 
   @override
   Future<void> onAppPause() async {
-    await _dispose();
+    await _disposeNsd();
+    await _rpcServer?.shutdown();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _dispose();
+    _disposeNsd();
+    _rpcServer?.shutdown();
   }
 
-  Future<void> _dispose() async {
+  Future<void> _registerNsd() async {
+    final info = NetworkInfo();
+    final client = await RequesterClient.create(
+      HostPort(
+        host: await info.getWifiIP() ?? '',
+        port: port,
+      ),
+    );
+    _nsdRegistration = await nsd.register(client.toNsdService());
+  }
+
+  Future<void> _disposeNsd() async {
     final registration = _nsdRegistration;
     if (registration != null) {
-      nsd.unregister(registration);
+      await nsd.unregister(registration);
     }
-    await _rpcServer?.shutdown();
+  }
+
+  Future<void> _restartNsd() async {
+    await _disposeNsd();
+    await _registerNsd();
   }
 }

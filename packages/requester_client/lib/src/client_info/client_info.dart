@@ -11,9 +11,9 @@ class ClientInfoProvider {
   final _subject = BehaviorSubject<ClientInfo>.seeded({});
 
   /// 向Requester报告设备信息
-  late final stream = _subject.stream.asBroadcastStream();
+  late final stream = _subject.stream;
 
-  Map<String, String Function(String value)> _onUpdateListeners = {};
+  final Map<String, String Function(String value)> _onUpdateListeners = {};
 
   /// 报告[key]的值
   void set(String key, String value) {
