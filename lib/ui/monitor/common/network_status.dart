@@ -8,9 +8,9 @@ import 'package:requester/domain/monitor/model.dart';
 class NetworkStatus extends StatelessWidget {
   /// 网络状态
   const NetworkStatus({
-    Key? key,
+    super.key,
     required this.request,
-  }) : super(key: key);
+  });
 
   final MonitorLogRequest request;
 

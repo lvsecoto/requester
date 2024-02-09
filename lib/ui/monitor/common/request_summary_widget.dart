@@ -5,10 +5,10 @@ import 'package:requester/domain/monitor/model.dart';
 class RequestSummaryWidget extends StatelessWidget {
   /// 请求路径
   const RequestSummaryWidget({
-    Key? key,
+    super.key,
     required this.request,
     this.leading,
-  }) : super(key: key);
+  });
 
   final Widget? leading;
 

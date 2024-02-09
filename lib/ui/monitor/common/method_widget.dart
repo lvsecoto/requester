@@ -3,7 +3,7 @@ import 'package:requester/common/tag_widget.dart';
 import 'package:requester/domain/monitor/monitor.dart';
 
 class MethodWidget extends StatelessWidget {
-  const MethodWidget({Key? key, required this.request}) : super(key: key);
+  const MethodWidget({super.key, required this.request});
 
   final MonitorLogRequest request;
 

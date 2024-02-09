@@ -81,11 +81,11 @@ class ListDetailsNavigation extends HookConsumerWidget {
   /// }
   /// ```
   const ListDetailsNavigation({
-    Key? key,
+    super.key,
     required this.list,
     required this.navigator,
     required this.isDetailsEmpty,
-  }) : super(key: key);
+  });
 
   /// 列表边栏
   final Widget list;

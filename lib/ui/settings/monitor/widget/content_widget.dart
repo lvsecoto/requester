@@ -6,7 +6,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:requester/domain/monitor/provider.dart';
-import 'package:requester/ui/settings/monitor/provider/provider.dart';
 
 class ContentWidget extends StatelessWidget {
   const ContentWidget({super.key});

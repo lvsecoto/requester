@@ -16,10 +16,6 @@ part 'provider.g.dart';
 /// 监视器端口
 @riverpod
 class MonitorPort extends _$MonitorPort with StreamValueNotifier<int> {
-  @override
-  int? build() {
-    return super.build();
-  }
 
   @override
   Stream<int> buildStream() {

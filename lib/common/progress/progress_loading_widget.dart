@@ -7,10 +7,10 @@ import 'progress.dart';
 class ProgressLoadingWidget extends HookWidget {
   /// 在[child]表面显示进度[progress]的加载进度
   const ProgressLoadingWidget({
-    Key? key,
+    super.key,
     required this.child,
     required this.progress,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final Progress? progress;

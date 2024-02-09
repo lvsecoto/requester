@@ -8,7 +8,7 @@ import '../app/app.dart';
 
 void main() async {
   await Hive.initFlutter();
-  runApp(App());
+  runApp(const App());
 
   if (Platform.isMacOS || Platform.isWindows) {
     doWhenWindowReady(() {

@@ -3,7 +3,7 @@ import 'package:requester/domain/monitor/model.dart';
 
 class HostWidget extends StatelessWidget {
   /// 主机地址
-  const HostWidget({Key? key, required this.request}) : super(key: key);
+  const HostWidget({super.key, required this.request});
 
   final MonitorLogRequest request;
 

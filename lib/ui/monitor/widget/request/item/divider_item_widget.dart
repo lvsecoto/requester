@@ -6,15 +6,15 @@ final _dataTimeFormat = DateFormat('MM/dd hh:mm:ss');
 
 class DividerItemWidget extends StatelessWidget {
   const DividerItemWidget({
-    Key? key,
+    super.key,
     required this.divider,
-  }) : super(key: key);
+  });
 
   final MonitorLogDivider divider;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 64,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

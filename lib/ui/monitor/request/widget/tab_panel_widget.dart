@@ -11,11 +11,11 @@ class PanelTab<T> {
 
 class PanelTabWidget<T> extends HookWidget {
   const PanelTabWidget({
-    Key? key,
+    super.key,
     required this.tabs,
     required this.builder,
     this.value,
-  }) : super(key: key);
+  });
 
   final List<PanelTab<T>> tabs;
 

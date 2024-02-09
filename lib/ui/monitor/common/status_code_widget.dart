@@ -7,9 +7,9 @@ import 'package:requester/domain/monitor/model.dart';
 class DCStatusCodeWidget extends StatelessWidget {
   /// 返回代码
   const DCStatusCodeWidget({
-    Key? key,
+    super.key,
     required this.request,
-  }) : super(key: key);
+  });
 
   final MonitorLogRequest request;
 

@@ -2,8 +2,6 @@ import 'package:grpc/grpc.dart';
 import 'package:requester_client/requester_client.dart';
 import 'package:requester_client/src/rpc/rpc.dart' as rpc;
 
-import 'client_info/client_info.dart';
-
 class RequesterClientService extends rpc.RequesterClientServiceBase {
   /// Requester客户端提供服务实现
   RequesterClientService({

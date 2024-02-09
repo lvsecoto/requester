@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:common/common.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:requester/common/responsive_layout/responsive_layout.dart';
 import 'package:requester/domain/monitor/monitor.dart';

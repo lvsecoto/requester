@@ -68,9 +68,9 @@ class ContentWidget extends HookConsumerWidget {
                 ),
               );
             }),
-            children: [
-              const RequestPanel(),
-              const ResponsePanel(),
+            children: const [
+              RequestPanel(),
+              ResponsePanel(),
             ],
           ),
         ),
