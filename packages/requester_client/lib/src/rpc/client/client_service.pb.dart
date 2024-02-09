@@ -59,6 +59,72 @@ class ClientInfo extends $pb.GeneratedMessage {
   $core.Map<$core.String, ClientMetaValue> get meta => $_getMap(0);
 }
 
+class ClientInfoEntry extends $pb.GeneratedMessage {
+  factory ClientInfoEntry({
+    $core.String? key,
+    ClientMetaValue? value,
+  }) {
+    final $result = create();
+    if (key != null) {
+      $result.key = key;
+    }
+    if (value != null) {
+      $result.value = value;
+    }
+    return $result;
+  }
+  ClientInfoEntry._() : super();
+  factory ClientInfoEntry.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ClientInfoEntry.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ClientInfoEntry', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'key')
+    ..aOM<ClientMetaValue>(2, _omitFieldNames ? '' : 'value', subBuilder: ClientMetaValue.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ClientInfoEntry clone() => ClientInfoEntry()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ClientInfoEntry copyWith(void Function(ClientInfoEntry) updates) => super.copyWith((message) => updates(message as ClientInfoEntry)) as ClientInfoEntry;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ClientInfoEntry create() => ClientInfoEntry._();
+  ClientInfoEntry createEmptyInstance() => create();
+  static $pb.PbList<ClientInfoEntry> createRepeated() => $pb.PbList<ClientInfoEntry>();
+  @$core.pragma('dart2js:noInline')
+  static ClientInfoEntry getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ClientInfoEntry>(create);
+  static ClientInfoEntry? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get key => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set key($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasKey() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearKey() => clearField(1);
+
+  @$pb.TagNumber(2)
+  ClientMetaValue get value => $_getN(1);
+  @$pb.TagNumber(2)
+  set value(ClientMetaValue v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasValue() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearValue() => clearField(2);
+  @$pb.TagNumber(2)
+  ClientMetaValue ensureValue() => $_ensure(1);
+}
+
 class ClientMetaValue extends $pb.GeneratedMessage {
   factory ClientMetaValue({
     $core.String? value,

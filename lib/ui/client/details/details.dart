@@ -21,7 +21,7 @@ class RequesterClientDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return RequesterClientServiceControllerWidget(
       hostPort: hostPort,
-      child: Builder(builder: (context) {
+      child: HookBuilder(builder: (context) {
         final controller = RequesterClientServiceController.of(context);
         final clientService =
             useListenableSelector(controller, () => controller.clientService);

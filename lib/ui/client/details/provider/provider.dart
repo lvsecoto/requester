@@ -11,8 +11,9 @@ RequesterClientService? clientService(ClientServiceRef ref) {
   throw UnimplementedError();
 }
 
+/// 手动刷新
 void actionRefresh(WidgetRef ref) {
-
+  ref.invalidate(observeClientInfoProvider);
 }
 
 /// 观察Requester客户端信息
@@ -27,5 +28,16 @@ Stream<Map<String, String>> observeClientInfo(ObserveClientInfoRef ref) async* {
             value.value,
           ),
         ),
+      );
+}
+
+/// 更新设备信息
+void actionUpdateClientInfoEntry(
+  WidgetRef ref, {
+  required String key,
+  required String value,
+}) {
+  ref.read(clientServiceProvider)?.updateClientInfo(
+        rpc.ClientInfoEntry(key: key, value: rpc.ClientMetaValue(value: value)),
       );
 }

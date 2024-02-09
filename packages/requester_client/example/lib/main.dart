@@ -12,13 +12,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return RequesterClientWidget(
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -34,53 +36,51 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  final _counterController = StreamController<int>()..add(0);
-  late Stream<int> _counterStream;
+  late final infoProvider =
+      RequesterClientController.of(context).clientInfoProvider;
 
   @override
   void initState() {
     super.initState();
-    _counterStream = _counterController.stream.asBroadcastStream();
+    infoProvider.set('counter', _counter.toString());
+    infoProvider.on('counter', (value) {
+      _counter = int.tryParse(value) ?? _counter;
+      setState(() {});
+      return _counter.toString();
+    });
   }
 
   void _incrementCounter() {
     setState(() {
       _counter++;
-      _counterController.sink.add(_counter);
+      infoProvider.set('counter', _counter.toString());
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return RequesterClientWidget(
-      clientInfoProvider: _counterStream.map(
-        (counter) => {
-          'counter': counter.toString(),
-        },
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
       ),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ],
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'You have pushed the button this many times:',
-              ),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _incrementCounter,
-          tooltip: 'Increment',
-          child: const Icon(Icons.add),
-        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
       ),
     );
   }

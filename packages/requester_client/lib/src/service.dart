@@ -15,8 +15,14 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
   final ClientInfoProvider clientInfoProvider;
 
   @override
+  Future<rpc.Empty> updateClientInfo(ServiceCall call, rpc.ClientInfoEntry request) async {
+    clientInfoProvider.onRequesterUpdateValue(request.key, request.value.value);
+    return rpc.Empty();
+  }
+
+  @override
   Stream<rpc.ClientInfo> observeClientInfo(ServiceCall call, rpc.Empty request) {
-    return clientInfoProvider.map(
+    return clientInfoProvider.stream.map(
       (it) => rpc.ClientInfo(
         meta: it.map(
           (key, value) => MapEntry(key, rpc.ClientMetaValue(value: value)),

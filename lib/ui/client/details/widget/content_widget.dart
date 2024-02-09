@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:requester/ui/client/details/provider/provider.dart' as provider;
-import 'package:requester_common/requester_common.dart';
+
+import 'client_infos_widget.dart';
 
 class ContentWidget extends HookConsumerWidget {
   const ContentWidget({super.key});
@@ -11,10 +12,12 @@ class ContentWidget extends HookConsumerWidget {
     return ScaffoldMessenger(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('设备信息'),
+          title: const Text('客户端'),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                provider.actionRefresh(ref);
+              },
               icon: const Icon(Icons.refresh),
             ),
           ],
@@ -24,7 +27,7 @@ class ContentWidget extends HookConsumerWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                _Infos(),
+                ClientInfosWidget(),
               ],
             ),
           ),
@@ -34,25 +37,3 @@ class ContentWidget extends HookConsumerWidget {
   }
 }
 
-class _Infos extends ConsumerWidget {
-  const _Infos({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final infos =
-        ref.watch(provider.observeClientInfoProvider).valueOrNull?.entries ??
-            [];
-    print(ref.watch(provider.observeClientInfoProvider).error);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ...infos.map(
-          (info) => ListTile(
-            title: Text(info.key),
-            subtitle: Text(info.value),
-          ),
-        ),
-      ],
-    );
-  }
-}

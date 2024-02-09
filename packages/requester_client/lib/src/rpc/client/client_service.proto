@@ -8,13 +8,16 @@ import "common/common.proto";
 // 由Requester Client提供
 service RequesterClientService {
 
-  // 观察客户端设备信息，具体设备信息，可由客户端定义
+  // Requester观察客户端设备信息，具体设备信息，可由客户端定义
   rpc ObserveClientInfo (common.Empty) returns (stream ClientInfo) {}
 
-  // 设置，让设备发送日志到本Requester
+  // Requester更新客户端信息，一次只更新单一的keyValue
+  rpc UpdateClientInfo (ClientInfoEntry) returns (common.Empty) {}
+
+  // Requester设置客户端发送当前日志上报到哪个Requester的HostPort
   rpc SetLogHostPort(LogHostPort) returns (common.Empty) {};
 
-  // 获取设备当前发送日志到本Requester
+  // Requester向客户端获取当前日志上报到哪个Requester的HostPort
   rpc GetLogHostPort(common.Empty) returns (LogHostPort) {};
 }
 
@@ -22,6 +25,11 @@ service RequesterClientService {
 message ClientInfo {
   // 信息，客户端以key-value形式上报
   map<string, ClientMetaValue> meta = 2;
+}
+
+message ClientInfoEntry {
+  string key = 1;
+  ClientMetaValue value = 2;
 }
 
 message ClientMetaValue {

@@ -38,6 +38,20 @@ final $typed_data.Uint8List clientInfoDescriptor = $convert.base64Decode(
     '8uTWV0YUVudHJ5UgRtZXRhGloKCU1ldGFFbnRyeRIQCgNrZXkYASABKAlSA2tleRI3CgV2YWx1'
     'ZRgCIAEoCzIhLnJlcXVlc3Rlcl9jbGllbnQuQ2xpZW50TWV0YVZhbHVlUgV2YWx1ZToCOAE=');
 
+@$core.Deprecated('Use clientInfoEntryDescriptor instead')
+const ClientInfoEntry$json = {
+  '1': 'ClientInfoEntry',
+  '2': [
+    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    {'1': 'value', '3': 2, '4': 1, '5': 11, '6': '.requester_client.ClientMetaValue', '10': 'value'},
+  ],
+};
+
+/// Descriptor for `ClientInfoEntry`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List clientInfoEntryDescriptor = $convert.base64Decode(
+    'Cg9DbGllbnRJbmZvRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSNwoFdmFsdWUYAiABKAsyIS5yZX'
+    'F1ZXN0ZXJfY2xpZW50LkNsaWVudE1ldGFWYWx1ZVIFdmFsdWU=');
+
 @$core.Deprecated('Use clientMetaValueDescriptor instead')
 const ClientMetaValue$json = {
   '1': 'ClientMetaValue',
