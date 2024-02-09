@@ -10,11 +10,13 @@ import 'package:grpc/grpc.dart' as grpc;
 
 part 'widget/requester_client_widget.dart';
 
+/// 管理Requester客户端的发现服务注册以及提供给Requester的服务
 class RequesterClientController extends ChangeNotifier
     implements AppLifecycleAware {
-
   static RequesterClientController of(BuildContext context) {
-    return context.findAncestorWidgetOfExactType<_RequesterControllerHolder>()!.controller;
+    return context
+        .findAncestorWidgetOfExactType<_RequesterControllerHolder>()!
+        .controller;
   }
 
   RequesterClientController({
@@ -38,12 +40,13 @@ class RequesterClientController extends ChangeNotifier
     final info = NetworkInfo();
 
     // nsd
-    _nsdRegistration = await nsd.register(RequesterClient(
-      hostPort: HostPort(
+    final client = await RequesterClient.create(
+      HostPort(
         host: await info.getWifiIP() ?? '',
         port: port,
       ),
-    ).toNsdService());
+    );
+    _nsdRegistration = await nsd.register(client.toNsdService());
 
     // rpc服务
     _rpcServer = grpc.Server.create(services: [
@@ -58,7 +61,6 @@ class RequesterClientController extends ChangeNotifier
   Future<void> onAppPause() async {
     await _dispose();
   }
-
 
   @override
   void dispose() {

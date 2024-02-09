@@ -68,6 +68,7 @@ dependencies:
     path: packages/requester_client
   requester_common:
     path: packages/requester_common
+  easy_rich_text: ^2.1.0
 
 dev_dependencies:
   flutter_test:

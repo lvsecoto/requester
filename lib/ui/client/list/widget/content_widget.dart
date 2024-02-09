@@ -1,10 +1,13 @@
 import 'package:common/common.dart';
+import 'package:easy_rich_text/easy_rich_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:requester/app/theme/theme.dart';
 import 'package:requester/discovery/discovery.dart';
 import 'package:requester/route/route.dart';
 import 'package:requester_client/requester_client.dart';
+
+import 'client_item_widget.dart';
 
 class ContentWidget extends HookWidget {
   const ContentWidget({super.key});
@@ -25,7 +28,8 @@ class ContentWidget extends HookWidget {
                   useListenableSelector(controller, () => controller.clients);
               return DiffSliverAnimatedList(
                 items: clients,
-                itemBuilder: (context, client) => _Item(
+                keySelector: (item) => item.hostPort,
+                itemBuilder: (context, client) => ClientItemWidget(
                   client: client,
                 ),
               );
@@ -33,28 +37,6 @@ class ContentWidget extends HookWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _Item extends StatelessWidget {
-  const _Item({
-    required this.client,
-  });
-
-  final RequesterClient client;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: const Icon(Icons.phone_android_sharp),
-      title: Text(client.hostPort.host),
-      subtitle: Text(client.hostPort.port.toString()),
-      onTap: () {
-        RequesterClientDetailsRoute.fromClient(client).go(
-          context,
-        );
-      },
     );
   }
 }

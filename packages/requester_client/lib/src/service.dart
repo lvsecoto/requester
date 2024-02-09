@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:grpc/grpc.dart';
 import 'package:requester_client/src/rpc/rpc.dart' as rpc;
 
