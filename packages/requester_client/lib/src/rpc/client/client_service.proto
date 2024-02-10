@@ -8,9 +8,14 @@ import "common/common.proto";
 // 由Requester Client提供
 service RequesterClientService {
 
+  // 设置客户端Id
   rpc SetClientId(ClientId) returns (common.Empty);
 
+  // 获取客户端Id
   rpc GetClientId(common.Empty) returns (ClientId);
+
+  // 识别客户端
+  rpc Identify(common.Empty) returns (common.Empty);
 
   // Requester观察客户端设备信息，具体设备信息，可由客户端定义
   rpc ObserveClientInfo (common.Empty) returns (stream ClientInfo) {}

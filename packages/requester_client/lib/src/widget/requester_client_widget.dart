@@ -28,9 +28,36 @@ class RequesterClientWidget extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final identityAnimation = useAnimationController();
+    useEffect(() {
+      void onChange(AnimationStatus status) {
+        if (status == AnimationStatus.completed) {
+          identityAnimation.animateTo(
+            identityAnimation.lowerBound,
+            duration: const Duration(milliseconds: 120),
+          );
+        }
+      }
+
+      identityAnimation.addStatusListener(onChange);
+      return () {
+        identityAnimation.removeStatusListener(onChange);
+      };
+    }, [identityAnimation]);
     final controller = useMemoized(
       () => RequesterClientController(
         port: 5005,
+        onIdentity: () {
+          identityAnimation.animateTo(
+            identityAnimation.upperBound,
+            duration: const Duration(milliseconds: 1500),
+            curve: const Interval(
+              0,
+              0.3,
+              curve: Curves.fastOutSlowIn,
+            ),
+          );
+        },
       ),
     );
     useEffect(
@@ -42,7 +69,36 @@ class RequesterClientWidget extends HookWidget {
     useAppLifecycleAware(controller);
     return _RequesterControllerHolder(
       controller: controller,
-      child: child,
+      child: Stack(
+        textDirection: TextDirection.ltr,
+        children: [
+          child,
+          HookBuilder(builder: (context) {
+            return Center(
+              child: FadeTransition(
+                opacity: identityAnimation,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.black54,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    child: Text(
+                      'Requester 客户端',
+                      textDirection: TextDirection.ltr,
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontSize: 32,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }),
+        ],
+      ),
     );
   }
 }

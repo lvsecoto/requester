@@ -58,3 +58,8 @@ void actionUpdateClientInfoEntry(
         rpc.ClientInfoEntry(key: key, value: rpc.ClientMetaValue(value: value)),
       );
 }
+
+/// 识别设备
+void actionIdentityClient(WidgetRef ref) {
+  ref.read(clientServiceProvider)?.identify(rpc.Empty());
+}

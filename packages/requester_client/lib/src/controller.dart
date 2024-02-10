@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:nsd/nsd.dart' as nsd;
@@ -20,6 +21,7 @@ class RequesterClientController extends ChangeNotifier
 
   RequesterClientController({
     required this.port,
+    required this.onIdentity,
   });
 
   /// 客户端和Requester连接的端口
@@ -27,6 +29,9 @@ class RequesterClientController extends ChangeNotifier
 
   /// 用于向Requester报告设备信息
   final clientInfoProvider = ClientInfoProvider();
+
+  /// 当发起识别命令
+  final VoidCallback onIdentity;
 
   /// rpc服务
   grpc.Server? _rpcServer;
@@ -52,6 +57,9 @@ class RequesterClientController extends ChangeNotifier
         clientInfoProvider: clientInfoProvider,
         onClientIdChanged: () {
           _restartNsd();
+        },
+        onIdentify: () {
+          onIdentity();
         },
       ),
     ]);

@@ -7,6 +7,7 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
   RequesterClientService({
     required this.clientInfoProvider,
     required this.onClientIdChanged,
+    required this.onIdentify,
   });
 
   /// 向Requester提供客户端信息
@@ -14,6 +15,9 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
 
   /// 客户端id改变回调
   final Function() onClientIdChanged;
+
+  /// 当发起识别命令
+  final Function() onIdentify;
 
   @override
   Future<rpc.Empty> setClientId(ServiceCall call, rpc.ClientId request) async {
@@ -26,6 +30,12 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
   Future<rpc.ClientId> getClientId(ServiceCall call, rpc.Empty request) async {
     final id = await RequesterClient.getClientId();
     return rpc.ClientId(id: id);
+  }
+
+  @override
+  Future<rpc.Empty> identify(ServiceCall call, rpc.Empty request) async {
+    onIdentify();
+    return rpc.Empty();
   }
 
   @override

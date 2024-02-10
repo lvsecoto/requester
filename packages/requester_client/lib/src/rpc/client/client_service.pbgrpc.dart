@@ -30,6 +30,10 @@ class RequesterClientServiceClient extends $grpc.Client {
       '/requester_client.RequesterClientService/GetClientId',
       ($1.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.ClientId.fromBuffer(value));
+  static final _$identify = $grpc.ClientMethod<$1.Empty, $1.Empty>(
+      '/requester_client.RequesterClientService/Identify',
+      ($1.Empty value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
   static final _$observeClientInfo = $grpc.ClientMethod<$1.Empty, $0.ClientInfo>(
       '/requester_client.RequesterClientService/ObserveClientInfo',
       ($1.Empty value) => value.writeToBuffer(),
@@ -59,6 +63,10 @@ class RequesterClientServiceClient extends $grpc.Client {
 
   $grpc.ResponseFuture<$0.ClientId> getClientId($1.Empty request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getClientId, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Empty> identify($1.Empty request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$identify, request, options: options);
   }
 
   $grpc.ResponseStream<$0.ClientInfo> observeClientInfo($1.Empty request, {$grpc.CallOptions? options}) {
@@ -97,6 +105,13 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.Empty.fromBuffer(value),
         ($0.ClientId value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.Empty, $1.Empty>(
+        'Identify',
+        identify_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.Empty.fromBuffer(value),
+        ($1.Empty value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.Empty, $0.ClientInfo>(
         'ObserveClientInfo',
         observeClientInfo_Pre,
@@ -135,6 +150,10 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
     return getClientId(call, await request);
   }
 
+  $async.Future<$1.Empty> identify_Pre($grpc.ServiceCall call, $async.Future<$1.Empty> request) async {
+    return identify(call, await request);
+  }
+
   $async.Stream<$0.ClientInfo> observeClientInfo_Pre($grpc.ServiceCall call, $async.Future<$1.Empty> request) async* {
     yield* observeClientInfo(call, await request);
   }
@@ -153,6 +172,7 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
 
   $async.Future<$1.Empty> setClientId($grpc.ServiceCall call, $0.ClientId request);
   $async.Future<$0.ClientId> getClientId($grpc.ServiceCall call, $1.Empty request);
+  $async.Future<$1.Empty> identify($grpc.ServiceCall call, $1.Empty request);
   $async.Stream<$0.ClientInfo> observeClientInfo($grpc.ServiceCall call, $1.Empty request);
   $async.Future<$1.Empty> updateClientInfo($grpc.ServiceCall call, $0.ClientInfoEntry request);
   $async.Future<$1.Empty> setLogHostPort($grpc.ServiceCall call, $0.LogHostPort request);
