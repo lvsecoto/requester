@@ -1,4 +1,6 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class ResponsiveColumn extends StatelessWidget {
   const ResponsiveColumn({
@@ -15,25 +17,41 @@ class ResponsiveColumn extends StatelessWidget {
       if (width < 500) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: children,
+          children: [
+            ...children.mapIndexed((index, child) {
+              return [
+                if (index != 0) const Gap(12),
+                child,
+              ];
+            }).flatMap((it) => it),
+          ],
         );
       } else {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ...List.generate(
-                children.length ~/ 2 + 1,
-                (index) => Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(child: children[index * 2]),
-                        if (index * 2 + 1 < children.length)
-                          Expanded(child: children[index * 2 + 1])
-                        else const Expanded(
-                          child: SizedBox.shrink(),
+                children.length ~/ 2,
+                (index) => [
+                      if (index != 0) const Gap(12),
+                      IntrinsicHeight(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(child: children[index * 2]),
+                            const Gap(12),
+                            if (index * 2 + 1 < children.length)
+                              Expanded(child: children[index * 2 + 1])
+                            else
+                              const Expanded(
+                                child: SizedBox.shrink(),
+                              ),
+                          ],
                         ),
-                      ],
-                    )),
+                      ),
+                    ]).flatMap(
+              (it) => it,
+            ),
           ],
         );
       }

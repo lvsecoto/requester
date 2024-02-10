@@ -5,11 +5,65 @@ import 'package:dartx/dartx.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:network_info_plus/network_info_plus.dart';
+import 'package:requester/client/client.dart';
+import 'package:requester_client/requester_client.dart';
+import 'package:requester_client/rpc.dart' as rpc;
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:uuid/uuid.dart';
 
 part 'log.freezed.dart';
+
 part 'log.g.dart';
 
+@riverpod
+LogManager logManager(LogManagerRef ref) {
+  return LogManager();
+}
+
+class LogManager {
+  /// Requester Client日志应到发送到的端口
+  final int port = 5200;
+
+  /// 获取Requester Client日志发送到哪个HostPort
+  Future<HostPort> getClientLogToHostPort(RequesterClientService client) async {
+    final data = await client.getLogHostPort(rpc.Empty());
+    return HostPort(
+      host: data.host,
+      port: data.port,
+    );
+  }
+
+  Future<HostPort> _getSelfHostPort() async {
+    final info = NetworkInfo();
+    final ip = await info.getWifiIP();
+    if (ip == null) {
+      throw '未连接到Wifi';
+    }
+    return HostPort(
+      host: ip,
+      port: port,
+    );
+  }
+
+  /// 判断Requester Client要发送日志的HostPort是否是指向本Requester
+  Future<bool> isClientLogToSelf(HostPort clientLogToHostPort) async {
+    return await _getSelfHostPort() == clientLogToHostPort;
+  }
+
+  /// 绑定Requester Client的日志上报地址到本设备
+  Future<void> bindClientLogHostPortToSelf(RequesterClientService client) async {
+    final hostPort = await _getSelfHostPort();
+    await client.setLogHostPort(
+      rpc.LogHostPort(
+        host: hostPort.host,
+        port: hostPort.port,
+      ),
+    );
+  }
+}
+
+@Deprecated('')
 class RequesterLogInterceptor extends Interceptor {
   RequesterLogInterceptor({
     this.hostPort = 'localhost:5000',
@@ -89,7 +143,8 @@ class RequesterLogInterceptor extends Interceptor {
   Future<void> _sendData(String data, String hostPort) async {
     try {
       final segments = hostPort.split(':');
-      final socket = await Socket.connect(segments.first, segments.second.toInt());
+      final socket =
+          await Socket.connect(segments.first, segments.second.toInt());
       socket.add(data.toUtf8());
       await socket.close();
     } catch (e) {

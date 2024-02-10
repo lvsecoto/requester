@@ -22,6 +22,14 @@ class HostPort with _$HostPort {
     );
   }
 
+  static HostPort? tryDecode(String string) {
+    try {
+      return decode(string);
+    } catch (_) {
+      return null;
+    }
+  }
+
   String encode() {
     return '$host:$port';
   }

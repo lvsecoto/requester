@@ -2,16 +2,21 @@ import 'package:grpc/grpc.dart';
 import 'package:requester_client/requester_client.dart';
 import 'package:requester_client/src/rpc/rpc.dart' as rpc;
 
+import 'log/log.dart';
+
 class RequesterClientService extends rpc.RequesterClientServiceBase {
   /// Requester客户端提供服务实现
   RequesterClientService({
     required this.clientInfoProvider,
+    required this.logProvider,
     required this.onClientIdChanged,
     required this.onIdentify,
   });
 
   /// 向Requester提供客户端信息
   final ClientInfoProvider clientInfoProvider;
+
+  final LogProvider logProvider;
 
   /// 客户端id改变回调
   final Function() onClientIdChanged;
@@ -60,12 +65,18 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
   @override
   Future<rpc.LogHostPort> getLogHostPort(
       ServiceCall call, rpc.Empty request) async {
-    return rpc.LogHostPort(port: 2, host: 'fasdf');
+    final hostPort = await logProvider.getLogHostPort();
+    return rpc.LogHostPort(host: hostPort.host, port: hostPort.port);
   }
 
   @override
   Future<rpc.Empty> setLogHostPort(
       ServiceCall call, rpc.LogHostPort request) async {
+    final hostPort = HostPort(
+      host: request.host,
+      port: request.port,
+    );
+    await logProvider.setLogHostPort(hostPort);
     return rpc.Empty();
   }
 }

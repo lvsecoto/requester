@@ -10,27 +10,24 @@ class ClientIdWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Padding(
-      padding: const EdgeInsets.all(12),
-      child: Material(
-        borderRadius: BorderRadius.circular(8),
-        color: AppTheme.of(context).surfaceContainerHighest,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Expanded(
-                child: _ClientId(),
-              ),
-              FilledButton(
-                onPressed: () {
-                  provider.actionIdentityClient(ref);
-                },
-                child: const Text('识别'),
-              ),
-            ],
-          ),
+    return Material(
+      borderRadius: BorderRadius.circular(8),
+      color: AppTheme.of(context).surfaceContainerHighest,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Expanded(
+              child: _ClientId(),
+            ),
+            FilledButton(
+              onPressed: () {
+                provider.actionIdentityClient(ref);
+              },
+              child: const Text('识别'),
+            ),
+          ],
         ),
       ),
     );

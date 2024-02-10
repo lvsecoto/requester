@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:nsd/nsd.dart' as nsd;
 import 'package:requester_client/requester_client.dart';
+import 'package:requester_client/src/log/log.dart';
 import 'package:requester_client/src/service.dart';
 import 'package:requester_common/requester_common.dart';
 import 'package:grpc/grpc.dart' as grpc;
@@ -30,6 +31,9 @@ class RequesterClientController extends ChangeNotifier
   /// 用于向Requester报告设备信息
   final clientInfoProvider = ClientInfoProvider();
 
+  /// 管理日志相关
+  final logProvider = LogProvider();
+
   /// 当发起识别命令
   final VoidCallback onIdentity;
 
@@ -55,6 +59,8 @@ class RequesterClientController extends ChangeNotifier
     _rpcServer = grpc.Server.create(services: [
       RequesterClientService(
         clientInfoProvider: clientInfoProvider,
+        logProvider: logProvider,
+        // todo, 改成provider
         onClientIdChanged: () {
           _restartNsd();
         },

@@ -18,6 +18,11 @@ part 'provider.g.dart';
 class MonitorPort extends _$MonitorPort with StreamValueNotifier<int> {
 
   @override
+  int? build() {
+    return super.build();
+  }
+
+  @override
   Stream<int> buildStream() {
     return ref.watch(appPersistenceProvider).observeMonitorPort();
   }
