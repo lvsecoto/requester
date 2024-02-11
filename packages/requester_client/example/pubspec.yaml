@@ -38,6 +38,7 @@ dependencies:
 
   requester_client:
     path: ../
+  dio: ^5.4.0
 
 dev_dependencies:
   flutter_test:

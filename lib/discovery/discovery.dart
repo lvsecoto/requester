@@ -1,4 +1,4 @@
-/// Request端口，设备发现功能实现
+/// Request端口，设备发现服务
 library;
 
 import 'package:flutter/material.dart';

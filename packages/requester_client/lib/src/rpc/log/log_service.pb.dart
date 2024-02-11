@@ -16,6 +16,7 @@ import 'package:protobuf/protobuf.dart' as $pb;
 /// 请求日志
 class LogRequest extends $pb.GeneratedMessage {
   factory LogRequest({
+    $core.String? id,
     $core.String? method,
     $core.String? path,
     $core.Map<$core.String, $core.String>? headers,
@@ -23,6 +24,9 @@ class LogRequest extends $pb.GeneratedMessage {
     $core.String? body,
   }) {
     final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
     if (method != null) {
       $result.method = method;
     }
@@ -45,11 +49,12 @@ class LogRequest extends $pb.GeneratedMessage {
   factory LogRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LogRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'method')
-    ..aOS(2, _omitFieldNames ? '' : 'path')
-    ..m<$core.String, $core.String>(3, _omitFieldNames ? '' : 'headers', entryClassName: 'LogRequest.HeadersEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
-    ..m<$core.String, $core.String>(4, _omitFieldNames ? '' : 'queries', entryClassName: 'LogRequest.QueriesEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
-    ..aOS(5, _omitFieldNames ? '' : 'body')
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'method')
+    ..aOS(3, _omitFieldNames ? '' : 'path')
+    ..m<$core.String, $core.String>(4, _omitFieldNames ? '' : 'headers', entryClassName: 'LogRequest.HeadersEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
+    ..m<$core.String, $core.String>(5, _omitFieldNames ? '' : 'queries', entryClassName: 'LogRequest.QueriesEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
+    ..aOS(6, _omitFieldNames ? '' : 'body')
     ..hasRequiredFields = false
   ;
 
@@ -74,68 +79,76 @@ class LogRequest extends $pb.GeneratedMessage {
   static LogRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LogRequest>(create);
   static LogRequest? _defaultInstance;
 
+  /// id，用来和LogResponse对应
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
   /// 方法
-  @$pb.TagNumber(1)
-  $core.String get method => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set method($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasMethod() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearMethod() => clearField(1);
+  @$pb.TagNumber(2)
+  $core.String get method => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set method($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMethod() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMethod() => clearField(2);
 
   /// 路径
-  @$pb.TagNumber(2)
-  $core.String get path => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set path($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasPath() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearPath() => clearField(2);
+  @$pb.TagNumber(3)
+  $core.String get path => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set path($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasPath() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPath() => clearField(3);
 
   /// 请求头
-  @$pb.TagNumber(3)
-  $core.Map<$core.String, $core.String> get headers => $_getMap(2);
+  @$pb.TagNumber(4)
+  $core.Map<$core.String, $core.String> get headers => $_getMap(3);
 
   /// queries
-  @$pb.TagNumber(4)
-  $core.Map<$core.String, $core.String> get queries => $_getMap(3);
+  @$pb.TagNumber(5)
+  $core.Map<$core.String, $core.String> get queries => $_getMap(4);
 
   /// 请求体
-  @$pb.TagNumber(5)
-  $core.String get body => $_getSZ(4);
-  @$pb.TagNumber(5)
-  set body($core.String v) { $_setString(4, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasBody() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearBody() => clearField(5);
-}
-
-enum LogResponse_Content {
-  body, 
-  reason, 
-  notSet
+  @$pb.TagNumber(6)
+  $core.String get body => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set body($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasBody() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearBody() => clearField(6);
 }
 
 /// 响应日志
 class LogResponse extends $pb.GeneratedMessage {
   factory LogResponse({
+    $core.String? id,
     $core.int? code,
     $core.String? body,
-    $core.String? reason,
+    $core.String? error,
     $core.Map<$core.String, $core.String>? headers,
   }) {
     final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
     if (code != null) {
       $result.code = code;
     }
     if (body != null) {
       $result.body = body;
     }
-    if (reason != null) {
-      $result.reason = reason;
+    if (error != null) {
+      $result.error = error;
     }
     if (headers != null) {
       $result.headers.addAll(headers);
@@ -146,16 +159,11 @@ class LogResponse extends $pb.GeneratedMessage {
   factory LogResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory LogResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static const $core.Map<$core.int, LogResponse_Content> _LogResponse_ContentByTag = {
-    3 : LogResponse_Content.body,
-    4 : LogResponse_Content.reason,
-    0 : LogResponse_Content.notSet
-  };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LogResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
-    ..oo(0, [3, 4])
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'code', $pb.PbFieldType.OU3)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'code', $pb.PbFieldType.O3)
     ..aOS(3, _omitFieldNames ? '' : 'body')
-    ..aOS(4, _omitFieldNames ? '' : 'reason')
+    ..aOS(4, _omitFieldNames ? '' : 'error')
     ..m<$core.String, $core.String>(5, _omitFieldNames ? '' : 'headers', entryClassName: 'LogResponse.HeadersEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
     ..hasRequiredFields = false
   ;
@@ -181,41 +189,50 @@ class LogResponse extends $pb.GeneratedMessage {
   static LogResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LogResponse>(create);
   static LogResponse? _defaultInstance;
 
-  LogResponse_Content whichContent() => _LogResponse_ContentByTag[$_whichOneof(0)]!;
-  void clearContent() => clearField($_whichOneof(0));
+  /// id，用来和LogRequest对应
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
 
   /// 返回代码，一般是200
   /// 如果是-1，那么代表错误不是服务器返回的，而是客户端内部原因，比如：网络失去连接
-  @$pb.TagNumber(1)
-  $core.int get code => $_getIZ(0);
-  @$pb.TagNumber(1)
-  set code($core.int v) { $_setUnsignedInt32(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasCode() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearCode() => clearField(1);
+  @$pb.TagNumber(2)
+  $core.int get code => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set code($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCode() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCode() => clearField(2);
 
+  /// 请求体
   @$pb.TagNumber(3)
-  $core.String get body => $_getSZ(1);
+  $core.String get body => $_getSZ(2);
   @$pb.TagNumber(3)
-  set body($core.String v) { $_setString(1, v); }
+  set body($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasBody() => $_has(1);
+  $core.bool hasBody() => $_has(2);
   @$pb.TagNumber(3)
   void clearBody() => clearField(3);
 
+  /// 错误信息
   @$pb.TagNumber(4)
-  $core.String get reason => $_getSZ(2);
+  $core.String get error => $_getSZ(3);
   @$pb.TagNumber(4)
-  set reason($core.String v) { $_setString(2, v); }
+  set error($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasReason() => $_has(2);
+  $core.bool hasError() => $_has(3);
   @$pb.TagNumber(4)
-  void clearReason() => clearField(4);
+  void clearError() => clearField(4);
 
   /// 返回头
   @$pb.TagNumber(5)
-  $core.Map<$core.String, $core.String> get headers => $_getMap(3);
+  $core.Map<$core.String, $core.String> get headers => $_getMap(4);
 }
 
 

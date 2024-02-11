@@ -72,12 +72,14 @@ class RequesterClientController extends ChangeNotifier
     _rpcServer!.serve(
       port: port,
     );
+    await logProvider.onAppResume();
   }
 
   @override
   Future<void> onAppPause() async {
     await _disposeNsd();
     await _rpcServer?.shutdown();
+    await logProvider.onAppPause();
   }
 
   @override
@@ -85,6 +87,7 @@ class RequesterClientController extends ChangeNotifier
     super.dispose();
     _disposeNsd();
     _rpcServer?.shutdown();
+    logProvider.dispose();
   }
 
   Future<void> _registerNsd() async {

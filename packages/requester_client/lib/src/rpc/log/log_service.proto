@@ -23,33 +23,39 @@ service RequesterLogService {
 
 // 请求日志
 message LogRequest {
+  // id，用来和LogResponse对应
+  string id = 1;
+
   // 方法
-  string method = 1;
+  string method = 2;
 
   // 路径
-  string path = 2;
+  string path = 3;
 
   // 请求头
-  map<string, string> headers = 3;
+  map<string, string> headers = 4;
 
   // queries
-  map<string, string> queries = 4;
+  map<string, string> queries = 5;
 
   // 请求体
-  string body = 5;
+  string body = 6;
 }
 
 // 响应日志
 message LogResponse {
+  // id，用来和LogRequest对应
+  string id = 1;
+
   // 返回代码，一般是200
   // 如果是-1，那么代表错误不是服务器返回的，而是客户端内部原因，比如：网络失去连接
-  uint32 code = 1;
+  int32 code = 2;
 
   // 请求体
-  oneof content {
-    string body = 3;
-    string reason = 4;
-  }
+  string body = 3;
+
+  // 错误信息
+  string error = 4;
 
   // 返回头
   map<string, string> headers = 5;

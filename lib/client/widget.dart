@@ -17,6 +17,11 @@ class RequesterClientServiceControllerWidget extends HookWidget {
     final controller =
         useMemoized(() => RequesterClientServiceController(hostPort: hostPort));
     useAppLifecycleAware(controller);
+    useEffect(() {
+      return () {
+        controller.dispose();
+      };
+    }, [controller]);
     return _ControllerHolder(
       controller: controller,
       child: child,

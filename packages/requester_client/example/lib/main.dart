@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:requester_client/requester_client.dart';
 
@@ -36,10 +37,15 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   late final infoProvider =
       RequesterClientController.of(context).clientInfoProvider;
+  late final logProvider = RequesterClientController.of(context).logProvider;
+  final dio = Dio();
 
   @override
   void initState() {
     super.initState();
+    dio.interceptors.addAll([
+      RequesterLogDioInterceptor(logProvider),
+    ]);
     infoProvider.set('counter', _counter.toString());
     infoProvider.on('counter', (value) {
       _counter = int.tryParse(value) ?? _counter;
@@ -71,6 +77,27 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            const SizedBox(height: 32),
+            ElevatedButton(
+              onPressed: () {
+                dio.get(
+                  'https://petstore3.swagger.io/api/v3/pet/findByStatus?status=available',
+                  queryParameters: {
+                    'meta': '2'
+                  }
+                );
+              },
+              child: const Text('GET'),
+            ),
+            const SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: () {
+                dio.get(
+                    'https://petstore3.swagger.io/api/v3/pet/findByStatus?status=availa',
+                );
+              },
+              child: const Text('GET(Error)'),
             ),
           ],
         ),
