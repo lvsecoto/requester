@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:requester/domain/monitor/model.dart';
-import 'package:requester/ui/monitor/common/host_widget.dart';
-import 'package:requester/ui/monitor/common/method_widget.dart';
-import 'package:requester/ui/monitor/common/network_status.dart';
-import 'package:requester/ui/monitor/common/request_summary_widget.dart';
-import 'package:requester/ui/monitor/common/status_code_widget.dart';
+import 'package:requester/domain/log/log.dart';
+import 'package:requester/ui/monitor/common/common.dart';
 
 class RequestItemWidget extends StatelessWidget {
   const RequestItemWidget({
@@ -12,7 +8,7 @@ class RequestItemWidget extends StatelessWidget {
     required this.request,
   });
 
-  final MonitorLogRequest request;
+  final LogRequest request;
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +20,16 @@ class RequestItemWidget extends StatelessWidget {
           RequestSummaryWidget(
             leading: Padding(
               padding: const EdgeInsets.only(right: 8),
-              child: MethodWidget(request: request),
+              child: MethodWidget(logRequest: request),
             ),
-            request: request,
+            logRequest: request,
           ),
           const SizedBox(height: 4),
           Row(
             children: [
-              NetworkStatus(request: request),
+              NetworkStatus(logRequest: request),
               const SizedBox(width: 8),
-              HostWidget(request: request),
+              HostWidget(logRequest: request),
               const SizedBox(width: 8),
               DCStatusCodeWidget(request: request),
             ],

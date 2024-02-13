@@ -28,7 +28,7 @@ dependencies:
   common:
     git:
       url: git@github.com:lvsecoto/flutter_common.git
-      ref: c7be8f640049b7c4d2498c2cbf4d7bcd4e911cbb
+      ref: 978f7ada6a0d1fb2fdd072aaae7a19ee112b945c
 
   # 自动代码生成
   persistence_annotation:
@@ -64,12 +64,18 @@ dependencies:
   protobuf: ^3.1.0
   curl_converter: ^1.0.4
 
+  drift: ^2.15.0
+  sqlite3_flutter_libs: ^0.5.19+1
+
   requester_client:
     path: packages/requester_client
   requester_common:
     path: packages/requester_common
   easy_rich_text: ^2.1.0
   gap: ^3.0.1
+  path_provider: ^2.1.2
+  path: ^1.8.3
+  visibility_detector: ^0.4.0+2
 
 dev_dependencies:
   flutter_test:
@@ -95,6 +101,8 @@ dev_dependencies:
     git:
       url: 'git@github.com:lvsecoto/flutter_persistence.git'
       ref: 4b060a7d23d417611c3da094cb0267a7bb3be42d
+
+  drift_dev: ^2.15.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

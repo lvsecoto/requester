@@ -2,36 +2,32 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:requester/common/tag_widget.dart';
-import 'package:requester/domain/monitor/model.dart';
+import 'package:requester/domain/log/log.dart';
 
 class DCStatusCodeWidget extends StatelessWidget {
-  /// 返回代码
+  /// 返回状态码
   const DCStatusCodeWidget({
     super.key,
     required this.request,
   });
 
-  final MonitorLogRequest request;
+  final LogRequest request;
 
   @override
   Widget build(BuildContext context) {
     Widget child = const SizedBox.shrink();
-    final data = request.logResponse?.data.trim();
-    if (data != null && data.startsWith('{') && data.endsWith('}')) {
-      final json = jsonDecode(data);
-      final code = json['code'];
-      if (code == 200) {
-        child = const TagWidget.green(label: Text('DC: OK'));
-      } else if (code == null) {
-        return const SizedBox.shrink();
-      } else if (code != 200) {
-        child = TagWidget.red(label: Text('DC: $code'));
-      }
+    final code = request.requestResponse?.code;
+    if (code == null) {
+      child = const SizedBox.shrink();
+    } else if (code == 200) {
+      child = const TagWidget.green(label: Text('200'));
+    } else if (code != 200) {
+      child = TagWidget.red(label: Text('$code'));
     }
     return AnimatedSwitcher(
       duration: kThemeAnimationDuration,
       child: KeyedSubtree(
-        key: ValueKey(request.logResponse == null),
+        key: ValueKey(code),
         child: child,
       ),
     );

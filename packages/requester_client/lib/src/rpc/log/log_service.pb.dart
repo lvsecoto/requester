@@ -11,12 +11,14 @@
 
 import 'dart:core' as $core;
 
+import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 /// 请求日志
 class LogRequest extends $pb.GeneratedMessage {
   factory LogRequest({
     $core.String? id,
+    $fixnum.Int64? time,
     $core.String? method,
     $core.String? path,
     $core.Map<$core.String, $core.String>? headers,
@@ -26,6 +28,9 @@ class LogRequest extends $pb.GeneratedMessage {
     final $result = create();
     if (id != null) {
       $result.id = id;
+    }
+    if (time != null) {
+      $result.time = time;
     }
     if (method != null) {
       $result.method = method;
@@ -50,11 +55,12 @@ class LogRequest extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LogRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'id')
-    ..aOS(2, _omitFieldNames ? '' : 'method')
-    ..aOS(3, _omitFieldNames ? '' : 'path')
-    ..m<$core.String, $core.String>(4, _omitFieldNames ? '' : 'headers', entryClassName: 'LogRequest.HeadersEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
-    ..m<$core.String, $core.String>(5, _omitFieldNames ? '' : 'queries', entryClassName: 'LogRequest.QueriesEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
-    ..aOS(6, _omitFieldNames ? '' : 'body')
+    ..a<$fixnum.Int64>(2, _omitFieldNames ? '' : 'time', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOS(3, _omitFieldNames ? '' : 'method')
+    ..aOS(4, _omitFieldNames ? '' : 'path')
+    ..m<$core.String, $core.String>(5, _omitFieldNames ? '' : 'headers', entryClassName: 'LogRequest.HeadersEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
+    ..m<$core.String, $core.String>(6, _omitFieldNames ? '' : 'queries', entryClassName: 'LogRequest.QueriesEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
+    ..aOS(7, _omitFieldNames ? '' : 'body')
     ..hasRequiredFields = false
   ;
 
@@ -89,49 +95,59 @@ class LogRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearId() => clearField(1);
 
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get time => $_getI64(1);
+  @$pb.TagNumber(2)
+  set time($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTime() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTime() => clearField(2);
+
   /// 方法
-  @$pb.TagNumber(2)
-  $core.String get method => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set method($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasMethod() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearMethod() => clearField(2);
+  @$pb.TagNumber(3)
+  $core.String get method => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set method($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasMethod() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMethod() => clearField(3);
 
   /// 路径
-  @$pb.TagNumber(3)
-  $core.String get path => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set path($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasPath() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearPath() => clearField(3);
+  @$pb.TagNumber(4)
+  $core.String get path => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set path($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPath() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPath() => clearField(4);
 
   /// 请求头
-  @$pb.TagNumber(4)
-  $core.Map<$core.String, $core.String> get headers => $_getMap(3);
+  @$pb.TagNumber(5)
+  $core.Map<$core.String, $core.String> get headers => $_getMap(4);
 
   /// queries
-  @$pb.TagNumber(5)
-  $core.Map<$core.String, $core.String> get queries => $_getMap(4);
+  @$pb.TagNumber(6)
+  $core.Map<$core.String, $core.String> get queries => $_getMap(5);
 
   /// 请求体
-  @$pb.TagNumber(6)
-  $core.String get body => $_getSZ(5);
-  @$pb.TagNumber(6)
-  set body($core.String v) { $_setString(5, v); }
-  @$pb.TagNumber(6)
-  $core.bool hasBody() => $_has(5);
-  @$pb.TagNumber(6)
-  void clearBody() => clearField(6);
+  @$pb.TagNumber(7)
+  $core.String get body => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set body($core.String v) { $_setString(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasBody() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearBody() => clearField(7);
 }
 
 /// 响应日志
 class LogResponse extends $pb.GeneratedMessage {
   factory LogResponse({
     $core.String? id,
+    $core.int? spentTime,
     $core.int? code,
     $core.String? body,
     $core.String? error,
@@ -140,6 +156,9 @@ class LogResponse extends $pb.GeneratedMessage {
     final $result = create();
     if (id != null) {
       $result.id = id;
+    }
+    if (spentTime != null) {
+      $result.spentTime = spentTime;
     }
     if (code != null) {
       $result.code = code;
@@ -161,10 +180,11 @@ class LogResponse extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LogResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'id')
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'code', $pb.PbFieldType.O3)
-    ..aOS(3, _omitFieldNames ? '' : 'body')
-    ..aOS(4, _omitFieldNames ? '' : 'error')
-    ..m<$core.String, $core.String>(5, _omitFieldNames ? '' : 'headers', entryClassName: 'LogResponse.HeadersEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'spentTime', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'code', $pb.PbFieldType.O3)
+    ..aOS(4, _omitFieldNames ? '' : 'body')
+    ..aOS(5, _omitFieldNames ? '' : 'error')
+    ..m<$core.String, $core.String>(6, _omitFieldNames ? '' : 'headers', entryClassName: 'LogResponse.HeadersEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
     ..hasRequiredFields = false
   ;
 
@@ -199,40 +219,50 @@ class LogResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearId() => clearField(1);
 
+  /// 返回耗费时间
+  @$pb.TagNumber(2)
+  $core.int get spentTime => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set spentTime($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSpentTime() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSpentTime() => clearField(2);
+
   /// 返回代码，一般是200
   /// 如果是-1，那么代表错误不是服务器返回的，而是客户端内部原因，比如：网络失去连接
-  @$pb.TagNumber(2)
-  $core.int get code => $_getIZ(1);
-  @$pb.TagNumber(2)
-  set code($core.int v) { $_setSignedInt32(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasCode() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearCode() => clearField(2);
+  @$pb.TagNumber(3)
+  $core.int get code => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set code($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasCode() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCode() => clearField(3);
 
   /// 请求体
-  @$pb.TagNumber(3)
-  $core.String get body => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set body($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasBody() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearBody() => clearField(3);
+  @$pb.TagNumber(4)
+  $core.String get body => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set body($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasBody() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearBody() => clearField(4);
 
   /// 错误信息
-  @$pb.TagNumber(4)
-  $core.String get error => $_getSZ(3);
-  @$pb.TagNumber(4)
-  set error($core.String v) { $_setString(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasError() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearError() => clearField(4);
+  @$pb.TagNumber(5)
+  $core.String get error => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set error($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasError() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearError() => clearField(5);
 
   /// 返回头
-  @$pb.TagNumber(5)
-  $core.Map<$core.String, $core.String> get headers => $_getMap(4);
+  @$pb.TagNumber(6)
+  $core.Map<$core.String, $core.String> get headers => $_getMap(5);
 }
 
 

@@ -15,7 +15,7 @@ part 'route.g.dart';
       path: '/monitor',
     ),
     TypedGoRoute<RequestRoute>(
-      path: '/monitor/:requestId',
+      path: '/monitor/:id',
     ),
   ],
 )
@@ -36,9 +36,9 @@ class MonitorRoute extends ShellRouteData {
 }
 
 class RequestRoute extends GoRouteData {
-  final String requestId;
+  final int id;
 
-  const RequestRoute(this.requestId);
+  const RequestRoute(this.id);
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
@@ -55,8 +55,8 @@ class RequestRoute extends GoRouteData {
         );
       },
       child: RequestScreen(
-        key: ValueKey(requestId),
-        requestId: requestId,
+        key: ValueKey(id),
+        id: id,
       ),
     );
   }

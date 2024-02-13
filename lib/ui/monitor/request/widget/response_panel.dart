@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:requester/ui/monitor/common/data_widget.dart';
-import 'package:requester/ui/monitor/common/status_code_widget.dart';
+import 'package:requester/ui/monitor/common/common.dart';
 import 'package:requester/ui/monitor/request/provider/provider.dart';
 
 import 'panel_widget.dart';
@@ -11,13 +10,13 @@ class ResponsePanel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final request = loadMonitorRequest(ref);
-    final exception = request?.logException;
-    final response = request?.logResponse;
+    final request = loadLogRequest(ref);
+    final error = request?.requestResponse?.error;
+    final response = request?.requestResponse;
 
     Widget title;
 
-    if (exception != null) {
+    if (error != null) {
       title = const Text('响应失败');
     } else if (response != null) {
       title = const Text('响应');
@@ -37,10 +36,10 @@ class ResponsePanel extends ConsumerWidget {
 
     Widget child;
 
-    if (exception != null) {
+    if (error != null) {
       child = Center(
         child: Text(
-          exception.type.toString(),
+          error,
           style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 color: Colors.red,
               ),
@@ -48,13 +47,13 @@ class ResponsePanel extends ConsumerWidget {
       );
     } else if (response != null) {
       child = DataWidget(
-        data: response.data,
+        data: response.body,
       );
     } else {
       child = const SizedBox.shrink();
     }
 
-    final state = (response, exception);
+    final state = (response, error);
     return PanelWidget(
       margin: const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 16),
       title: AnimatedSwitcher(

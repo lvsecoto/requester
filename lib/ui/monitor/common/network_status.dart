@@ -3,16 +3,16 @@ import 'dart:ui';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:requester/domain/monitor/model.dart';
+import 'package:requester/domain/log/log.dart';
 
 class NetworkStatus extends StatelessWidget {
   /// 网络状态
   const NetworkStatus({
     super.key,
-    required this.request,
+    required this.logRequest,
   });
 
-  final MonitorLogRequest request;
+  final LogRequest logRequest;
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +25,14 @@ class NetworkStatus extends StatelessWidget {
       }
     }
 
-    if (request.logResponse != null) {
-      final duration =
-          request.logResponse!.time.difference(request.logRequest.time);
+    final response = logRequest.requestResponse;
+    if (response?.body != null) {
+      final duration = response!.spentTime;
       child = DefaultTextStyle(
-        style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Colors.green),
+        style: Theme.of(context)
+            .textTheme
+            .labelMedium!
+            .copyWith(color: Colors.green),
         child: Row(
           children: [
             const _Circle(
@@ -40,9 +43,8 @@ class NetworkStatus extends StatelessWidget {
           ],
         ),
       );
-    } else if (request.logException != null) {
-      final duration =
-          request.logException!.time.difference(request.logRequest.time);
+    } else if (response?.error != null) {
+      final duration = response!.spentTime;
       child = Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -51,7 +53,7 @@ class NetworkStatus extends StatelessWidget {
           ),
           const SizedBox(width: 4),
           Text(
-            '${request.logException!.type.toString().split('.').last}(${durationStr(duration)})',
+            '${response.error.toString()}(${durationStr(duration)})',
             style: Theme.of(context).textTheme.labelMedium!.copyWith(
                   color: Colors.red,
                 ),
@@ -70,9 +72,9 @@ class NetworkStatus extends StatelessWidget {
           const SizedBox(width: 4),
           HookBuilder(builder: (context) {
             final loadSpentTime =
-                useState(DateTime.now().difference(request.time));
+                useState(DateTime.now().difference(logRequest.time));
             useInterval(() {
-              loadSpentTime.value = DateTime.now().difference(request.time);
+              loadSpentTime.value = DateTime.now().difference(logRequest.time);
             }, const Duration(seconds: 1));
             return Text(
               '${loadSpentTime.value.inSeconds}s',
@@ -87,7 +89,10 @@ class NetworkStatus extends StatelessWidget {
         ],
       );
     }
-    return child;
+    return AnimatedSizeAndFade(
+      childKey: response,
+      child: child,
+    );
   }
 }
 

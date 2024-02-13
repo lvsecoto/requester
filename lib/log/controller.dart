@@ -57,13 +57,13 @@ class LogServiceController extends rpc.RequesterLogServiceBase implements AppLif
 
   @override
   Future<rpc.Empty> sendRequest(grpc.ServiceCall call, rpc.LogRequest request) async {
-    print(request);
+    ref.read(logManagerProvider).onReceiveLogRequest(request);
     return rpc.Empty();
   }
 
   @override
   Future<rpc.Empty> sendResponse(grpc.ServiceCall call, rpc.LogResponse request) async {
-    print(request);
+    ref.read(logManagerProvider).onReceiveLogResponse(request);
     return rpc.Empty();
   }
 }

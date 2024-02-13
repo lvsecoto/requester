@@ -26,20 +26,22 @@ message LogRequest {
   // id，用来和LogResponse对应
   string id = 1;
 
+  uint64 time = 2;
+
   // 方法
-  string method = 2;
+  string method = 3;
 
   // 路径
-  string path = 3;
+  string path = 4;
 
   // 请求头
-  map<string, string> headers = 4;
+  map<string, string> headers = 5;
 
   // queries
-  map<string, string> queries = 5;
+  map<string, string> queries = 6;
 
   // 请求体
-  string body = 6;
+  string body = 7;
 }
 
 // 响应日志
@@ -47,16 +49,19 @@ message LogResponse {
   // id，用来和LogRequest对应
   string id = 1;
 
+  // 返回耗费时间
+  uint32 spent_time = 2;
+
   // 返回代码，一般是200
   // 如果是-1，那么代表错误不是服务器返回的，而是客户端内部原因，比如：网络失去连接
-  int32 code = 2;
+  int32 code = 3;
 
   // 请求体
-  string body = 3;
+  string body = 4;
 
   // 错误信息
-  string error = 4;
+  string error = 5;
 
   // 返回头
-  map<string, string> headers = 5;
+  map<string, string> headers = 6;
 }

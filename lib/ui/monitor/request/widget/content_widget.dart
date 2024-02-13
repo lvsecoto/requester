@@ -82,7 +82,7 @@ class ContentWidget extends HookConsumerWidget {
 class _Title extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final request = loadMonitorRequest(ref);
+    final request = loadLogRequest(ref);
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: () {
@@ -121,9 +121,9 @@ class _Title extends ConsumerWidget {
                   child: SizedBox(
                     width: double.infinity,
                     child: RequestSummaryWidget(
-                      request: request,
+                      logRequest: request,
                       leading: MethodWidget(
-                        request: request,
+                        logRequest: request,
                       ),
                     ),
                   ),

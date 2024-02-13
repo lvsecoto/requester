@@ -7,17 +7,17 @@ import 'widget/content_widget.dart';
 class RequestScreen extends ConsumerWidget {
   const RequestScreen({
     super.key,
-    required this.requestId,
+    required this.id,
   });
 
-  final String requestId;
+  final int id;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ProviderScope(
       parent: ProviderScope.containerOf(context),
       overrides: [
-        requestIdProvider.overrideWithValue(requestId)
+        requestLogIdProvider.overrideWithValue(id)
       ],
       child: const ContentWidget(),
     );

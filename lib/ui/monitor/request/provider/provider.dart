@@ -2,21 +2,20 @@ import 'package:curl_converter/curl_converter.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_split_view/multi_split_view.dart';
-import 'package:requester/domain/monitor/model.dart';
-import 'package:requester/domain/monitor/monitor.dart';
-import 'package:requester/domain/monitor/provider.dart';
+import 'package:requester/domain/log/log.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'provider.g.dart';
 
 @Riverpod(dependencies: [])
-String requestId(RequestIdRef ref) {
+int requestLogId(RequestLogIdRef ref) {
   throw UnimplementedError();
 }
 
-MonitorLogRequest? loadMonitorRequest(WidgetRef ref) {
-  final requestId = ref.watch(requestIdProvider);
-  return ref.watch(getMonitorRequestProvider(requestId)).valueOrNull;
+LogRequest? loadLogRequest(WidgetRef ref) {
+  return null;
+  // final requestId = ref.watch(requestIdProvider);
+  // return ref.watch(getMonitorRequestProvider(requestId)).valueOrNull;
 }
 
 final kDefaultMonitorSplitAreas = [
@@ -30,7 +29,8 @@ Raw<MultiSplitViewController> splitViewController(SplitViewControllerRef ref) {
 }
 
 void copyCurl(WidgetRef ref) {
-  final request = loadMonitorRequest(ref)?.logRequest;
+  // final request = loadMonitorRequest(ref)?.logRequest;
+  final request = null;
   if (request == null) {
     return;
   }
@@ -44,13 +44,14 @@ void copyCurl(WidgetRef ref) {
 }
 
 void copyURL(WidgetRef ref) {
-  final request = loadMonitorRequest(ref);
+  return;
+  final request = loadLogRequest(ref);
   if (request == null) {
     return;
   }
-  _copyToClipBoard(
-    request.logRequest.uri,
-  );
+  // _copyToClipBoard(
+  //   request.logRequest.uri,
+  // );
 }
 
 void _copyToClipBoard(String text) {
