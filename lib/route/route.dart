@@ -55,10 +55,9 @@ class RequestRoute extends GoRouteData {
       duration: kThemeAnimationDuration,
       transitionBuilder: (Widget child, Animation<double> primaryAnimation,
           Animation<double> secondaryAnimation) {
-        return SharedAxisTransition(
+        return FadeThroughTransition(
           animation: primaryAnimation,
           secondaryAnimation: secondaryAnimation,
-          transitionType: SharedAxisTransitionType.horizontal,
           child: child,
         );
       },
