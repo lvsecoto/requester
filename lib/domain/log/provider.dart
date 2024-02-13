@@ -52,6 +52,14 @@ class LogList extends _$LogList with PagingLoadNotifierMixin<Log, int> {
         );
       }
     });
+    ref.listen(_onClearLogsProvider, (_, deletedLog) {
+      if (deletedLog != null) {
+        state = state.copyWith(
+          data: const [],
+          hasMore: false,
+        );
+      }
+    });
     ref.keepAlive();
     return onBuild();
   }
@@ -89,6 +97,14 @@ class _OnLogResponseUpdate extends _$OnLogResponseUpdate with SelectableNotifier
 class _OnLogDelete extends _$OnLogDelete with SelectableNotifier {
   @override
   Log? build() {
+    return null;
+  }
+}
+
+@riverpod
+class _OnClearLogs extends _$OnClearLogs with SelectableNotifier {
+  @override
+  Object? build() {
     return null;
   }
 }

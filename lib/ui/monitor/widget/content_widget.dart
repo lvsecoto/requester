@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:requester/app/theme/theme.dart';
-import 'package:requester/ui/monitor/provider/provider.dart';
+import 'package:requester/ui/monitor/provider/provider.dart' as provider;
 import 'package:requester/ui/monitor/widget/request/request_list_widget.dart';
 
 class ContentWidget extends HookConsumerWidget {
@@ -22,7 +22,7 @@ class ContentWidget extends HookConsumerWidget {
                 decoration: const InputDecoration.collapsed(
                   hintText: '搜索请求',
                 ),
-                controller: ref.watch(editQueryProvider.notifier).controller,
+                controller: ref.watch(provider.editQueryProvider.notifier).controller,
               ),
             ),
           ),
@@ -55,7 +55,7 @@ class ContentWidget extends HookConsumerWidget {
                         ));
 
                 if (confirmed == true) {
-                  // ref.read(monitorRequestListProvider.notifier).clean();
+                  provider.actionClearLog(ref);
                 }
               },
               icon: const Icon(Icons.cleaning_services),

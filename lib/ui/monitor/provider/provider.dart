@@ -16,3 +16,7 @@ class EditQuery extends _$EditQuery with TextEditControllerNotifier {
 LogListProvider watchLogProvider(WidgetRef ref) {
   return ref.watch(logManagerProvider).providerLogList;
 }
+
+Future<void> actionClearLog(WidgetRef ref) async {
+  return ref.read(logManagerProvider).clear();
+}

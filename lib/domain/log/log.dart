@@ -53,4 +53,10 @@ class LogManager extends _LogManager with _HostPortManager, _LogRecord {
 
   /// 加载日志
   late final provideLoadLog = loadLogProvider;
+
+  /// 清除日志
+  Future<void> clear() async {
+    await _logTable.deleteAll();
+    _ref.read(_onClearLogsProvider.notifier).select(DateTime.now());
+  }
 }
