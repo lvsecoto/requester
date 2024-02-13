@@ -13,9 +13,9 @@ int requestLogId(RequestLogIdRef ref) {
 }
 
 LogRequest? loadLogRequest(WidgetRef ref) {
-  return null;
-  // final requestId = ref.watch(requestIdProvider);
-  // return ref.watch(getMonitorRequestProvider(requestId)).valueOrNull;
+  final requestId = ref.watch(requestLogIdProvider);
+  final provider = ref.watch(logManagerProvider).provideLoadLog(requestId);
+  return ref.watch(provider).valueOrNull as LogRequest?;
 }
 
 final kDefaultMonitorSplitAreas = [

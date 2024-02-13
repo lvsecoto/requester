@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:requester/domain/log/log.dart';
+import 'package:requester/router.dart';
 import 'package:requester/ui/monitor/provider/provider.dart' as provider;
 
 import 'item/item.dart';
@@ -15,11 +16,11 @@ class RequestListWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final listProvider = provider.watchLogProvider(ref);
-    final request = ref.watch(listProvider).data;
+    final requests = ref.watch(listProvider).data;
     return CustomScrollView(
       slivers: [
         DiffSliverAnimatedList(
-            items: request,
+            items: requests,
             keySelector: (it) => it.id,
             indexedItemBuilder: (context, item, index) => Column(
                   children: [
@@ -28,7 +29,9 @@ class RequestListWidget extends ConsumerWidget {
                     switch (item) {
                       LogRequest() => _RequestItem(
                           item: item,
-                          index: index,
+                          onTap: () {
+                            RequestRoute(item.id).go(context);
+                          },
                         ),
                       _ => throw '',
                     },
@@ -45,36 +48,24 @@ class RequestListWidget extends ConsumerWidget {
 class _RequestItem extends ConsumerWidget {
   const _RequestItem({
     required this.item,
-    required this.index,
+    required this.onTap,
   });
 
   final LogRequest item;
 
-  final int index;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentId = GoRouterState.of(context).pathParameters['requestId'];
+    final currentId = RequestRoute.from(GoRouterState.of(context))?.id;
     return Material(
       animationDuration: const Duration(seconds: 1),
-      color:
-          item.id == currentId || (index == 0 && kLatestRequestId == currentId)
-              ? Theme.of(context).colorScheme.primaryContainer
-              : Colors.transparent,
+      color: item.id == currentId
+          ? Theme.of(context).colorScheme.primaryContainer
+          : Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
-        onTap: () async {
-          final int targetRequestId;
-          if (index == 0) {
-            targetRequestId = kLatestRequestId;
-          } else {
-            targetRequestId = item.id;
-          }
-          // await ref.watch(getMonitorRequestProvider(targetRequestId).future);
-          // if (context.mounted) {
-          //   RequestRoute(targetRequestId).go(context);
-          // }
-        },
+        onTap: onTap,
         child: RequestItemWidget(
           request: item,
         ),

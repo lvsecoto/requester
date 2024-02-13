@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/ui/monitor/common/common.dart';
@@ -16,7 +17,8 @@ class ResponsePanel extends ConsumerWidget {
 
     Widget title;
 
-    if (error != null) {
+    final hasError = error.isNotNullOrBlank;
+    if (hasError) {
       title = const Text('响应失败');
     } else if (response != null) {
       title = const Text('响应');
@@ -36,10 +38,10 @@ class ResponsePanel extends ConsumerWidget {
 
     Widget child;
 
-    if (error != null) {
+    if (hasError) {
       child = Center(
         child: Text(
-          error,
+          error!,
           style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 color: Colors.red,
               ),

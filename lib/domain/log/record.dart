@@ -1,8 +1,6 @@
 part of 'log.dart';
 
 mixin _LogRecord on _LogManager {
-  late final _logTable = _ref.watch(appDataBaseProvider).logTable;
-
   /// 接收到请求日志时的回调
   Future<void> onReceiveLogRequest(rpc.LogRequest logRequest) async {
     final id = await _logTable.insertOne(

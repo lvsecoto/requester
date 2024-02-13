@@ -22,7 +22,7 @@ class DataWidget extends StatelessWidget {
     String language = 'text';
     String data = this.data;
 
-    if (data.trim().startsWith('{')) {
+    if (data.trim().startsWith('{') || data.trim().startsWith('[')) {
       language = 'json';
       try {
         data = _encoder.convert(jsonDecode(data));

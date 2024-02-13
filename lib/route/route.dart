@@ -40,6 +40,14 @@ class RequestRoute extends GoRouteData {
 
   const RequestRoute(this.id);
 
+  static RequestRoute? from(GoRouterState state) {
+    try {
+      return $RequestRouteExtension._fromState(state);
+    } catch(ignored) {
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context, GoRouterState state) {
     // 仅仅改变:requestId，路由不会有变化，也不会有路由动画，这里我们自己加上去

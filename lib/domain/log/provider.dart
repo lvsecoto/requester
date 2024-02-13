@@ -92,3 +92,9 @@ class _OnLogDelete extends _$OnLogDelete with SelectableNotifier {
     return null;
   }
 }
+
+/// 加载日志为[logId]的日志
+@riverpod
+Future<Log> loadLog(LoadLogRef ref, int logId) async {
+  return await ref.watch(logManagerProvider)._getLog(logId);
+}
