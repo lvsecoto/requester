@@ -1,5 +1,4 @@
 import 'package:common/common.dart';
-import 'package:dartx/dartx.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/domain/log/log.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
