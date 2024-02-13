@@ -12,10 +12,12 @@ part 'route.g.dart';
 @TypedShellRoute<MonitorRoute>(
   routes: [
     TypedGoRoute<ListDetailsEmptyRoute>(
-      path: '/monitor',
-    ),
-    TypedGoRoute<RequestRoute>(
-      path: '/monitor/:id',
+      path: '/monitorList',
+      routes: [
+        TypedGoRoute<RequestRoute>(
+          path: 'monitor/:id',
+        ),
+      ]
     ),
   ],
 )
@@ -52,11 +54,12 @@ class RequestRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) {
     // 仅仅改变:requestId，路由不会有变化，也不会有路由动画，这里我们自己加上去
     return PageTransitionSwitcher(
-      duration: kThemeAnimationDuration,
+      duration: const Duration(milliseconds: 800),
       transitionBuilder: (Widget child, Animation<double> primaryAnimation,
           Animation<double> secondaryAnimation) {
-        return FadeThroughTransition(
+        return SharedAxisTransition(
           animation: primaryAnimation,
+          transitionType: SharedAxisTransitionType.horizontal,
           secondaryAnimation: secondaryAnimation,
           child: child,
         );

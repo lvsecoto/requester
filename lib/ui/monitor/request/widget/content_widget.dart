@@ -30,8 +30,9 @@ class ContentWidget extends HookConsumerWidget {
         backgroundColor: AppTheme.of(context).surfaceContainer,
         appBar: AppBar(
           title: _Title(),
+          titleSpacing: 0,
+          centerTitle: false,
           backgroundColor: Colors.transparent,
-          toolbarHeight: kToolbarHeight + 16,
         ),
         body: MultiSplitViewTheme(
           data: MultiSplitViewThemeData(
@@ -117,7 +118,7 @@ class _Title extends ConsumerWidget {
           child: request == null
               ? const SizedBox.shrink()
               : Padding(
-                  padding: const EdgeInsets.all(4),
+                  padding: const EdgeInsets.symmetric(vertical: 4),
                   child: SizedBox(
                     width: double.infinity,
                     child: RequestSummaryWidget(
