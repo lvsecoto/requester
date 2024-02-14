@@ -1,7 +1,5 @@
 part of 'log.dart';
 
-typedef LogListProvider = AutoDisposeNotifierProvider<LogList, PagingLoadState<Log>>;
-
 /// 日志列表Provider，观察可获取一个可以分页加载，并且响应日志增加删除事件的日志列表
 ///
 /// 当调用:
@@ -16,9 +14,9 @@ typedef LogListProvider = AutoDisposeNotifierProvider<LogList, PagingLoadState<L
 @riverpod
 class LogList extends _$LogList with PagingLoadNotifierMixin<Log, int> {
   @override
-  PagingLoadState<Log> build() {
+  PagingLoadState<Log> build(LogFilter filter) {
     ref.listen(_onLogAddProvider, (_, newLog) {
-      if (newLog != null) {
+      if (newLog != null && filter.isMatched(newLog)) {
         state = state.copyWith(
           data: [
             newLog,
@@ -61,7 +59,7 @@ class LogList extends _$LogList with PagingLoadNotifierMixin<Log, int> {
       }
     });
     ref.keepAlive();
-    return onBuild();
+    return onBuild(defaultData: filter.byData);
   }
 
   @override
@@ -72,6 +70,7 @@ class LogList extends _$LogList with PagingLoadNotifierMixin<Log, int> {
       await Future.delayed(const Duration(milliseconds: 300));
     }
     return ref.watch(logManagerProvider)._getLogs(
+          filter: filter,
           dataAfterId: dataAfterId,
         );
   }

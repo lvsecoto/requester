@@ -253,8 +253,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "978f7ada6a0d1fb2fdd072aaae7a19ee112b945c"
-      resolved-ref: "978f7ada6a0d1fb2fdd072aaae7a19ee112b945c"
+      ref: "42287cf13da0db6bdea0a52a366773e35c7f5f04"
+      resolved-ref: "42287cf13da0db6bdea0a52a366773e35c7f5f04"
       url: "git@github.com:lvsecoto/flutter_common.git"
     source: git
     version: "0.0.1"

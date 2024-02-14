@@ -5,7 +5,8 @@ mixin _LogRecord on _LogManager {
   Future<void> onReceiveLogRequest(rpc.LogRequest logRequest) async {
     final id = await _logTable.insertOne(
       LogTableCompanion.insert(
-        time: Value(DateTime.fromMillisecondsSinceEpoch(logRequest.time.toInt())),
+        time:
+            Value(DateTime.fromMillisecondsSinceEpoch(logRequest.time.toInt())),
         requestId: Value(logRequest.id),
         requestMethod: Value(logRequest.method),
         requestPath: Value(logRequest.path),
@@ -54,15 +55,29 @@ mixin _LogRecord on _LogManager {
 
   /// 获取缓存的Log
   Future<LogPagingData> _getLogs({
+    LogFilter filter = const LogFilter(),
     required int dataAfterId,
     int pageSize = 10,
   }) async {
+    Expression<bool> filterExpr;
+    // 防止匹配到json字符
+    var query = filter.query.replaceAll(RegExp('[",{}]'), '');
+    if (query == '') {
+      filterExpr = const Constant(true);
+    } else {
+      filterExpr = _logTable.requestPath.contains(query) |
+          _logTable.requestQueries.contains(query) |
+          _logTable.requestHeaders.contains(query) |
+          _logTable.requestBody.contains(query) |
+          _logTable.responseBody.contains(query);
+    }
     var data = await (_logTable.selectOnly()
           ..addColumns(_logTable.$columns)
           ..orderBy([OrderingTerm.desc(_logTable.id)])
-          ..where(dataAfterId == -1
-              ? const Constant(true)
-              : _logTable.id.isSmallerThanValue(dataAfterId))
+          ..where(filterExpr &
+              (dataAfterId == -1
+                  ? const Constant(true)
+                  : _logTable.id.isSmallerThanValue(dataAfterId)))
           ..limit(pageSize + 1))
         .map((record) {
       return _mapToLogRequest(record);
@@ -75,7 +90,7 @@ mixin _LogRecord on _LogManager {
     return LogPagingData(
       data: data,
       hasMore: hasMore,
-      dataAfterId: data.last.id,
+      dataAfterId: hasMore ? data.last.id : -2,
     );
   }
 

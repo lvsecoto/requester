@@ -16,7 +16,7 @@ class RequestListWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final listProvider = provider.watchLogProvider(ref);
+    final listProvider = ref.watch(provider.watchLogProviderProvider);
     final requests = ref.watch(listProvider).data;
     final alwaysShowLastLog = useState(false);
     if (alwaysShowLastLog.value) {
