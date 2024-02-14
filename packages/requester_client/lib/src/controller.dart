@@ -69,7 +69,7 @@ class RequesterClientController extends ChangeNotifier
         },
       ),
     ]);
-    _rpcServer!.serve(
+    await _rpcServer!.serve(
       port: port,
     );
     await logProvider.onAppResume();

@@ -12,6 +12,7 @@ class LogProvider implements AppLifecycleAware {
   Future<void> setLogHostPort(HostPort hostPort) async {
     await saveObject(_kLogHostPort, hostPort, encode: (it) => it.encode());
     _hostPort = hostPort;
+    await _start();
   }
 
   /// 获取日志要发送的地址
