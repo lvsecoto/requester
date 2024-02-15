@@ -253,11 +253,27 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "42287cf13da0db6bdea0a52a366773e35c7f5f04"
-      resolved-ref: "42287cf13da0db6bdea0a52a366773e35c7f5f04"
+      ref: ee2abc5bd85dd2276dc5d661f46fe39e302ba2ef
+      resolved-ref: ee2abc5bd85dd2276dc5d661f46fe39e302ba2ef
       url: "git@github.com:lvsecoto/flutter_common.git"
     source: git
     version: "0.0.1"
+  conduit_codable:
+    dependency: transitive
+    description:
+      name: conduit_codable
+      sha256: "2530ccffacf1d3c177da68f163ca388f41cc68441d1e4ce39850559493bddf4a"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "4.4.0"
+  conduit_open_api:
+    dependency: "direct main"
+    description:
+      name: conduit_open_api
+      sha256: defc948645a53a69506c902203ca1e4579461fc79b35129641a8f31e88cb213b
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "4.4.0"
   convert:
     dependency: transitive
     description:

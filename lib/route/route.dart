@@ -6,6 +6,7 @@ import 'package:animations/animations.dart';
 import 'package:requester_client/requester_client.dart';
 
 part 'client.dart';
+part 'settings.dart';
 
 part 'route.g.dart';
 
@@ -69,40 +70,5 @@ class RequestRoute extends GoRouteData {
         id: id,
       ),
     );
-  }
-}
-
-const _settingsTypedRoute = TypedShellRoute<SettingsRoute>(routes: [
-  _monitorSettingsTypedRoute,
-]);
-
-/// 设置
-@_settingsTypedRoute
-class SettingsRoute extends ShellRouteData {
-  const SettingsRoute();
-
-  // 默认的位置是没选择任何列表内容
-  String get location => const MonitorSettingsRoute().location;
-
-  @override
-  Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
-    return ListDetailsNavigation(
-      navigator: navigator,
-      isDetailsEmpty: state.uri.path == const ListDetailsEmptyRoute().location,
-      list: const SettingsScreen(),
-    );
-  }
-}
-
-const _monitorSettingsTypedRoute =
-    TypedGoRoute<MonitorSettingsRoute>(path: '/settings/monitor');
-
-/// 设置监视器
-class MonitorSettingsRoute extends GoRouteData {
-  const MonitorSettingsRoute();
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const MonitorSettingsScreen();
   }
 }

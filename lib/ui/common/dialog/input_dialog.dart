@@ -16,11 +16,13 @@ Future<String?> showInputDialog<T>(
       builder: (context) {
         final controller = useTextEditingController();
         final error = useState<String?>(null);
+        final node = useFocusNode();
         void onSubmit() {
           final value = controller.text;
           final hasError = validator?.call(value);
           if (hasError != null) {
             error.value = hasError;
+            node.requestFocus();
           } else {
             Navigator.of(context).pop(value);
           }
@@ -31,6 +33,7 @@ Future<String?> showInputDialog<T>(
             duration: kThemeAnimationDuration,
             alignment: Alignment.topCenter,
             child: TextField(
+              focusNode: node,
               controller: controller,
               autofocus: true,
               decoration: InputDecoration(
@@ -38,6 +41,9 @@ Future<String?> showInputDialog<T>(
                 errorText: error.value,
               ),
               inputFormatters: inputFormatters,
+              onChanged: (value) {
+                error.value = null;
+              },
               onSubmitted: (value) => onSubmit(),
             ),
           ),

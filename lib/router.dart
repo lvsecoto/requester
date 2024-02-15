@@ -35,7 +35,7 @@ GoRouter router(RouterRef ref) => GoRouter(
           ),
         ),
         ResponsiveLayoutNavigationDestinationRoute(
-          const SettingsRoute().location,
+          const SettingsEmptyRoute().location,
           $settingsRoute,
           ResponsiveLayoutNavigationDestination(
             icon: const Icon(Icons.settings),

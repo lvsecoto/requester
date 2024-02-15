@@ -28,7 +28,7 @@ dependencies:
   common:
     git:
       url: git@github.com:lvsecoto/flutter_common.git
-      ref: 42287cf13da0db6bdea0a52a366773e35c7f5f04
+      ref: ee2abc5bd85dd2276dc5d661f46fe39e302ba2ef
 
   # 自动代码生成
   persistence_annotation:
@@ -76,6 +76,7 @@ dependencies:
   path_provider: ^2.1.2
   path: ^1.8.3
   visibility_detector: ^0.4.0+2
+  conduit_open_api: ^4.4.0
 
 dev_dependencies:
   flutter_test:
