@@ -5,6 +5,8 @@ import 'package:gap/gap.dart';
 import 'package:requester/ui/common/common.dart';
 import 'package:requester/ui/settings/document/provider/provider.dart'
     as provider;
+import 'package:requester/ui/settings/document/widget/actions/action_delete_document_source_widget.dart';
+import 'package:requester/ui/settings/document/widget/actions/action_sync_document_source_widget.dart';
 
 class ContentWidget extends ConsumerWidget {
   const ContentWidget({
@@ -52,17 +54,12 @@ class ContentWidget extends ConsumerWidget {
               itemBuilder: (context, source) => ListTile(
                 title: Text(source.name),
                 subtitle: Text(source.url),
-                trailing: IconButton(
-                  onPressed: () async {
-                    final confirmed = await showConfirmDialog(
-                      context,
-                      title: const Text('删除文档源'),
-                    );
-                    if (confirmed) {
-                      await provider.actionRemoveDocumentSource(ref, source);
-                    }
-                  },
-                  icon: const Icon(Icons.close),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ActionSyncDocumentSourceWidget(source: source),
+                    ActionDeleteDocumentSourceWidget(source: source),
+                  ],
                 ),
               ),
             );

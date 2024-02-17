@@ -78,7 +78,7 @@ class _RequestItem extends ConsumerWidget {
       child: InkWell(
         onTap: onTap,
         child: RequestItemWidget(
-          request: item,
+          logRequest: item,
         ),
       ),
     );

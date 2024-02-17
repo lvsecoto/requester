@@ -16,18 +16,24 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.surfaceContainerHighest,
     required this.priorityHeight,
     required this.priorityLow,
+    required this.colorDocument,
   });
 
   factory AppTheme.from({required Color colorSeed}) {
     final palette = CorePalette.of(colorSeed.value);
 
-    // 业务颜色
     final primaryCam = Cam16.fromInt(colorSeed.value);
+    // 业务颜色
+
     final priorityHeight = TonalPalette.of(
       Cam16.fromInt(Colors.red.value).hue,
       max(48, primaryCam.chroma),
     ).get(40);
     final priorityLow = palette.neutral.get(40);
+    final colorDocument = TonalPalette.of(
+      Cam16.fromInt(Colors.blue.value).hue,
+      max(48, primaryCam.chroma),
+    ).get(40);
 
     return AppTheme(
       surfaceContainerLowest: Color(palette.neutral.get(100)),
@@ -38,6 +44,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       surfaceContainerHighest: Color(palette.neutral.get(90)),
       priorityHeight: Color(priorityHeight),
       priorityLow: Color(priorityLow),
+      colorDocument: Color(colorDocument),
     );
   }
 
@@ -50,6 +57,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
 
   final Color priorityHeight;
   final Color priorityLow;
+
+  final Color colorDocument;
 
   static AppTheme of(BuildContext context) =>
       Theme.of(context).extension<AppTheme>()!;
@@ -64,6 +73,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
         surfaceContainerHighest: surfaceContainerHighest,
         priorityHeight: priorityHeight,
         priorityLow: priorityLow,
+        colorDocument: colorDocument,
       );
 
   @override
@@ -92,6 +102,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
           Colors.transparent,
       priorityLow:
           Color.lerp(priorityLow, other.priorityLow, t) ?? Colors.transparent,
+      colorDocument: Color.lerp(colorDocument, other.colorDocument, t) ??
+          Colors.transparent,
     );
   }
 }

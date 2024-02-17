@@ -1,4 +1,5 @@
 import 'package:common/common.dart';
+import 'package:requester/domain/document/document.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/domain/log/log.dart';
@@ -6,6 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'provider.g.dart';
 
+/// 编辑搜索关键字
 @riverpod
 class EditQuery extends _$EditQuery with TextEditControllerNotifier {
   @override
@@ -32,6 +34,7 @@ class EditQuery extends _$EditQuery with TextEditControllerNotifier {
   }
 }
 
+/// 当前过滤配置
 @riverpod
 class CurrentFilter extends _$CurrentFilter {
   @override
@@ -40,6 +43,7 @@ class CurrentFilter extends _$CurrentFilter {
   }
 }
 
+/// 日志Provider
 @riverpod
 class WatchLogProvider extends _$WatchLogProvider {
   @override
@@ -56,6 +60,12 @@ class WatchLogProvider extends _$WatchLogProvider {
   }
 }
 
+/// 操作：清除日志
 Future<void> actionClearLog(WidgetRef ref) async {
   return ref.read(logManagerProvider).clear();
+}
+
+String watchRequestDocumentSummary(WidgetRef ref, LogRequest logRequest) {
+  final provider = ref.watch(documentManagerProvider).provideAnalyzeLogRequest(logRequest);
+  return ref.watch(provider).valueOrNull?.summary ?? '';
 }

@@ -11,3 +11,26 @@ class DocumentSource with _$DocumentSource {
       _$DocumentSourceFromJson(json);
 }
 
+@freezed
+class LogRequestAnalysis with _$LogRequestAnalysis {
+  /// 请求日志分析结果
+  const factory LogRequestAnalysis({
+    required DocumentSource documentSource,
+    /// 总览
+    required String summary,
+    /// 查询字段
+    required Map<String, FieldAnalysis> queries,
+    /// 头字段
+    required Map<String, FieldAnalysis> headers,
+  }) = _LogRequestAnalysis;
+}
+
+@freezed
+class FieldAnalysis with _$FieldAnalysis {
+  const factory FieldAnalysis({
+    required DocumentSource documentSource,
+    /// 总览
+    required String summary,
+  }) = _FieldAnalysis;
+}
+

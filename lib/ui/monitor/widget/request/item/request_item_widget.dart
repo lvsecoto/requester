@@ -1,14 +1,20 @@
+import 'package:common/common.dart';
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:requester/domain/log/log.dart';
+import 'package:requester/ui/common/common.dart';
 import 'package:requester/ui/monitor/common/common.dart';
+import 'package:requester/ui/monitor/provider/provider.dart';
 
 class RequestItemWidget extends StatelessWidget {
   const RequestItemWidget({
     super.key,
-    required this.request,
+    required this.logRequest,
   });
 
-  final LogRequest request;
+  final LogRequest logRequest;
 
   @override
   Widget build(BuildContext context) {
@@ -20,18 +26,27 @@ class RequestItemWidget extends StatelessWidget {
           RequestSummaryWidget(
             leading: Padding(
               padding: const EdgeInsets.only(right: 8),
-              child: MethodWidget(logRequest: request),
+              child: MethodWidget(logRequest: logRequest),
             ),
-            logRequest: request,
+            logRequest: logRequest,
           ),
-          const SizedBox(height: 4),
+          const Gap(4),
+          Consumer(builder: (context, ref, _) {
+            final summary = watchRequestDocumentSummary(ref, logRequest);
+            return AnimatedVisibilityWidget(
+              isVisible: summary.isNotBlank,
+              child: DocumentText(
+                summary,
+              ),
+            );
+          }),
           Row(
             children: [
-              NetworkStatus(logRequest: request),
-              const SizedBox(width: 8),
-              HostWidget(logRequest: request),
-              const SizedBox(width: 8),
-              DCStatusCodeWidget(request: request),
+              NetworkStatus(logRequest: logRequest),
+              const Gap(8),
+              HostWidget(logRequest: logRequest),
+              const Gap(8),
+              DCStatusCodeWidget(request: logRequest),
             ],
           ),
         ],
