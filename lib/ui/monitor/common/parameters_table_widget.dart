@@ -1,12 +1,29 @@
+import 'package:common/common.dart';
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:requester/domain/document/document.dart';
+import 'package:requester/ui/common/common.dart';
+
+class ParametersTableValue {
+  final FieldAnalysis? fieldAnalysis;
+  final dynamic data;
+
+  ParametersTableValue({
+    required this.data,
+    required this.fieldAnalysis,
+  });
+}
 
 class ParametersTableWidget extends HookWidget {
   /// 表格
-  const ParametersTableWidget({super.key, required this.data});
+  const ParametersTableWidget({
+    super.key,
+    required this.data,
+  });
 
-  final Map<String, dynamic> data;
+  final Map<String, ParametersTableValue> data;
 
   @override
   Widget build(BuildContext context) {
@@ -48,14 +65,31 @@ class ParametersTableWidget extends HookWidget {
                 TableCell(
                   child: ListTile(
                     onTap: () {
-                      Clipboard.setData(ClipboardData(text: entry.value));
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(const SnackBar(content: Text('内容已复制')));
+                      Clipboard.setData(
+                        ClipboardData(
+                          text: entry.value.data.toString(),
+                        ),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('内容已复制')),
+                      );
                     },
-                    title: Text(
-                      entry.value.toString(),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
+                    title: AnimatedSize(
+                      duration: kThemeAnimationDuration,
+                      child: Wrap(
+                        spacing: 16,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Text(
+                            entry.value.data.toString(),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                          _Document(
+                            entry: entry,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -65,5 +99,27 @@ class ParametersTableWidget extends HookWidget {
         ),
       ),
     );
+  }
+}
+
+class _Document extends StatelessWidget {
+  const _Document({
+    required this.entry,
+  });
+
+  final MapEntry<String, ParametersTableValue> entry;
+
+  @override
+  Widget build(BuildContext context) {
+    return Builder(builder: (context) {
+      final fieldAnalysis = entry.value.fieldAnalysis;
+      final summary = fieldAnalysis?.summary ?? '';
+      return AnimatedVisibilityWidget(
+        isVisible: summary.isNotBlank,
+        child: DocumentText(
+          summary,
+        ),
+      );
+    });
   }
 }

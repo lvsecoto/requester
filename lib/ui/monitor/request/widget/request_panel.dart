@@ -15,6 +15,7 @@ class RequestPanel extends HookConsumerWidget {
     final request = loadLogRequest(ref);
 
     final queries = request?.requestQueries ?? const {};
+    final headers = request?.requestHeaders ?? {};
 
     int? defaultTab;
     if (request != null) {
@@ -35,11 +36,17 @@ class RequestPanel extends HookConsumerWidget {
           PanelTab('Query', 1),
           PanelTab('请求头', 2),
         ],
-        builder: (context, value, child) => switch (value) {
-          0 => DataWidget(data: request?.requestBody ?? ''),
-          1 => ParametersTableWidget(data: queries),
-          2 => ParametersTableWidget(data: request?.requestHeaders ?? {}),
-          _ => throw '',
+        builder: (context, value, child) {
+          return switch (value) {
+            0 => DataWidget(data: request?.requestBody ?? ''),
+            1 => ParametersTableWidget(
+                data: loadLogRequestQueries(ref),
+              ),
+            2 => ParametersTableWidget(
+                data: loadLogRequestHeaders(ref),
+              ),
+            _ => throw '',
+          };
         },
       ),
     );
