@@ -80,6 +80,38 @@ Map<String, ParametersTableValue> _analyzeParameterData(
   };
 }
 
+DataWidgetData loadLogRequestBody(
+  WidgetRef ref,
+) {
+  final request = loadLogRequest(ref);
+  if (request == null) {
+    return DataWidgetData(data: '');
+  }
+  final documentProvider =
+      ref.watch(documentManagerProvider).provideAnalyzeLogRequest(request);
+  final documentBodies = ref.watch(documentProvider).valueOrNull?.requestBody;
+  return DataWidgetData(
+    data: request.requestResponse?.body ?? '',
+    objectAnalysis: documentBodies,
+  );
+}
+
+DataWidgetData loadLogResponseBody(
+  WidgetRef ref,
+) {
+  final request = loadLogRequest(ref);
+  if (request == null) {
+    return DataWidgetData(data: '');
+  }
+  final documentProvider =
+      ref.watch(documentManagerProvider).provideAnalyzeLogRequest(request);
+  final documentBodies = ref.watch(documentProvider).valueOrNull?.responseBody;
+  return DataWidgetData(
+    data: request.requestResponse?.body ?? '',
+    objectAnalysis: documentBodies?[request.requestResponse?.code.toString()],
+  );
+}
+
 final kDefaultMonitorSplitAreas = [
   Area(minimalSize: 200),
   Area(minimalSize: 200)

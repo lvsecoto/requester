@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-dynamic tryJsonDecode(String source) {
+dynamic tryJsonDecode(String? source) {
   try {
-    return jsonDecode(source);
+    return jsonDecode(source!);
   } catch (e) {
     return null;
   }

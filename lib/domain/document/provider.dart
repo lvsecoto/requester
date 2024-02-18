@@ -69,6 +69,20 @@ class AnalyzeLogRequest extends _$AnalyzeLogRequest {
         document,
         APIParameterLocation.header,
       ),
+      requestBody: ObjectAnalysis(
+        scheme: document
+                .apiOperation.requestBody?.content?.values.firstOrNull?.schema ??
+            APISchemaObject.empty(),
+      ),
+      responseBody: document.apiOperation.responses?.map(
+        (key, response) => MapEntry(
+          key,
+          ObjectAnalysis(
+            scheme: response?.content?.values.firstOrNull?.schema ??
+                APISchemaObject.empty(),
+          ),
+        ),
+      ),
     );
   }
 

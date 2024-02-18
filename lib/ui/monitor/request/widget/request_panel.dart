@@ -38,7 +38,7 @@ class RequestPanel extends HookConsumerWidget {
         ],
         builder: (context, value, child) {
           return switch (value) {
-            0 => DataWidget(data: request?.requestBody ?? ''),
+            0 => DataWidget(data: loadLogRequestBody(ref)),
             1 => ParametersTableWidget(
                 data: loadLogRequestQueries(ref),
               ),

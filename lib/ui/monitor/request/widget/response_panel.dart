@@ -49,7 +49,7 @@ class ResponsePanel extends ConsumerWidget {
       );
     } else if (response != null) {
       child = DataWidget(
-        data: response.body,
+        data: loadLogResponseBody(ref),
       );
     } else {
       child = const SizedBox.shrink();

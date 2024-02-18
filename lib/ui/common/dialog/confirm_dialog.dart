@@ -8,7 +8,7 @@ Future<bool> showConfirmDialog<T>(
   Widget? title,
   Widget? message,
 }) async {
-  return (await showDialog<String>(
+  return (await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
       title: title,

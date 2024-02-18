@@ -25,6 +25,12 @@ class LogRequestAnalysis with _$LogRequestAnalysis {
 
     /// 头字段
     required Map<String, FieldAnalysis> headers,
+
+    /// 请求字段
+    ObjectAnalysis? requestBody,
+
+    /// 返回字段(String代表不同的返回代码)
+    Map<String, ObjectAnalysis>? responseBody,
   }) = _LogRequestAnalysis;
 }
 
@@ -118,4 +124,160 @@ sealed class FieldAnalysisResult with _$FieldAnalysisResult {
     required String expected,
     required String butWas,
   }) = FieldAnalysisResultTypeError;
+}
+
+@freezed
+class ObjectAnalysis with _$ObjectAnalysis {
+  const ObjectAnalysis._();
+
+  const factory ObjectAnalysis({
+    required APISchemaObject scheme,
+  }) = _ObjectAnalysis;
+
+  ObjectAnalysisResult analyze(dynamic data) {
+    ObjectAnalysisResult inflate(
+      dynamic key,
+      APISchemaObject? scheme,
+      dynamic data,
+    ) {
+      if (data is Map<String, dynamic>) {
+        final fields = [
+          ...data.mapEntries((entry) {
+            final fieldScheme = scheme?.properties?[entry.key];
+            final fieldData = entry.value;
+            return inflate(entry.key, fieldScheme, fieldData);
+          }),
+          // 漏了的字段
+          ...(scheme?.properties ?? const {})
+              .filterNot((it) => data.containsKey(it.key))
+              .mapEntries(
+                (fieldSchemeEntry) =>
+                    inflate(fieldSchemeEntry.key, fieldSchemeEntry.value, null),
+              ),
+        ];
+        if (scheme?.type != APIType.object) {
+          return ObjectAnalysisResult.missed(
+            key: key,
+            expected: '对象',
+            busWas: data.toString(),
+            fields: fields,
+          );
+        } else if (scheme == null) {
+          return ObjectAnalysisResult.redundant(
+            key: key,
+            fields: fields,
+          );
+        } else {
+          return ObjectAnalysisResult.corrected(
+            key: key,
+            summary: scheme.description ?? '',
+            fields: fields,
+          );
+        }
+      } else if (data is List) {
+        final fields = data
+            .mapIndexed(
+              (index, data) => inflate(index, scheme?.items, data),
+            )
+            .toList();
+        if (scheme?.type != APIType.array) {
+          return ObjectAnalysisResult.missed(
+            key: key,
+            expected: '数组',
+            busWas: data.toString(),
+            fields: fields,
+          );
+        } else if (scheme == null) {
+          return ObjectAnalysisResult.redundant(
+            key: key,
+            fields: fields,
+          );
+        } else {
+          return ObjectAnalysisResult.corrected(
+            key: key,
+            summary: scheme.description ?? '',
+            fields: fields,
+          );
+        }
+      } else {
+        if (scheme == null) {
+          return ObjectAnalysisResult.redundant(
+            key: key,
+            value: data,
+            fields: const [],
+          );
+        } else {
+          final expected = _isCorrected(scheme.type, data);
+          if (expected != null) {
+            List<ObjectAnalysisResult> fields = const [];
+            if (scheme.type == APIType.object) {
+              // 漏了的字段
+              fields = (scheme.properties ?? const {})
+                  .mapEntries(
+                    (fieldSchemeEntry) => inflate(
+                        fieldSchemeEntry.key, fieldSchemeEntry.value, null),
+                  )
+                  .toList();
+            } else if (scheme.type == APIType.array) {
+              fields = [
+                inflate(key, scheme.items, null),
+              ];
+            }
+            return ObjectAnalysisResult.missed(
+              key: key,
+              value: data,
+              expected: expected,
+              busWas: data.toString(),
+              fields: fields,
+            );
+          } else {
+            return ObjectAnalysisResult.corrected(
+              key: key,
+              value: data,
+              summary: scheme.description ?? '',
+              fields: const [],
+            );
+          }
+        }
+      }
+    }
+
+    return inflate(null, scheme, data);
+  }
+
+  String? _isCorrected(APIType? fieldType, fieldData) {
+    return switch (fieldType) {
+      null => null,
+      APIType.array => tryJsonDecode(fieldData) is List ? null : '列表',
+      APIType.object => tryJsonDecode(fieldData) is Map ? null : '对象',
+      APIType.string => fieldData is String ? null : 'string',
+      APIType.number => fieldData is int ? null : 'int',
+      APIType.integer => fieldData is int ? null : 'int',
+      APIType.boolean => fieldData is bool ? null : 'bool',
+    };
+  }
+}
+
+@freezed
+sealed class ObjectAnalysisResult with _$ObjectAnalysisResult {
+  const factory ObjectAnalysisResult.corrected({
+    required dynamic key,
+    dynamic value,
+    required String summary,
+    required List<ObjectAnalysisResult>? fields,
+  }) = ObjectAnalysisResultCorrected;
+
+  const factory ObjectAnalysisResult.redundant({
+    required dynamic key,
+    dynamic value,
+    required List<ObjectAnalysisResult>? fields,
+  }) = ObjectAnalysisResultRedundant;
+
+  const factory ObjectAnalysisResult.missed({
+    required dynamic key,
+    dynamic value,
+    required String expected,
+    required String busWas,
+    required List<ObjectAnalysisResult>? fields,
+  }) = ObjectAnalysisResultMissed;
 }

@@ -1,11 +1,27 @@
 import 'dart:convert';
 
+import 'package:animated_tree_view/animated_tree_view.dart';
+import 'package:common/common.dart';
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_highlight/themes/github.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:requester/common/common.dart';
+import 'package:requester/domain/document/document.dart';
+import 'package:requester/ui/common/common.dart';
 
 import 'flutter_highlight.dart';
+
+class DataWidgetData {
+  DataWidgetData({
+    required this.data,
+    this.objectAnalysis,
+  });
+
+  final String data;
+  final ObjectAnalysis? objectAnalysis;
+}
 
 class DataWidget extends StatelessWidget {
   const DataWidget({
@@ -13,30 +29,32 @@ class DataWidget extends StatelessWidget {
     required this.data,
   });
 
-  final String data;
-
-  static const _encoder = JsonEncoder.withIndent('   ');
+  final DataWidgetData data;
 
   @override
   Widget build(BuildContext context) {
-    String language = 'text';
-    String data = this.data;
+    String data = this.data.data;
+    final json = tryJsonDecode(data);
+    final objectAnalysis = this.data.objectAnalysis;
 
-    if (data.trim().startsWith('{') || data.trim().startsWith('[')) {
-      language = 'json';
-      try {
-        data = _encoder.convert(jsonDecode(data));
-      } catch (_) {}
+    if (json != null) {
+      if (objectAnalysis == null) {
+        return _Viewer(data: data, language: 'json');
+      } else {
+        return _DocumentJsonViewer(
+          data: json,
+          objectAnalysis: objectAnalysis,
+        );
+      }
     } else if (data.trim().startsWith('<')) {
-      language = 'html';
+      return _Viewer(data: data, language: 'html');
+    } else if (data.isBlank) {
+      return const Center(
+        child: Text('没有内容'),
+      );
+    } else {
+      return _Viewer(data: data, language: 'text');
     }
-    return SelectionArea(
-      child: data.isBlank
-          ? const Center(
-              child: Text('没有内容'),
-            )
-          : _Viewer(data: data, language: language),
-    );
   }
 }
 
@@ -52,22 +70,141 @@ class _Viewer extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final controller = useScrollController();
-    return Scrollbar(
-      controller: controller,
-      child: SingleChildScrollView(
+    return SelectionArea(
+      child: Scrollbar(
         controller: controller,
-        child: HighlightView(
-          data,
-          language: language,
-          theme: {
-            ...githubTheme,
-            'root': githubTheme['root']!.copyWith(
-              backgroundColor: Colors.transparent,
-            ),
-          },
-          padding: const EdgeInsets.all(8),
+        child: SingleChildScrollView(
+          controller: controller,
+          child: HighlightView(
+            data,
+            language: language,
+            theme: {
+              ...githubTheme,
+              'root': githubTheme['root']!.copyWith(
+                backgroundColor: Colors.transparent,
+              ),
+            },
+            padding: const EdgeInsets.all(8),
+          ),
         ),
       ),
     );
+  }
+}
+
+class _DocumentJsonViewer extends HookWidget {
+  const _DocumentJsonViewer({
+    required this.data,
+    required this.objectAnalysis,
+  });
+
+  final dynamic data;
+
+  final ObjectAnalysis objectAnalysis;
+
+  static const _encoder = JsonEncoder.withIndent('   ');
+
+  @override
+  Widget build(BuildContext context) {
+    final isOriginMode = useState(false);
+    final root = _useRootNode();
+
+    final treeView = TreeView.simpleTyped(
+      tree: root,
+      showRootNode: false,
+      indentation: const Indentation(
+        style: IndentStyle.roundJoint,
+      ),
+      padding: const EdgeInsets.only(left: 8),
+      onTreeReady: (controller) async {
+        await Future.delayed(Durations.medium4);
+        controller.expandAllChildren(root, recursive: true);
+      },
+      builder: (context, item) {
+        final jsonNode = item.data!;
+        var key =
+            jsonNode.key is int ? '[${jsonNode.key}]' : jsonNode.key.toString();
+        final title =
+            key + (jsonNode.value == null ? '' : ' : ${jsonNode.value}');
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8, top: 8, right: 32),
+          child: switch (jsonNode) {
+            ObjectAnalysisResultCorrected() => DocumentText(title),
+            ObjectAnalysisResultRedundant() =>
+              DocumentText(title, isRedundant: true),
+            ObjectAnalysisResultMissed() => DocumentText(title, isError: true),
+          },
+        );
+      },
+    );
+
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        treeView,
+        AnimatedVisibilityWidget(
+          isVisible: isOriginMode.value,
+          animationWidgetBuilder: AnimatedVisibilityWidget.fadeAnimationWidgetBuilder,
+          child: IgnorePointer(
+            ignoring: !isOriginMode.value,
+            child: Material(
+              color: Colors.white,
+              child: _Viewer(
+                data: _encoder.convert(data),
+                language: 'json',
+              ),
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.topRight,
+          child: IconButton(
+            onPressed: () {
+              isOriginMode.value = !isOriginMode.value;
+            },
+            icon: AnimatedSizeAndFade(
+              childKey: isOriginMode.value,
+              child: isOriginMode.value
+                  ? const Icon(
+                      Icons.remove_red_eye_outlined,
+                    )
+                  : const Icon(
+                      Icons.remove_red_eye,
+                    ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  TreeNode<ObjectAnalysisResult> _useRootNode() {
+    return useMemoized(() {
+      final result = objectAnalysis.analyze([
+        ...data,
+        {'a': 'b'}
+      ]);
+      final root = TreeNode<ObjectAnalysisResult>.root(
+        data: result,
+      );
+      // 展开分析结果
+      void expand(TreeNode<ObjectAnalysisResult> node) {
+        final fields = node.data?.fields;
+        final childNode = fields?.map((field) {
+              final childNode = TreeNode<ObjectAnalysisResult>(
+                key: '${node.key}${field.key}',
+                data: field,
+              );
+              expand(childNode);
+              return childNode;
+            }).toList() ??
+            [];
+        node.addAll(childNode);
+        return;
+      }
+
+      expand(root);
+      return root;
+    });
   }
 }
