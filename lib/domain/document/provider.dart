@@ -62,10 +62,12 @@ class AnalyzeLogRequest extends _$AnalyzeLogRequest {
           .filterNotNull()
           .join('\n'),
       queries: _analyzeFields(
-        document, APIParameterLocation.query,
+        document,
+        APIParameterLocation.query,
       ),
       headers: _analyzeFields(
-        document, APIParameterLocation.header,
+        document,
+        APIParameterLocation.header,
       ),
     );
   }
@@ -80,14 +82,15 @@ class AnalyzeLogRequest extends _$AnalyzeLogRequest {
           .filter((it) => it.location == location),
       ...document.apiOperation.parameters
               ?.filterNotNull()
-              .filter((it) => it.location == APIParameterLocation.query).toList() ??
+              .filter((it) => it.location == location)
+              .toList() ??
           const [],
     ].associate(
       (it) => MapEntry(
           it.name ?? '',
           FieldAnalysis(
             documentSource: document.documentSource,
-            summary: it.description ?? '',
+            parameterDocument: it,
           )),
     );
   }

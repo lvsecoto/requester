@@ -1,4 +1,5 @@
 import 'package:curl_converter/curl_converter.dart';
+import 'package:dartx/dartx.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_split_view/multi_split_view.dart';
@@ -30,23 +31,7 @@ Map<String, ParametersTableValue> loadLogRequestQueries(
   final documentProvider =
       ref.watch(documentManagerProvider).provideAnalyzeLogRequest(request);
   final documentQuery = ref.watch(documentProvider).valueOrNull?.queries;
-  if (documentQuery == null) {
-    return request.requestQueries.map((key, value) => MapEntry(
-          key,
-          ParametersTableValue(
-            fieldAnalysis: null,
-            data: value,
-          ),
-        ));
-  } else {
-    return request.requestQueries.map((key, value) => MapEntry(
-          key,
-          ParametersTableValue(
-            fieldAnalysis: documentQuery[key],
-            data: value,
-          ),
-        ));
-  }
+  return _analyzeParameterData(documentQuery, request.requestQueries);
 }
 
 Map<String, ParametersTableValue> loadLogRequestHeaders(
@@ -59,23 +44,40 @@ Map<String, ParametersTableValue> loadLogRequestHeaders(
   final documentProvider =
       ref.watch(documentManagerProvider).provideAnalyzeLogRequest(request);
   final documentHeaders = ref.watch(documentProvider).valueOrNull?.headers;
-  if (documentHeaders == null) {
-    return request.requestQueries.map((key, value) => MapEntry(
-          key,
-          ParametersTableValue(
-            fieldAnalysis: null,
-            data: value,
-          ),
-        ));
-  } else {
-    return request.requestQueries.map((key, value) => MapEntry(
-          key,
-          ParametersTableValue(
-            fieldAnalysis: documentHeaders[key],
-            data: value,
-          ),
-        ));
+  return _analyzeParameterData(documentHeaders, request.requestHeaders);
+}
+
+/// 用文档[document]分析数据集合[data]
+Map<String, ParametersTableValue> _analyzeParameterData(
+  Map<String, FieldAnalysis>? document,
+  Map<String, String> data,
+) {
+  if (document == null) {
+    return data.map(
+      (key, value) => MapEntry(
+        key,
+        ParametersTableValue(data: value),
+      ),
+    );
   }
+  return {
+    ...document.map((key, fieldAnalysis) => MapEntry(
+          key,
+          ParametersTableValue(
+            fieldAnalysis: fieldAnalysis,
+            data: data[key],
+          ),
+        )),
+    ...data
+        .filterNot((it) => document.keys.contains(it.key))
+        .map((key, data) => MapEntry(
+              key,
+              ParametersTableValue(
+                isRedundant: true,
+                data: data,
+              ),
+            ))
+  };
 }
 
 final kDefaultMonitorSplitAreas = [

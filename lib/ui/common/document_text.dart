@@ -6,25 +6,33 @@ class DocumentText extends StatelessWidget {
   const DocumentText(
     this.data, {
     super.key,
+    this.isError = false,
   });
 
+  final bool isError;
   final String data;
 
   @override
   Widget build(BuildContext context) {
-    final color = AppTheme.of(context).colorDocument;
+    final color = isError
+        ? Theme.of(context).colorScheme.error
+        : AppTheme.of(context).colorDocument;
     return Row(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(Icons.notes, size: 16, color: color),
+        isError
+            ? Icon(Icons.error, size: 16, color: color)
+            : Icon(Icons.notes, size: 16, color: color),
         const Gap(8),
-        Text(
-          data,
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                color: color,
-                fontWeight: FontWeight.bold,
-              ),
+        Flexible(
+          child: Text(
+            data,
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: color,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
         ),
       ],
     );

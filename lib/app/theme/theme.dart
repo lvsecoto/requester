@@ -25,15 +25,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
     final primaryCam = Cam16.fromInt(colorSeed.value);
     // 业务颜色
 
-    final priorityHeight = TonalPalette.of(
-      Cam16.fromInt(Colors.red.value).hue,
-      max(48, primaryCam.chroma),
-    ).get(40);
-    final priorityLow = palette.neutral.get(40);
-    final colorDocument = TonalPalette.of(
-      Cam16.fromInt(Colors.blue.value).hue,
-      max(48, primaryCam.chroma),
-    ).get(40);
+    final priorityHeight = Colors.red.tone(40);
+    final priorityLow = Color(palette.neutral.get(40));
+    final colorDocument = Colors.blue.tone(40);
 
     return AppTheme(
       surfaceContainerLowest: Color(palette.neutral.get(100)),
@@ -42,9 +36,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
       surfaceContainer: Color(palette.neutral.get(94)),
       surfaceContainerHigh: Color(palette.neutral.get(92)),
       surfaceContainerHighest: Color(palette.neutral.get(90)),
-      priorityHeight: Color(priorityHeight),
-      priorityLow: Color(priorityLow),
-      colorDocument: Color(colorDocument),
+      priorityHeight: priorityHeight,
+      priorityLow: priorityLow,
+      colorDocument: colorDocument,
     );
   }
 
@@ -120,4 +114,14 @@ extension TextStyleEx on TextStyle {
   TextStyle get disabled => copyWith(
         color: color!.withOpacity(0.38),
       );
+}
+
+extension ColorEx on Color {
+  Color tone(int tone) {
+    final tonalPalette = TonalPalette.of(
+      Cam16.fromInt(value).hue,
+      48,
+    );
+    return Color(tonalPalette.get(tone));
+  }
 }

@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
+import 'package:requester/common/common.dart';
 import 'package:requester/domain/log/log.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:persistence_annotation/persistence_annotation.dart';
