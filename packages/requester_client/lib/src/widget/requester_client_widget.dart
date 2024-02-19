@@ -22,9 +22,12 @@ class RequesterClientWidget extends HookWidget {
   const RequesterClientWidget({
     super.key,
     required this.child,
+    this.port = 5010,
   });
 
   final Widget child;
+
+  final int port;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +49,7 @@ class RequesterClientWidget extends HookWidget {
     }, [identityAnimation]);
     final controller = useMemoized(
       () => RequesterClientController(
-        port: 5005,
+        port: port,
         onIdentity: () {
           identityAnimation.animateTo(
             identityAnimation.upperBound,

@@ -38,7 +38,11 @@ class ResponsePanel extends ConsumerWidget {
 
     Widget child;
 
-    if (hasError) {
+    if (response != null) {
+      child = DataWidget(
+        data: loadLogResponseBody(ref),
+      );
+    } else if (hasError) {
       child = Center(
         child: Text(
           error!,
@@ -46,10 +50,6 @@ class ResponsePanel extends ConsumerWidget {
                 color: Colors.red,
               ),
         ),
-      );
-    } else if (response != null) {
-      child = DataWidget(
-        data: loadLogResponseBody(ref),
       );
     } else {
       child = const SizedBox.shrink();

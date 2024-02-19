@@ -155,16 +155,16 @@ class ObjectAnalysis with _$ObjectAnalysis {
                     inflate(fieldSchemeEntry.key, fieldSchemeEntry.value, null),
               ),
         ];
-        if (scheme?.type != APIType.object) {
-          return ObjectAnalysisResult.missed(
-            key: key,
-            expected: '对象',
-            busWas: data.toString(),
-            fields: fields,
-          );
-        } else if (scheme == null) {
+        if (scheme == null) {
           return ObjectAnalysisResult.redundant(
             key: key,
+            fields: fields,
+          );
+        } else if (scheme.type != APIType.object) {
+          return ObjectAnalysisResult.missed(
+            key: key,
+            expected: _getExpectedType(scheme.type, data) ?? '',
+            busWas: data.toString(),
             fields: fields,
           );
         } else {
@@ -180,16 +180,16 @@ class ObjectAnalysis with _$ObjectAnalysis {
               (index, data) => inflate(index, scheme?.items, data),
             )
             .toList();
-        if (scheme?.type != APIType.array) {
-          return ObjectAnalysisResult.missed(
-            key: key,
-            expected: '数组',
-            busWas: data.toString(),
-            fields: fields,
-          );
-        } else if (scheme == null) {
+        if (scheme == null) {
           return ObjectAnalysisResult.redundant(
             key: key,
+            fields: fields,
+          );
+        } else if (scheme.type != APIType.array) {
+          return ObjectAnalysisResult.missed(
+            key: key,
+            expected: _getExpectedType(scheme.type, data) ?? '',
+            busWas: data.toString(),
             fields: fields,
           );
         } else {
@@ -207,7 +207,7 @@ class ObjectAnalysis with _$ObjectAnalysis {
             fields: const [],
           );
         } else {
-          final expected = _isCorrected(scheme.type, data);
+          final expected = _getExpectedType(scheme.type, data);
           if (expected != null) {
             List<ObjectAnalysisResult> fields = const [];
             if (scheme.type == APIType.object) {
@@ -245,7 +245,8 @@ class ObjectAnalysis with _$ObjectAnalysis {
     return inflate(null, scheme, data);
   }
 
-  String? _isCorrected(APIType? fieldType, fieldData) {
+  /// 返回期望对象，如果[fieldData]符合期望对象，则返回为空
+  String? _getExpectedType(APIType? fieldType, fieldData) {
     return switch (fieldType) {
       null => null,
       APIType.array => tryJsonDecode(fieldData) is List ? null : '列表',

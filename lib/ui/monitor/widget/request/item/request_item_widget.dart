@@ -40,12 +40,11 @@ class RequestItemWidget extends StatelessWidget {
               ),
             );
           }),
-          Row(
+          Wrap(
+            spacing: 8,
             children: [
               NetworkStatus(logRequest: logRequest),
-              const Gap(8),
               HostWidget(logRequest: logRequest),
-              const Gap(8),
               DCStatusCodeWidget(request: logRequest),
             ],
           ),

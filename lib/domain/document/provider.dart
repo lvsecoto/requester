@@ -21,6 +21,7 @@ class DocumentSourceList extends _$DocumentSourceList with StreamValueNotifier {
 class ApiDocumentsStore extends _$ApiDocumentsStore {
   @override
   Future<Map<DocumentSource, APIDocument>> build() async {
+    ref.keepAlive();
     final sources =
         await ref.watch(documentManagerProvider)._persistence.getSources();
     final documents = await Future.wait(sources.map((source) async {
@@ -120,7 +121,7 @@ class AnalyzeLogRequest extends _$AnalyzeLogRequest {
       // 从Path中迭代Operation（Method），进而匹配合适的Path和Operation
       return keyAndPaths.mapNotNull((keyAndPath) {
         final path = keyAndPath.key;
-        if (!RegExp('.+/${path.removePrefix('/')}').hasMatch(url)) {
+        if (!RegExp('(.+/)?${path.removePrefix('/')}').hasMatch(url)) {
           return null;
         }
         final operation = keyAndPath.value?.operations.entries

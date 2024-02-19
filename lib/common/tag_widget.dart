@@ -86,7 +86,7 @@ class TagWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(8),
       color: Color(tonalPalette.get(95)),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

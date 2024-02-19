@@ -28,7 +28,7 @@ Future<T> getObject<T>(
   if (!await file.exists()) {
     final object = defaultValue;
     if (encode != null) {
-      await saveObject(key, object);
+      await saveObject(key, object, encode: encode);
     }
     return object;
   }

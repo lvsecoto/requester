@@ -80,6 +80,7 @@ Map<String, ParametersTableValue> _analyzeParameterData(
   };
 }
 
+/// 加载请求体
 DataWidgetData loadLogRequestBody(
   WidgetRef ref,
 ) {
@@ -91,7 +92,7 @@ DataWidgetData loadLogRequestBody(
       ref.watch(documentManagerProvider).provideAnalyzeLogRequest(request);
   final documentBodies = ref.watch(documentProvider).valueOrNull?.requestBody;
   return DataWidgetData(
-    data: request.requestResponse?.body ?? '',
+    data: request.requestBody ?? '',
     objectAnalysis: documentBodies,
   );
 }

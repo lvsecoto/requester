@@ -129,10 +129,10 @@ class _DocumentJsonViewer extends HookWidget {
         return Padding(
           padding: const EdgeInsets.only(bottom: 8, top: 8, right: 32),
           child: switch (jsonNode) {
-            ObjectAnalysisResultCorrected() => DocumentText(title),
+            ObjectAnalysisResultCorrected() => DocumentText('$title${jsonNode.summary.isNotBlank ?  '【${jsonNode.summary}】' : ''}'),
             ObjectAnalysisResultRedundant() =>
               DocumentText(title, isRedundant: true),
-            ObjectAnalysisResultMissed() => DocumentText(title, isError: true),
+            ObjectAnalysisResultMissed() => DocumentText('$title 期望${jsonNode.expected}，实际${jsonNode.busWas}', isError: true),
           },
         );
       },
@@ -180,10 +180,7 @@ class _DocumentJsonViewer extends HookWidget {
 
   TreeNode<ObjectAnalysisResult> _useRootNode() {
     return useMemoized(() {
-      final result = objectAnalysis.analyze([
-        ...data,
-        {'a': 'b'}
-      ]);
+      final result = objectAnalysis.analyze(data);
       final root = TreeNode<ObjectAnalysisResult>.root(
         data: result,
       );
