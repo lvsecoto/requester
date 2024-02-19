@@ -7,10 +7,12 @@ class DeviceListDetailsEmptyRoute extends ListDetailsEmptyRoute {
 @TypedShellRoute<RequesterClientListRoute>(
   routes: [
     TypedGoRoute<DeviceListDetailsEmptyRoute>(
-      path: '/client',
-    ),
-    TypedGoRoute<RequesterClientDetailsRoute>(
-      path: '/client/:hostPort',
+      path: '/clientList',
+      routes: [
+        TypedGoRoute<RequesterClientDetailsRoute>(
+          path: 'client/:hostPort',
+        ),
+      ]
     ),
   ],
 )
@@ -24,7 +26,7 @@ class RequesterClientListRoute extends ShellRouteData {
   Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
     return ListDetailsNavigation(
       navigator: navigator,
-      isDetailsEmpty: state.uri.path == const ListDetailsEmptyRoute().location,
+      isDetailsEmpty: state.uri.path == const DeviceListDetailsEmptyRoute().location,
       list: const RequesterClientListScreen(),
     );
   }

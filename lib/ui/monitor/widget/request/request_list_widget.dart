@@ -39,9 +39,10 @@ class RequestListWidget extends HookConsumerWidget {
                     switch (item) {
                       LogRequest() => _RequestItem(
                           item: item,
-                          onTap: () {
+                          onTap: () async {
                             alwaysShowLastLog.value = index == 0;
                             RequestRoute(item.id).go(context);
+                            alwaysShowLastLog.value = false;
                           },
                         ),
                       _ => throw '',

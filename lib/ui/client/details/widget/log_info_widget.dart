@@ -16,7 +16,7 @@ class LogInfoWidget extends StatelessWidget {
         children: [
           Expanded(
             child: ListTile(
-              title: const Text('日志上报目标'),
+              title: const Text('日志上报目标地址'),
               subtitle: HookConsumer(builder: (context, ref, _) {
                 final hostPort = ref
                         .watch(provider.loadClientLogHostPortProvider)

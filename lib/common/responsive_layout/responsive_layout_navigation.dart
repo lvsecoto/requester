@@ -144,8 +144,7 @@ class ResponsiveLayoutNavigation extends HookConsumerWidget {
                   onDestinationSelected: (index) {
                     onChangeIndex(index);
                   },
-                  labelBehavior:
-                      NavigationDestinationLabelBehavior.alwaysShow,
+                  labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
                   backgroundColor: containerColor,
                   destinations: _buildBottomNavLinks(),
                   selectedIndex: currentIndex,
@@ -163,7 +162,7 @@ class ResponsiveLayoutNavigation extends HookConsumerWidget {
                     labelType: NavigationRailLabelType.all,
                     selectedIndex: currentIndex,
                     onDestinationSelected: onChangeIndex,
-                    leading: isCompact ?  null : floatingActionButton,
+                    leading: isCompact ? null : floatingActionButton,
                   ),
                 ),
                 Expanded(

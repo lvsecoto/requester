@@ -122,6 +122,19 @@ class ListDetailsNavigation extends HookConsumerWidget {
           removeBottom: !isCompact,
         );
 
+    // 列表详情容器颜色
+    final backgroundColor = AppTheme.of(context).surfaceContainerHigh;
+
+    final theme = Theme.of(context);
+
+    // 列表颜色，和容器颜色匹配
+    final listTheme = theme.copyWith(
+      appBarTheme: theme.appBarTheme.copyWith(
+        color: backgroundColor,
+      ),
+      scaffoldBackgroundColor: backgroundColor,
+    );
+
     /// 详情页面
     final details = ClipRRect(
       borderRadius: isCompact ? BorderRadius.zero : BorderRadius.circular(12),
@@ -151,11 +164,10 @@ class ListDetailsNavigation extends HookConsumerWidget {
       bottom: true,
       minimum: EdgeInsets.only(
         top: Platform.isMacOS ? appWindow.titleBarHeight : 16,
-        right: 16,
         bottom: 16,
       ),
       child: Material(
-        color: AppTheme.of(context).surfaceContainerHigh,
+        color: backgroundColor,
         borderRadius: isCompact ? BorderRadius.zero : BorderRadius.circular(28),
         child: LayoutBuilder(builder: (context, constraint) {
           return Stack(
@@ -177,7 +189,10 @@ class ListDetailsNavigation extends HookConsumerWidget {
                     opacity: WindowClassNotifierWidget.animation(context),
                     child: MediaQuery(
                       data: data,
-                      child: list,
+                      child: Theme(
+                        data: listTheme,
+                        child: list,
+                      ),
                     ),
                   ),
                 ),

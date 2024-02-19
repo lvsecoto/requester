@@ -23,11 +23,11 @@ GoRouter router(RouterRef ref) => GoRouter(
           $monitorRoute,
           ResponsiveLayoutNavigationDestination(
             icon: const Icon(Icons.monitor_heart),
-            title: '监视',
+            title: '日志',
           ),
         ),
         ResponsiveLayoutNavigationDestinationRoute(
-          const DeviceListDetailsEmptyRoute().location,
+          const RequesterClientListRoute().location,
           $requesterClientListRoute,
           ResponsiveLayoutNavigationDestination(
             icon: const Icon(Icons.devices),
@@ -35,7 +35,7 @@ GoRouter router(RouterRef ref) => GoRouter(
           ),
         ),
         ResponsiveLayoutNavigationDestinationRoute(
-          const SettingsEmptyRoute().location,
+          const SettingsRoute().location,
           $settingsRoute,
           ResponsiveLayoutNavigationDestination(
             icon: const Icon(Icons.settings),

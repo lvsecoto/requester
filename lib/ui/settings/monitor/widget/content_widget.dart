@@ -13,10 +13,10 @@ class ContentWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('监视器设置'),
+        title: const Text('基本设置'),
       ),
       body: AutoDisposeProviderLoadingStateWidget.multiple(
-        futureProvider: [
+        futureProvider: const [
           // monitorHostPortProvider,
         ],
         child: ListView(

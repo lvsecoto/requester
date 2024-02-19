@@ -1,40 +1,39 @@
 part of 'route.dart';
 
-const _settingsTypedRoute = TypedShellRoute<SettingsRoute>(
-    routes: [
-      TypedGoRoute<SettingsEmptyRoute>(
-        path: '/settings',
-        routes: [
-          _monitorSettingsTypedRoute,
-          _documentSettingsTypedRoute,
-        ],
-      ),
-],);
-
 class SettingsEmptyRoute extends ListDetailsEmptyRoute {
   const SettingsEmptyRoute();
 }
 
 /// 设置
-@_settingsTypedRoute
+@TypedShellRoute<SettingsRoute>(
+  routes: [
+    TypedGoRoute<SettingsEmptyRoute>(
+      path: '/settingList',
+      routes: [
+        _monitorSettingsTypedRoute,
+        _documentSettingsTypedRoute,
+      ],
+    ),
+  ],
+)
 class SettingsRoute extends ShellRouteData {
   const SettingsRoute();
 
   // 默认的位置是没选择任何列表内容
-  String get location => const MonitorSettingsRoute().location;
+  String get location => const SettingsEmptyRoute().location;
 
   @override
   Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
     return ListDetailsNavigation(
       navigator: navigator,
-      isDetailsEmpty: state.uri.path == const ListDetailsEmptyRoute().location,
+      isDetailsEmpty: state.uri.path == const SettingsEmptyRoute().location,
       list: const SettingsScreen(),
     );
   }
 }
 
 const _monitorSettingsTypedRoute =
-    TypedGoRoute<MonitorSettingsRoute>(path: 'monitor');
+    TypedGoRoute<MonitorSettingsRoute>(path: 'setting/monitor');
 
 /// 设置监视器
 class MonitorSettingsRoute extends GoRouteData {
@@ -47,7 +46,7 @@ class MonitorSettingsRoute extends GoRouteData {
 }
 
 const _documentSettingsTypedRoute =
-    TypedGoRoute<DocumentSettingsRoute>(path: 'document');
+    TypedGoRoute<DocumentSettingsRoute>(path: 'setting/document');
 
 /// 设置文档
 class DocumentSettingsRoute extends GoRouteData {

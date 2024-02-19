@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:requester/app/theme/theme.dart';
 import 'package:requester/ui/monitor/provider/provider.dart' as provider;
@@ -11,6 +12,7 @@ class ContentWidget extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
+        const Gap(2),
         Consumer(
           builder: (context, ref, child) => Material(
             color: AppTheme.of(context).surfaceContainerLow,

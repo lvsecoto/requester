@@ -35,6 +35,7 @@ class RequestItemWidget extends StatelessWidget {
             final summary = watchRequestDocumentSummary(ref, logRequest);
             return AnimatedVisibilityWidget(
               isVisible: summary.isNotBlank,
+              animationWidgetBuilder: AnimatedVisibilityWidget.verticalAnimationWidgetBuilder,
               child: DocumentText(
                 summary,
               ),
