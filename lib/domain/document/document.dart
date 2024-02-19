@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:common/common.dart';
 import 'package:dartx/dartx.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
@@ -35,7 +36,7 @@ class DocumentManager {
 
   DocumentManager(this._ref);
 
-  late final _sources = _persistence.observeSources();
+  Stream<List<DocumentSource>> getSources() => _persistence.observeSources();
 
   /// 添加源
   Future<void> addSource(String url) async {

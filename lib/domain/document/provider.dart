@@ -12,7 +12,7 @@ class DocumentSourceList extends _$DocumentSourceList with StreamValueNotifier {
 
   @override
   Stream<List<DocumentSource>> buildStream() {
-    return ref.watch(documentManagerProvider)._sources;
+    return ref.watch(documentManagerProvider).getSources();
   }
 }
 
@@ -22,16 +22,22 @@ class ApiDocumentsStore extends _$ApiDocumentsStore {
   @override
   Future<Map<DocumentSource, APIDocument>> build() async {
     ref.keepAlive();
-    final sources =
-        await ref.watch(documentManagerProvider)._persistence.getSources();
+    final sources = ref.watch(documentSourceListProvider) ?? [];
     final documents = await Future.wait(sources.map((source) async {
-      final data = (await Dio().get(source.url)).data;
-      return MapEntry(
-        source,
-        APIDocument.fromMap(data),
-      );
+      try {
+        final data = (await Dio().get(source.url)).data;
+        final document = APIDocument.fromMap(data);
+        return MapEntry(
+          source,
+          document,
+        );
+      } catch (e, stacktrace) {
+        debugPrint(e.toString());
+        debugPrintStack(stackTrace: stacktrace);
+        return null;
+      }
     }));
-    return Map.fromEntries(documents);
+    return Map.fromEntries(documents.filterNotNull());
   }
 }
 
@@ -71,8 +77,8 @@ class AnalyzeLogRequest extends _$AnalyzeLogRequest {
         APIParameterLocation.header,
       ),
       requestBody: ObjectAnalysis(
-        scheme: document
-                .apiOperation.requestBody?.content?.values.firstOrNull?.schema ??
+        scheme: document.apiOperation.requestBody?.content?.values.firstOrNull
+                ?.schema ??
             APISchemaObject.empty(),
       ),
       responseBody: document.apiOperation.responses?.map(
