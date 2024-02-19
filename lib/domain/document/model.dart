@@ -158,18 +158,21 @@ class ObjectAnalysis with _$ObjectAnalysis {
         if (scheme == null) {
           return ObjectAnalysisResult.redundant(
             key: key,
+            value: data,
             fields: fields,
           );
         } else if (scheme.type != APIType.object) {
           return ObjectAnalysisResult.missed(
             key: key,
             expected: _getExpectedType(scheme.type, data) ?? '',
+            value: data,
             busWas: data.toString(),
             fields: fields,
           );
         } else {
           return ObjectAnalysisResult.corrected(
             key: key,
+            value: data,
             summary: scheme.description ?? '',
             fields: fields,
           );
@@ -183,11 +186,13 @@ class ObjectAnalysis with _$ObjectAnalysis {
         if (scheme == null) {
           return ObjectAnalysisResult.redundant(
             key: key,
+            value: data,
             fields: fields,
           );
         } else if (scheme.type != APIType.array) {
           return ObjectAnalysisResult.missed(
             key: key,
+            value: data,
             expected: _getExpectedType(scheme.type, data) ?? '',
             busWas: data.toString(),
             fields: fields,
@@ -195,6 +200,7 @@ class ObjectAnalysis with _$ObjectAnalysis {
         } else {
           return ObjectAnalysisResult.corrected(
             key: key,
+            value: data,
             summary: scheme.description ?? '',
             fields: fields,
           );
@@ -209,7 +215,7 @@ class ObjectAnalysis with _$ObjectAnalysis {
         } else {
           final expected = _getExpectedType(scheme.type, data);
           if (expected != null) {
-            List<ObjectAnalysisResult> fields = const [];
+            List<ObjectAnalysisResult>? fields;
             if (scheme.type == APIType.object) {
               // 漏了的字段
               fields = (scheme.properties ?? const {})
@@ -235,7 +241,7 @@ class ObjectAnalysis with _$ObjectAnalysis {
               key: key,
               value: data,
               summary: scheme.description ?? '',
-              fields: const [],
+              fields: null,
             );
           }
         }

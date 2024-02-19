@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/app/theme/theme.dart';
+import 'package:requester/common/common.dart';
 import 'package:requester/ui/client/details/provider/provider.dart' as provider;
 import 'package:requester/ui/common/common.dart';
 
@@ -30,7 +31,9 @@ class ClientInfosWidget extends ConsumerWidget {
             ),
             ...infos.map(
               (info) => ListTile(
-                onTap: () {},
+                onTap: () {
+                  copyToClipBoard(context, info.value);
+                },
                 title: Text(info.key),
                 subtitle: Text(info.value),
                 trailing: IconButton(

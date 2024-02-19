@@ -3,6 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 import 'package:requester/app/theme/theme.dart';
+import 'package:requester/common/common.dart';
+import 'package:requester/ui/common/common.dart';
 import 'package:requester/ui/monitor/common/method_widget.dart';
 import 'package:requester/ui/monitor/common/request_summary_widget.dart';
 import 'package:requester/ui/monitor/request/provider/provider.dart';
@@ -87,29 +89,7 @@ class _Title extends ConsumerWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: () {
-        showDialog(
-          context: context,
-          builder: (dialogContext) => SimpleDialog(
-            children: [
-              ListTile(
-                title: const Text('复制url'),
-                onTap: () {
-                  copyURL(ref);
-                  Navigator.of(dialogContext).pop();
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('已复制')));
-                },
-              ),
-              ListTile(
-                title: const Text('复制curl'),
-                onTap: () {
-                  copyCurl(ref);
-                  Navigator.of(dialogContext).pop();
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('已复制')));
-                },
-              ),
-            ],
-          ),
-        );
+        _copyUrl(context, ref);
       },
       child: AnimatedSwitcher(
         duration: kThemeAnimationDuration,
@@ -132,5 +112,40 @@ class _Title extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Future<(String, Function)?> _copyUrl(BuildContext context, WidgetRef ref) {
+    return showOptionsDialog(
+        context,
+        options: [
+          (
+            '复制url',
+            () {
+              final url = getRequestUrl(ref);
+              if (url == null) {
+                return;
+              }
+              copyToClipBoard(context, url);
+            }
+          ),
+          (
+            '复制curl',
+            () {
+              final curl = getRequestCurl(ref);
+              if (curl == null) {
+                return;
+              }
+              copyToClipBoard(context, curl);
+            }
+          ),
+        ],
+        optionBuilder: (context, item, onTap) => ListTile(
+          onTap: () {
+            onTap(item);
+            item.$2.call();
+          },
+          title: Text(item.$1),
+        ),
+      );
   }
 }

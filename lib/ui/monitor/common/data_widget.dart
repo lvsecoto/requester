@@ -70,13 +70,20 @@ class _Viewer extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final controller = useScrollController();
+    final content = useMemoized(() {
+      if (language != 'json') {
+        return data;
+      }
+      return data.jsonFormat();
+    });
+
     return SelectionArea(
       child: Scrollbar(
         controller: controller,
         child: SingleChildScrollView(
           controller: controller,
           child: HighlightView(
-            data,
+            content,
             language: language,
             theme: {
               ...githubTheme,
@@ -102,8 +109,6 @@ class _DocumentJsonViewer extends HookWidget {
 
   final ObjectAnalysis objectAnalysis;
 
-  static const _encoder = JsonEncoder.withIndent('   ');
-
   @override
   Widget build(BuildContext context) {
     final isOriginMode = useState(false);
@@ -125,15 +130,23 @@ class _DocumentJsonViewer extends HookWidget {
         var key =
             jsonNode.key is int ? '[${jsonNode.key}]' : jsonNode.key.toString();
         final title =
-            key + (jsonNode.value == null ? '' : ' : ${jsonNode.value}');
+            key + (jsonNode.fields != null ? '' : ' : ${jsonNode.value}');
         return Padding(
           padding: const EdgeInsets.only(bottom: 8, top: 8, right: 32),
-          child: switch (jsonNode) {
-            ObjectAnalysisResultCorrected() => DocumentText('$title${jsonNode.summary.isNotBlank ?  '【${jsonNode.summary}】' : ''}'),
-            ObjectAnalysisResultRedundant() =>
-              DocumentText(title, isRedundant: true),
-            ObjectAnalysisResultMissed() => DocumentText('$title 期望${jsonNode.expected}，实际${jsonNode.busWas}', isError: true),
-          },
+          child: InkWell(
+            onTap: () {
+              _copyData(context, jsonNode, title);
+            },
+            child: switch (jsonNode) {
+              ObjectAnalysisResultCorrected() => DocumentText(
+                  '$title${jsonNode.summary.isNotBlank ? '【${jsonNode.summary}】' : ''}'),
+              ObjectAnalysisResultRedundant() =>
+                DocumentText(title, isRedundant: true),
+              ObjectAnalysisResultMissed() => DocumentText(
+                  '$title 期望${jsonNode.expected}，实际${jsonNode.busWas}',
+                  isError: true),
+            },
+          ),
         );
       },
     );
@@ -144,13 +157,14 @@ class _DocumentJsonViewer extends HookWidget {
         treeView,
         AnimatedVisibilityWidget(
           isVisible: isOriginMode.value,
-          animationWidgetBuilder: AnimatedVisibilityWidget.fadeAnimationWidgetBuilder,
+          animationWidgetBuilder:
+              AnimatedVisibilityWidget.fadeAnimationWidgetBuilder,
           child: IgnorePointer(
             ignoring: !isOriginMode.value,
             child: Material(
               color: Colors.white,
               child: _Viewer(
-                data: _encoder.convert(data),
+                data: jsonEncode(data),
                 language: 'json',
               ),
             ),
@@ -175,6 +189,40 @@ class _DocumentJsonViewer extends HookWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Future<(String, Function)?> _copyData(
+      BuildContext context, ObjectAnalysisResult jsonNode, String title) {
+    return showOptionsDialog(
+      context,
+      options: [
+        (
+          '复制key',
+          () {
+            copyToClipBoard(context, jsonNode.key.toString());
+          }
+        ),
+        (
+          '复制value',
+          () {
+            copyToClipBoard(context, jsonEncode(jsonNode.value).jsonFormat());
+          }
+        ),
+        (
+          '复制所有',
+          () {
+            copyToClipBoard(context, title);
+          }
+        ),
+      ],
+      optionBuilder: (context, item, onTap) => ListTile(
+        onTap: () {
+          onTap(item);
+          item.$2.call();
+        },
+        title: Text(item.$1),
+      ),
     );
   }
 

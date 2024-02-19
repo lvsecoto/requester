@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:requester/app/theme/theme.dart';
+import 'package:requester/common/common.dart';
 import 'package:requester/domain/document/document.dart';
 import 'package:requester/ui/common/common.dart';
 
@@ -67,9 +68,7 @@ class ParametersTableWidget extends HookWidget {
                   TableCell(
                     child: ListTile(
                       onTap: () {
-                        Clipboard.setData(ClipboardData(text: entry.key));
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('内容已复制')));
+                        copyToClipBoard(context, entry.key);
                       },
                       title: Text(
                         entry.key,

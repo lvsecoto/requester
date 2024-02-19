@@ -1,6 +1,5 @@
 import 'package:curl_converter/curl_converter.dart';
 import 'package:dartx/dartx.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 import 'package:requester/domain/document/document.dart';
@@ -123,32 +122,27 @@ Raw<MultiSplitViewController> splitViewController(SplitViewControllerRef ref) {
   return MultiSplitViewController(areas: kDefaultMonitorSplitAreas);
 }
 
-void copyCurl(WidgetRef ref) {
-  // final request = loadMonitorRequest(ref)?.logRequest;
-  final request = null;
-  if (request == null) {
-    return;
-  }
-  final curlString = Curl(
-    uri: Uri.parse(request.uri),
-    data: request.data,
-    headers: request.headers,
-  ).toCurlString();
-
-  _copyToClipBoard(curlString);
-}
-
-void copyURL(WidgetRef ref) {
-  return;
+String? getRequestCurl(WidgetRef ref) {
   final request = loadLogRequest(ref);
   if (request == null) {
-    return;
+    return null;
   }
-  // _copyToClipBoard(
-  //   request.logRequest.uri,
-  // );
+  final curlString = Curl(
+    uri: Uri.parse(getRequestUrl(ref)!),
+    data: request.requestBody,
+    headers: request.requestHeaders,
+    method: request.requestMethod,
+  ).toCurlString();
+
+  return curlString;
 }
 
-void _copyToClipBoard(String text) {
-  Clipboard.setData(ClipboardData(text: text));
+String? getRequestUrl(WidgetRef ref) {
+  final request = loadLogRequest(ref);
+  if (request == null) {
+    return null;
+  }
+  return Uri.tryParse(request.requestPath)?.replace(
+    queryParameters: request.requestQueries
+  ).toString().removeSuffix('?');
 }
