@@ -8,3 +8,29 @@ option objc_class_prefix = "HLW";
 package common;
 
 message Empty {}
+
+// RPC json
+message RpcJson {
+    map<string, RpcJsonValue> fields = 1;
+}
+
+message RpcJsonValue {
+    oneof kind {
+        RpcJsonNullValue null_value = 1;
+        double number_value = 2;
+        uint64 integer_value = 3;
+        string string_value = 4;
+        bool bool_value = 5;
+        RpcJson json_value = 6;
+        RpcJsonListValue list_value = 7;
+    }
+}
+
+enum RpcJsonNullValue {
+    // Null value.
+    NULL_VALUE = 0;
+}
+
+message RpcJsonListValue {
+    repeated RpcJsonValue values = 1;
+}

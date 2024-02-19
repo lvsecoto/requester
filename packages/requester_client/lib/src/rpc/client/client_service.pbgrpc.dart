@@ -50,6 +50,22 @@ class RequesterClientServiceClient extends $grpc.Client {
       '/requester_client.RequesterClientService/GetLogHostPort',
       ($1.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.LogHostPort.fromBuffer(value));
+  static final _$getRequestOverrides = $grpc.ClientMethod<$1.Empty, $1.RpcJsonListValue>(
+      '/requester_client.RequesterClientService/GetRequestOverrides',
+      ($1.Empty value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.RpcJsonListValue.fromBuffer(value));
+  static final _$addRequestOverrides = $grpc.ClientMethod<$1.RpcJson, $1.Empty>(
+      '/requester_client.RequesterClientService/AddRequestOverrides',
+      ($1.RpcJson value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
+  static final _$removeRequestOverrides = $grpc.ClientMethod<$1.RpcJson, $1.Empty>(
+      '/requester_client.RequesterClientService/RemoveRequestOverrides',
+      ($1.RpcJson value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
+  static final _$updateRequestOverrides = $grpc.ClientMethod<$1.RpcJson, $1.Empty>(
+      '/requester_client.RequesterClientService/UpdateRequestOverrides',
+      ($1.RpcJson value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
 
   RequesterClientServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -83,6 +99,22 @@ class RequesterClientServiceClient extends $grpc.Client {
 
   $grpc.ResponseFuture<$0.LogHostPort> getLogHostPort($1.Empty request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getLogHostPort, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.RpcJsonListValue> getRequestOverrides($1.Empty request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getRequestOverrides, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Empty> addRequestOverrides($1.RpcJson request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$addRequestOverrides, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Empty> removeRequestOverrides($1.RpcJson request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$removeRequestOverrides, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Empty> updateRequestOverrides($1.RpcJson request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$updateRequestOverrides, request, options: options);
   }
 }
 
@@ -140,6 +172,34 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.Empty.fromBuffer(value),
         ($0.LogHostPort value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.Empty, $1.RpcJsonListValue>(
+        'GetRequestOverrides',
+        getRequestOverrides_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.Empty.fromBuffer(value),
+        ($1.RpcJsonListValue value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.RpcJson, $1.Empty>(
+        'AddRequestOverrides',
+        addRequestOverrides_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.RpcJson.fromBuffer(value),
+        ($1.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.RpcJson, $1.Empty>(
+        'RemoveRequestOverrides',
+        removeRequestOverrides_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.RpcJson.fromBuffer(value),
+        ($1.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.RpcJson, $1.Empty>(
+        'UpdateRequestOverrides',
+        updateRequestOverrides_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.RpcJson.fromBuffer(value),
+        ($1.Empty value) => value.writeToBuffer()));
   }
 
   $async.Future<$1.Empty> setClientId_Pre($grpc.ServiceCall call, $async.Future<$0.ClientId> request) async {
@@ -170,6 +230,22 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
     return getLogHostPort(call, await request);
   }
 
+  $async.Future<$1.RpcJsonListValue> getRequestOverrides_Pre($grpc.ServiceCall call, $async.Future<$1.Empty> request) async {
+    return getRequestOverrides(call, await request);
+  }
+
+  $async.Future<$1.Empty> addRequestOverrides_Pre($grpc.ServiceCall call, $async.Future<$1.RpcJson> request) async {
+    return addRequestOverrides(call, await request);
+  }
+
+  $async.Future<$1.Empty> removeRequestOverrides_Pre($grpc.ServiceCall call, $async.Future<$1.RpcJson> request) async {
+    return removeRequestOverrides(call, await request);
+  }
+
+  $async.Future<$1.Empty> updateRequestOverrides_Pre($grpc.ServiceCall call, $async.Future<$1.RpcJson> request) async {
+    return updateRequestOverrides(call, await request);
+  }
+
   $async.Future<$1.Empty> setClientId($grpc.ServiceCall call, $0.ClientId request);
   $async.Future<$0.ClientId> getClientId($grpc.ServiceCall call, $1.Empty request);
   $async.Future<$1.Empty> identify($grpc.ServiceCall call, $1.Empty request);
@@ -177,4 +253,8 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
   $async.Future<$1.Empty> updateClientInfo($grpc.ServiceCall call, $0.ClientInfoEntry request);
   $async.Future<$1.Empty> setLogHostPort($grpc.ServiceCall call, $0.LogHostPort request);
   $async.Future<$0.LogHostPort> getLogHostPort($grpc.ServiceCall call, $1.Empty request);
+  $async.Future<$1.RpcJsonListValue> getRequestOverrides($grpc.ServiceCall call, $1.Empty request);
+  $async.Future<$1.Empty> addRequestOverrides($grpc.ServiceCall call, $1.RpcJson request);
+  $async.Future<$1.Empty> removeRequestOverrides($grpc.ServiceCall call, $1.RpcJson request);
+  $async.Future<$1.Empty> updateRequestOverrides($grpc.ServiceCall call, $1.RpcJson request);
 }

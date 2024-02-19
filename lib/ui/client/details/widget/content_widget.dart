@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:requester/client/client.dart';
 import 'package:requester/common/responsive_layout/responsive_column.dart';
+import 'package:requester/route/route.dart';
 import 'package:requester/ui/client/details/provider/provider.dart' as provider;
 import 'package:requester/ui/client/details/widget/log_info_widget.dart';
 
@@ -17,6 +19,13 @@ class ContentWidget extends HookConsumerWidget {
         appBar: AppBar(
           title: const Text('客户端'),
           actions: [
+            IconButton(
+              onPressed: () {
+                final hostPort = RequesterClientServiceController.of(context).hostPort;
+                ClientRequestOverrideRoute(hostPort.encode()).go(context);
+              },
+              icon: const Icon(Icons.flash_on),
+            ),
             IconButton(
               onPressed: () {
                 provider.actionRefresh(ref);

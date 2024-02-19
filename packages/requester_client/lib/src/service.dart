@@ -1,5 +1,6 @@
 import 'package:grpc/grpc.dart';
 import 'package:requester_client/requester_client.dart';
+import 'package:requester_client/src/override/override.dart';
 import 'package:requester_client/src/rpc/rpc.dart' as rpc;
 
 import 'log/log.dart';
@@ -9,6 +10,7 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
   RequesterClientService({
     required this.clientInfoProvider,
     required this.logProvider,
+    required this.overrideProvider,
     required this.onClientIdChanged,
     required this.onIdentify,
   });
@@ -17,6 +19,8 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
   final ClientInfoProvider clientInfoProvider;
 
   final LogProvider logProvider;
+
+  final OverrideProvider overrideProvider;
 
   /// 客户端id改变回调
   final Function() onClientIdChanged;
@@ -77,6 +81,43 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
       port: request.port,
     );
     await logProvider.setLogHostPort(hostPort);
+    return rpc.Empty();
+  }
+
+  @override
+  Future<rpc.Empty> addRequestOverrides(
+      ServiceCall call, rpc.RpcJson request) async {
+    await overrideProvider.addOverride(
+      OverrideRequest.fromJson(request.toJson()).copyWith(
+        id: DateTime.now().toString(),
+      ),
+    );
+    return rpc.Empty();
+  }
+
+  @override
+  Future<rpc.RpcJsonListValue> getRequestOverrides(
+      ServiceCall call, rpc.Empty request) async {
+    final overrides = await overrideProvider.getOverrideList();
+    return rpc.RpcJsonListValue(
+      values: overrides.map((it) => it.toJson().toRpcJson()).toList(),
+    );
+  }
+
+  @override
+  Future<rpc.Empty> removeRequestOverrides(
+      ServiceCall call, rpc.RpcJson request) async {
+    await overrideProvider.removeOverride(
+      OverrideRequest.fromJson(request.toJson()),
+    );
+    return rpc.Empty();
+  }
+
+  @override
+  Future<rpc.Empty> updateRequestOverrides(ServiceCall call, rpc.RpcJson request) async {
+    await overrideProvider.updateOverride(
+      OverrideRequest.fromJson(request.toJson()),
+    );
     return rpc.Empty();
   }
 }

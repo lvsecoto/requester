@@ -4,6 +4,7 @@ import 'package:network_info_plus/network_info_plus.dart';
 import 'package:nsd/nsd.dart' as nsd;
 import 'package:requester_client/requester_client.dart';
 import 'package:requester_client/src/log/log.dart';
+import 'package:requester_client/src/override/override.dart';
 import 'package:requester_client/src/service.dart';
 import 'package:requester_common/requester_common.dart';
 import 'package:grpc/grpc.dart' as grpc;
@@ -33,6 +34,9 @@ class RequesterClientController extends ChangeNotifier
   /// 管理日志相关
   final logProvider = LogProvider();
 
+  /// 管理重载
+  final overrideProvider = OverrideProvider();
+
   /// 当发起识别命令
   final VoidCallback onIdentity;
 
@@ -59,6 +63,7 @@ class RequesterClientController extends ChangeNotifier
       RequesterClientService(
         clientInfoProvider: clientInfoProvider,
         logProvider: logProvider,
+        overrideProvider: overrideProvider,
         // todo, 改成provider
         onClientIdChanged: () {
           _restartNsd();

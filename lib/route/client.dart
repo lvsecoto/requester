@@ -6,14 +6,14 @@ class DeviceListDetailsEmptyRoute extends ListDetailsEmptyRoute {
 
 @TypedShellRoute<RequesterClientListRoute>(
   routes: [
-    TypedGoRoute<DeviceListDetailsEmptyRoute>(
-      path: '/clientList',
-      routes: [
-        TypedGoRoute<RequesterClientDetailsRoute>(
-          path: 'client/:hostPort',
-        ),
-      ]
-    ),
+    TypedGoRoute<DeviceListDetailsEmptyRoute>(path: '/clientList', routes: [
+      TypedGoRoute<RequesterClientDetailsRoute>(
+        path: 'client/:hostPort',
+        routes: [
+          _clientRequestOverrideTypedRoute,
+        ],
+      ),
+    ]),
   ],
 )
 class RequesterClientListRoute extends ShellRouteData {
@@ -26,7 +26,8 @@ class RequesterClientListRoute extends ShellRouteData {
   Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
     return ListDetailsNavigation(
       navigator: navigator,
-      isDetailsEmpty: state.uri.path == const DeviceListDetailsEmptyRoute().location,
+      isDetailsEmpty:
+          state.uri.path == const DeviceListDetailsEmptyRoute().location,
       list: const RequesterClientListScreen(),
     );
   }
@@ -62,4 +63,23 @@ class RequesterClientDetailsRoute extends GoRouteData {
       ),
     );
   }
+}
+
+const _clientRequestOverrideTypedRoute =
+    TypedGoRoute<ClientRequestOverrideRoute>(
+  path: 'requestOverride',
+);
+
+/// 请求重载
+class ClientRequestOverrideRoute extends GoRouteData {
+  const ClientRequestOverrideRoute(this.hostPort);
+
+  /// 设备的主机地址和端口
+  final String hostPort;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      ClientRequestOverrideScreen(
+        hostPort: HostPort.decode(hostPort),
+      );
 }

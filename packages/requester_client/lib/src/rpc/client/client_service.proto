@@ -28,6 +28,18 @@ service RequesterClientService {
 
   // Requester向客户端获取当前日志上报到哪个Requester的HostPort
   rpc GetLogHostPort(common.Empty) returns (LogHostPort) {};
+
+  // Requester向客户端获取请求重载列表，为json列表
+  rpc GetRequestOverrides(common.Empty) returns (common.RpcJsonListValue);
+
+  // Requester向客户端添加重载规则
+  rpc AddRequestOverrides(common.RpcJson) returns (common.Empty);
+
+  // Requester向客户端删除重载规则
+  rpc RemoveRequestOverrides(common.RpcJson) returns (common.Empty);
+
+  // Requester向客户端更新重载规则
+  rpc UpdateRequestOverrides(common.RpcJson) returns (common.Empty);
 }
 
 message ClientId {
