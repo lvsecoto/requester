@@ -258,8 +258,8 @@ class ObjectAnalysis with _$ObjectAnalysis {
       APIType.array => tryJsonDecode(fieldData) is List ? null : '列表',
       APIType.object => tryJsonDecode(fieldData) is Map ? null : '对象',
       APIType.string => fieldData is String ? null : 'string',
-      APIType.number => fieldData is int ? null : 'int',
       APIType.integer => fieldData is int ? null : 'int',
+      APIType.number => fieldData is num ? null : 'double',
       APIType.boolean => fieldData is bool ? null : 'bool',
     };
   }

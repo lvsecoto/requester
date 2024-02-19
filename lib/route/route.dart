@@ -6,20 +6,17 @@ import 'package:animations/animations.dart';
 import 'package:requester_client/requester_client.dart';
 
 part 'client.dart';
+
 part 'settings.dart';
 
 part 'route.g.dart';
 
 @TypedShellRoute<MonitorRoute>(
   routes: [
-    TypedGoRoute<ListDetailsEmptyRoute>(
-      path: '/monitorList',
-      routes: [
-        TypedGoRoute<RequestRoute>(
-          path: 'monitor/:id',
-        ),
-      ]
-    ),
+    TypedGoRoute<ListDetailsEmptyRoute>(path: '/monitorList', routes: [
+      TypedGoRoute<RequestRoute>(path: 'monitor/:id'),
+      _requestViewClientRequestOverrideRouteTypedRoute,
+    ]),
   ],
 )
 class MonitorRoute extends ShellRouteData {
@@ -46,7 +43,7 @@ class RequestRoute extends GoRouteData {
   static RequestRoute? from(GoRouterState state) {
     try {
       return $RequestRouteExtension._fromState(state);
-    } catch(ignored) {
+    } catch (ignored) {
       return null;
     }
   }
@@ -71,4 +68,30 @@ class RequestRoute extends GoRouteData {
       ),
     );
   }
+}
+
+const _requestViewClientRequestOverrideRouteTypedRoute =
+    TypedGoRoute<RequestViewClientRequestOverrideRoute>(
+  path: 'requestViewClientRequestOverrideRoute',
+);
+
+/// 请求重载
+class RequestViewClientRequestOverrideRoute extends GoRouteData {
+  const RequestViewClientRequestOverrideRoute(
+    this.hostPort,
+  );
+
+  static RequestViewClientRequestOverrideRoute fromClient(
+      RequesterClient client) {
+    return RequestViewClientRequestOverrideRoute(client.hostPort.encode());
+  }
+
+  /// 设备的主机地址和端口
+  final String hostPort;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      ClientRequestOverrideScreen(
+        hostPort: HostPort.decode(hostPort),
+      );
 }

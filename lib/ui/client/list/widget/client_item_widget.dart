@@ -7,9 +7,12 @@ class ClientItemWidget extends StatelessWidget {
   const ClientItemWidget({
     super.key,
     required this.client,
+    required this.onTap,
   });
 
   final RequesterClient client;
+
+  final ValueChanged<RequesterClient> onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +38,7 @@ class ClientItemWidget extends StatelessWidget {
       }),
       subtitle: Text(subtitle),
       onTap: () {
-        RequesterClientDetailsRoute.fromClient(client).go(
-          context,
-        );
+        onTap(client);
       },
     );
   }

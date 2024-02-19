@@ -74,6 +74,10 @@ const _clientRequestOverrideTypedRoute =
 class ClientRequestOverrideRoute extends GoRouteData {
   const ClientRequestOverrideRoute(this.hostPort);
 
+  static ClientRequestOverrideRoute fromClient(RequesterClient client) {
+    return ClientRequestOverrideRoute(client.hostPort.encode());
+  }
+
   /// 设备的主机地址和端口
   final String hostPort;
 

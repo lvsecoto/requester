@@ -4,6 +4,8 @@ library;
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:grpc/grpc.dart' as grpc;
+import 'package:requester_client/rpc.dart' as rpc;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nsd/nsd.dart' as nsd;
 import 'package:package_info_plus/package_info_plus.dart';
@@ -84,6 +86,18 @@ class RequesterClient with _$RequesterClient {
       decode: (input) => input,
       encode: (input) => input,
       defaultValue: _getRandomString(6),
+    );
+  }
+
+  /// 转换为服务
+  rpc.RequesterClientServiceClient toService() {
+    final client = grpc.ClientChannel(hostPort.host,
+        port: hostPort.port,
+        options: const grpc.ChannelOptions(
+          credentials: grpc.ChannelCredentials.insecure(),
+        ));
+    return rpc.RequesterClientServiceClient(
+      client,
     );
   }
 }
