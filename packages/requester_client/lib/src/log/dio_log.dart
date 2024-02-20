@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:enum_to_string/enum_to_string.dart';
 import 'package:requester_client/rpc.dart' as rpc;
 import 'package:uuid/v1.dart';
 
@@ -77,7 +76,7 @@ class RequesterLogDioInterceptor extends Interceptor {
       id: logId,
       code: err.response?.statusCode ?? -1,
       body: err.response != null ? _captureBody(err.response!.data) : err.error.toString(),
-      error: EnumToString.convertToString(err.type),
+      error: err.type.toString(),
     );
     logProvider.client?.sendResponse(logResponse);
   }

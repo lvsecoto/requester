@@ -55,7 +55,6 @@ class ResponsiveColumn extends StatelessWidget {
           ],
         );
       }
-      return Container();
     });
   }
 }

@@ -42,25 +42,29 @@ dependencies:
     path: ../requester_common
 
   # 获取运行信息
+  path_provider: ^2.1.2
   package_info_plus: ^5.0.1
   network_info_plus: ^4.1.0+1
 
   # 网络发现
   nsd: ^3.0.0
+
   flutter_hooks: ^0.20.5
 
   # 同步
   synchronized: ^3.1.0+1
 
-
+  # 通信
   protobuf: ^3.1.0
   grpc: ^3.2.4
+  fixnum: ^1.1.0
 
-  path_provider: ^2.1.2
+  # 网络请求相关
   dio: ^5.4.0
 
+  # 工具类
   uuid: ^4.3.3
-  enum_to_string: ^2.0.1
+  rxdart: ^0.27.7
 
 dev_dependencies:
   flutter_test:

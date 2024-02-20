@@ -3,7 +3,6 @@ import 'package:dartx/dartx.dart';
 import 'package:drift/drift.dart' hide JsonKey;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:network_info_plus/network_info_plus.dart';
 import 'package:requester/client/client.dart';
 import 'package:requester/common/intranet_ip.dart';
 import 'package:requester/data/db/db.dart';
