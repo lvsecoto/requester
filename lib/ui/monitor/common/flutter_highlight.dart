@@ -56,9 +56,9 @@ class HighlightView extends StatelessWidget {
         stack.add(currentSpans);
         currentSpans = tmp;
 
-        for (var node in node.children!) {
+        for (var node in node.children ?? []) {
           traverse(node);
-          if (node == node.children!.last) {
+          if (node == node.children?.last) {
             currentSpans = stack.isEmpty ? spans : stack.removeLast();
           }
         }

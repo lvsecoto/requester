@@ -45,6 +45,12 @@ class _MyHomePageState extends State<MyHomePage> {
     dio.interceptors.addAll(
       requesterClientController.buildDioInterceptors(),
     );
+    infoProvider.set('文档链接AchievementService',
+        '''https://xf8f0tt2.treemendous.cn/AchievementService/swagger/v1/swagger.json''');
+    infoProvider.set('文档链接career',
+        '''https://xf8f0tt2.treemendous.cn/career/swagger/v1/swagger.json''');
+    infoProvider.set('文档链接login',
+        '''https://xf8f0tt2.treemendous.cn/login/swagger/v1/swagger.json''');
     infoProvider.set('counter', _counter.toString());
     infoProvider.on('counter', (value) {
       _counter = int.tryParse(value) ?? _counter;
