@@ -127,10 +127,11 @@ class _DocumentJsonViewer extends HookWidget {
       },
       builder: (context, item) {
         final jsonNode = item.data!;
-        var key =
+        final key =
             jsonNode.key is int ? '[${jsonNode.key}]' : jsonNode.key.toString();
+        final isValueCollection = jsonNode.value is Map || jsonNode.value is List;
         final title =
-            key + (jsonNode.fields != null ? '' : ' : ${jsonNode.value}');
+            key + (isValueCollection ? '' : ' : ${jsonNode.value}');
         return Padding(
           padding: const EdgeInsets.only(bottom: 8, top: 8, right: 32),
           child: InkWell(

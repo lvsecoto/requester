@@ -14,20 +14,17 @@ mixin _HostPortManager on _LogManager{
   }
 
   Future<HostPort> _getSelfHostPort() async {
-    final info = NetworkInfo();
-    final ip = await info.getWifiIP();
-    if (ip == null) {
-      throw '未连接到Wifi';
-    }
+    final ip = await intranetIpv4();
     return HostPort(
-      host: ip,
+      host: ip.host,
       port: port,
     );
   }
 
   /// 判断Requester Client要发送日志的HostPort是否是指向本Requester
   Future<bool> isClientLogToSelf(HostPort clientLogToHostPort) async {
-    return await _getSelfHostPort() == clientLogToHostPort;
+    final selfHostPort = await _getSelfHostPort();
+    return selfHostPort == clientLogToHostPort;
   }
 
   /// 绑定Requester Client的日志上报地址到本设备

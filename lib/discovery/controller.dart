@@ -22,7 +22,7 @@ class RequesterClientDiscoveryController extends ChangeNotifier
 
   /// 启动发现服务
   Future<void> _start() async {
-    _nsdDiscovery = await nsd.startDiscovery('_requester._tcp')
+    _nsdDiscovery = await nsd.startDiscovery('_requester._tcp', ipLookupType: nsd.IpLookupType.any)
       ..addListener(() {
         final services = _nsdDiscovery?.services ?? [];
         _clients = services
