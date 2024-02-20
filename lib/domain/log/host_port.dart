@@ -14,9 +14,17 @@ mixin _HostPortManager on _LogManager{
   }
 
   Future<HostPort> _getSelfHostPort() async {
-    final ip = await intranetIpv4();
+    final info = NetworkInfo();
+    final ip = await info.getWifiIP();
+    if (ip == null) {
+      final ip = await intranetIpv4();
+      return HostPort(
+        host: ip.host,
+        port: port,
+      );
+    }
     return HostPort(
-      host: ip.host,
+      host: ip,
       port: port,
     );
   }
