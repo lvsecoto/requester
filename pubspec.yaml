@@ -27,13 +27,13 @@ dependencies:
   # 公共库
   common:
     git:
-      url: git@github.com:lvsecoto/flutter_common.git
+      url: https://github.com/lvsecoto/flutter_common.git
       ref: ee2abc5bd85dd2276dc5d661f46fe39e302ba2ef
 
   # 自动代码生成
   persistence_annotation:
     git:
-      url: 'git@github.com:lvsecoto/flutter_persistence_annotation.git'
+      url: https://github.com/lvsecoto/flutter_persistence_annotation.git
       ref: 7732f6cfd0a1dcce9e228f30d941bb2a6c3fbe8b
 
   flutter_localizations:
@@ -101,8 +101,8 @@ dev_dependencies:
   # 自动代码生成
   persistence:
     git:
-      url: 'git@github.com:lvsecoto/flutter_persistence.git'
-      ref: 4b060a7d23d417611c3da094cb0267a7bb3be42d
+      url: https://github.com/lvsecoto/flutter_persistence.git
+      ref: ddd186b
 
   drift_dev: ^2.15.0
 
