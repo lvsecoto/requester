@@ -36,18 +36,29 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   freezed_annotation: ^2.4.1
-  nsd: ^3.0.0
-  flutter_hooks: ^0.20.5
+
+  # 公共组件
   requester_common:
     path: ../requester_common
-  synchronized: ^3.1.0+1
+
+  # 获取运行信息
+  package_info_plus: ^5.0.1
   network_info_plus: ^4.1.0+1
+
+  # 网络发现
+  nsd: ^3.0.0
+  flutter_hooks: ^0.20.5
+
+  # 同步
+  synchronized: ^3.1.0+1
+
+
   protobuf: ^3.1.0
   grpc: ^3.2.4
-  rxdart: ^0.27.7
-  package_info_plus: ^5.0.1
+
   path_provider: ^2.1.2
   dio: ^5.4.0
+
   uuid: ^4.3.3
   enum_to_string: ^2.0.1
 
