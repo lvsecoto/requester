@@ -35,17 +35,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  late final infoProvider =
-      RequesterClientController.of(context).clientInfoProvider;
-  late final logProvider = RequesterClientController.of(context).logProvider;
+  late final requesterClientController = RequesterClientController.of(context);
+  late final infoProvider = requesterClientController.clientInfoProvider;
   final dio = Dio();
 
   @override
   void initState() {
     super.initState();
-    dio.interceptors.addAll([
-      RequesterLogDioInterceptor(logProvider),
-    ]);
+    dio.interceptors.addAll(
+      requesterClientController.buildDioInterceptors(),
+    );
     infoProvider.set('counter', _counter.toString());
     infoProvider.on('counter', (value) {
       _counter = int.tryParse(value) ?? _counter;
@@ -82,11 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               onPressed: () {
                 dio.get(
-                  'https://petstore3.swagger.io/api/v3/pet/findByStatus?status=available',
-                  queryParameters: {
-                    'meta': '2'
-                  }
-                );
+                    'https://petstore3.swagger.io/api/v3/pet/findByStatus?status=available',
+                    queryParameters: {'meta': '2'});
               },
               child: const Text('GET'),
             ),
@@ -94,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               onPressed: () {
                 dio.get(
-                    'https://petstore3.swagger.io/api/v3/pet/findByStatus?status=availa',
+                  'https://petstore3.swagger.io/api/v3/pet/findByStatus?status=availa',
                 );
               },
               child: const Text('GET(Error)'),

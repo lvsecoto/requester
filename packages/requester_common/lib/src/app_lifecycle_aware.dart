@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ import 'package:synchronized/synchronized.dart';
 
 /// 实现这个接口，感受App的周期变化
 abstract class AppLifecycleAware {
-
   /// App继续运行
   Future<void> onAppResume();
 
@@ -18,34 +16,30 @@ abstract class AppLifecycleAware {
 
 /// 让[appLifecycleAware]感受App的周期变化
 void useAppLifecycleAware(AppLifecycleAware? appLifecycleAware) {
-  final isResumed = useRef(true);
   final lock = useMemoized(() => Lock());
-  useMemoized(() {
+  useEffect(() {
     appLifecycleAware?.onAppResume();
+    return () {
+      appLifecycleAware?.onAppPause();
+    };
   }, [appLifecycleAware]);
   useOnAppLifecycleStateChange((previous, current) {
+    if (Platform.isMacOS || Platform.isWindows) {
+      return;
+    }
     if (!_isAppForeground(previous) && _isAppForeground(current)) {
       lock.synchronized(() async {
-        if (isResumed.value) {
-          appLifecycleAware?.onAppPause();
-        }
-        appLifecycleAware?.onAppResume();
+        await appLifecycleAware?.onAppResume();
       });
     } else if (_isAppForeground(previous) && !_isAppForeground(current)) {
       lock.synchronized(() async {
-        if (!isResumed.value) {
-          appLifecycleAware?.onAppResume();
-        }
-        appLifecycleAware?.onAppPause();
+        await appLifecycleAware?.onAppPause();
       });
     }
   });
 }
 
 bool _isAppForeground(AppLifecycleState? appState) {
-  if (Platform.isMacOS) {
-    return true;
-  }
   return [AppLifecycleState.inactive, AppLifecycleState.resumed]
       .contains(appState);
 }

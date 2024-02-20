@@ -9,6 +9,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 import 'package:requester/common/common.dart';
 import 'package:requester/domain/log/log.dart';
+import 'package:requester_common/requester_common.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:persistence_annotation/persistence_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

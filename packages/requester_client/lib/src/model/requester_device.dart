@@ -2,6 +2,7 @@
 library;
 
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:grpc/grpc.dart' as grpc;
@@ -44,8 +45,12 @@ class RequesterClient with _$RequesterClient {
   /// 转换为服务
   nsd.Service toNsdService() {
     return nsd.Service(
-      name: hostPort.host,
+      name: 'requester',
       port: hostPort.port,
+      host: hostPort.host,
+      addresses: [
+        InternetAddress.anyIPv4,
+      ],
       type: '_requester._tcp',
       txt: {
         'host': utf8.encode(hostPort.host),
