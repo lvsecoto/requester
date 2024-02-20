@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:nsd/nsd.dart' as nsd;
-import 'package:requester_client/requester_client.dart';
-import 'package:requester_client/src/log/log.dart';
-import 'package:requester_client/src/override/override.dart';
-import 'package:requester_client/src/service.dart';
 import 'package:requester_common/requester_common.dart';
 import 'package:grpc/grpc.dart' as grpc;
+
+import 'client_info/client_info.dart';
+import 'log/log.dart';
+import 'model/model.dart';
+import 'override/override.dart';
+import 'service.dart';
 
 part 'widget/requester_client_widget.dart';
 

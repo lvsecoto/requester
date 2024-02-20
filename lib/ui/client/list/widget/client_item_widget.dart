@@ -1,6 +1,5 @@
 import 'package:easy_rich_text/easy_rich_text.dart';
 import 'package:flutter/material.dart';
-import 'package:requester/router.dart';
 import 'package:requester_client/requester_client.dart';
 
 class ClientItemWidget extends StatelessWidget {

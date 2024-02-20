@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:material_color_utilities/material_color_utilities.dart';
 
@@ -22,9 +20,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   factory AppTheme.from({required Color colorSeed}) {
     final palette = CorePalette.of(colorSeed.value);
 
-    final primaryCam = Cam16.fromInt(colorSeed.value);
     // 业务颜色
-
     final priorityHeight = Colors.red.tone(40);
     final priorityLow = Color(palette.neutral.get(40));
     final colorDocument = Colors.blue.tone(40);

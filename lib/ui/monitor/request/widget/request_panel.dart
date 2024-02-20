@@ -12,11 +12,9 @@ class RequestPanel extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     final request = loadLogRequest(ref);
-
     final queries = request?.requestQueries ?? const {};
-    final headers = request?.requestHeaders ?? {};
-
     int? defaultTab;
     if (request != null) {
       if (request.requestBody.isNotBlank) {

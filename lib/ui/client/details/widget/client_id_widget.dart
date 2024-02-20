@@ -35,9 +35,7 @@ class ClientIdWidget extends ConsumerWidget {
 }
 
 class _ClientId extends ConsumerWidget {
-  const _ClientId({
-    super.key,
-  });
+  const _ClientId();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -1,7 +1,6 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gap/gap.dart';
 import 'package:requester/ui/common/common.dart';
 import 'package:requester/ui/settings/document/provider/provider.dart'
     as provider;

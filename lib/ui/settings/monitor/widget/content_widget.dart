@@ -25,8 +25,8 @@ class ContentWidget extends StatelessWidget {
               // final port = ref.watch(monitorPortProvider) ?? 0;
               // final hostPort =
               //     ref.watch(monitorHostPortProvider).valueOrNull ?? '';
-              final port = 0;
-              final hostPort = '';
+              const port = 0;
+              const hostPort = '';
 
               return Padding(
                 padding: const EdgeInsets.all(12),
@@ -47,11 +47,11 @@ class ContentWidget extends StatelessWidget {
                               onTap: hostPort.isNotEmpty
                                   ? () {
                                       Clipboard.setData(
-                                          ClipboardData(text: hostPort));
+                                          const ClipboardData(text: hostPort));
                                     }
                                   : null,
                               title: const Text('服务连接地址'),
-                              subtitle: Text(hostPort),
+                              subtitle: const Text(hostPort),
                             ),
                             ListTile(
                               title: const Text('端口'),
@@ -60,49 +60,50 @@ class ContentWidget extends StatelessWidget {
                                 onPressed: () async {
                                   final port = await showDialog<int>(
                                     context: context,
-                                    builder: (context) => HookBuilder(
-                                      builder: (context) {
-                                        final controller = useTextEditingController();
-                                        final error = useState<String?>(null);
-                                        return AlertDialog(
-                                          title: const Text('请输入端口'),
-                                          content: AnimatedSize(
-                                            duration: kThemeAnimationDuration,
-                                            alignment: Alignment.topCenter,
-                                            child: TextField(
-                                              controller: controller,
-                                              autofocus: true,
-                                              decoration: InputDecoration(
+                                    builder: (context) =>
+                                        HookBuilder(builder: (context) {
+                                      final controller =
+                                          useTextEditingController();
+                                      final error = useState<String?>(null);
+                                      return AlertDialog(
+                                        title: const Text('请输入端口'),
+                                        content: AnimatedSize(
+                                          duration: kThemeAnimationDuration,
+                                          alignment: Alignment.topCenter,
+                                          child: TextField(
+                                            controller: controller,
+                                            autofocus: true,
+                                            decoration: InputDecoration(
                                                 hintText: '请输入数字',
-                                                errorText: error.value
-                                              ),
-                                              inputFormatters: [
-                                                FilteringTextInputFormatter.digitsOnly,
-                                              ],
-                                            ),
+                                                errorText: error.value),
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly,
+                                            ],
                                           ),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: const Text('取消'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {
-                                                final port = controller.text.toIntOrNull();
-                                                if (port == null) {
-                                                  error.value = '请输入正确的数字';
-                                                  return;
-                                                }
-                                                Navigator.of(context).pop(port);
-                                              },
-                                              child: const Text('确认'),
-                                            ),
-                                          ],
-                                        );
-                                      }
-                                    ),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('取消'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              final port =
+                                                  controller.text.toIntOrNull();
+                                              if (port == null) {
+                                                error.value = '请输入正确的数字';
+                                                return;
+                                              }
+                                              Navigator.of(context).pop(port);
+                                            },
+                                            child: const Text('确认'),
+                                          ),
+                                        ],
+                                      );
+                                    }),
                                   );
                                   if (port != null) {
                                     // ref.read(monitorPortProvider.notifier).port = port;

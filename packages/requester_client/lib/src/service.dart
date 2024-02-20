@@ -1,6 +1,5 @@
 import 'package:grpc/grpc.dart';
 import 'package:requester_client/requester_client.dart';
-import 'package:requester_client/src/override/override.dart';
 import 'package:requester_client/src/rpc/rpc.dart' as rpc;
 
 import 'log/log.dart';

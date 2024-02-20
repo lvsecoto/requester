@@ -44,7 +44,7 @@ class HighlightView extends StatelessWidget {
     var currentSpans = spans;
     List<List<TextSpan>> stack = [];
 
-    _traverse(Node node) {
+    traverse(Node node) {
       if (node.value != null) {
         currentSpans.add(node.className == null
             ? TextSpan(text: node.value)
@@ -56,17 +56,17 @@ class HighlightView extends StatelessWidget {
         stack.add(currentSpans);
         currentSpans = tmp;
 
-        node.children!.forEach((n) {
-          _traverse(n);
-          if (n == node.children!.last) {
+        for (var node in node.children!) {
+          traverse(node);
+          if (node == node.children!.last) {
             currentSpans = stack.isEmpty ? spans : stack.removeLast();
           }
-        });
+        }
       }
     }
 
     for (var node in nodes) {
-      _traverse(node);
+      traverse(node);
     }
 
     return spans;

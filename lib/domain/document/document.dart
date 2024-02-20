@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
-import 'package:requester/common/common.dart';
 import 'package:requester/domain/log/log.dart';
 import 'package:requester_common/requester_common.dart';
 import 'package:rxdart/rxdart.dart';
@@ -31,11 +30,11 @@ DocumentManager documentManager(DocumentManagerRef ref) {
 }
 
 class DocumentManager {
-  final AutoDisposeRef<DocumentManager> _ref;
+  DocumentManager(this._ref);
 
   final _DocumentPersistence _persistence = _DocumentPersistence();
 
-  DocumentManager(this._ref);
+  final AutoDisposeRef<DocumentManager> _ref;
 
   Stream<List<DocumentSource>> getSources() => _persistence.observeSources();
 

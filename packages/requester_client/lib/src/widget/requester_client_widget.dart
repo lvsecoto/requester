@@ -86,7 +86,7 @@ class RequesterClientWidget extends HookWidget {
                     color: Colors.black54,
                   ),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     child: Text(
                       'Requester 客户端',
                       textDirection: TextDirection.ltr,

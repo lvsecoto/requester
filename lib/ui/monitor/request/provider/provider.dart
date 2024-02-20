@@ -91,7 +91,7 @@ DataWidgetData loadLogRequestBody(
       ref.watch(documentManagerProvider).provideAnalyzeLogRequest(request);
   final documentBodies = ref.watch(documentProvider).valueOrNull?.requestBody;
   return DataWidgetData(
-    data: request.requestBody ?? '',
+    data: request.requestBody,
     objectAnalysis: documentBodies,
   );
 }
