@@ -1,5 +1,6 @@
 library intranet_ip;
 
+import 'dart:async';
 import 'dart:core';
 import 'dart:io';
 import 'dart:math';
@@ -10,7 +11,7 @@ import 'package:network_info_plus/network_info_plus.dart';
 /// 获取局域网IP
 Future<String> getIntranetIpv4() async {
   final info = NetworkInfo();
-  final ip = await info.getWifiIP();
+  var ip = await info.getWifiIP();
   if (ip != null) {
     return ip;
   }
@@ -22,7 +23,8 @@ Future<String> getIntranetIpv4() async {
 
   socket.readEventsEnabled = true;
   socket.broadcastEnabled = true;
-  final ret = socket.timeout(const Duration(milliseconds: 500), onTimeout: (sink) {
+  final completer = Completer<String>();
+  socket.timeout(const Duration(milliseconds: 500), onTimeout: (sink) {
     sink.close();
   }).expand<InternetAddress>((event) {
     if (event == RawSocketEvent.read) {
@@ -30,6 +32,7 @@ Future<String> getIntranetIpv4() async {
       if (dg != null &&
           dg.data.length == len &&
           const ListEquality().equals(dg.data, token)) {
+        completer.complete(dg.address.host);
         socket.close();
         return [];
       }
@@ -38,7 +41,7 @@ Future<String> getIntranetIpv4() async {
   }).first;
 
   socket.send(token, InternetAddress("255.255.255.255"), socket.port);
-  return (await ret).host;
+  return await completer.future;
 }
 
 Uint8List randomUInt8List(int length) {
