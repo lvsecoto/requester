@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:nsd/nsd.dart' as nsd;
@@ -16,10 +18,10 @@ part 'widget/requester_client_widget.dart';
 /// 管理Requester客户端的发现服务注册以及提供给Requester的服务
 class RequesterClientController extends ChangeNotifier
     implements AppLifecycleAware {
-  static RequesterClientController of(BuildContext context) {
+  static RequesterClientController? of(BuildContext context) {
     return context
-        .findAncestorWidgetOfExactType<_RequesterControllerHolder>()!
-        .controller;
+        .findAncestorWidgetOfExactType<_RequesterControllerHolder>()
+        ?.controller;
   }
 
   RequesterClientController({

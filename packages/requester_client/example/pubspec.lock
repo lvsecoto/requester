@@ -482,9 +482,11 @@ packages:
   requester_common:
     dependency: transitive
     description:
-      path: "../../requester_common"
-      relative: true
-    source: path
+      path: "packages/requester_common"
+      ref: "906f2f7"
+      resolved-ref: "906f2f7795856292a551c4b14fbe513eef1df5ad"
+      url: "https://github.com/lvsecoto/requester.git"
+    source: git
     version: "1.0.0+1"
   rxdart:
     dependency: transitive

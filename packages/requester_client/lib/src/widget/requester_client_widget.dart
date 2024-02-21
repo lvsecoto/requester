@@ -21,86 +21,109 @@ class RequesterClientWidget extends HookWidget {
   ///
   const RequesterClientWidget({
     super.key,
-    required this.child,
+    /// Requester Client对Requester通信端口
     this.port = 5010,
+    /// 是否启用Requester Client核心
+    this.isEnabled = true,
+    required this.child,
   });
 
   final Widget child;
 
   final int port;
 
+  final bool isEnabled;
+
   @override
   Widget build(BuildContext context) {
-    final identityAnimation = useAnimationController();
-    useEffect(() {
-      void onChange(AnimationStatus status) {
-        if (status == AnimationStatus.completed) {
-          identityAnimation.animateTo(
-            identityAnimation.lowerBound,
-            duration: const Duration(milliseconds: 120),
-          );
-        }
-      }
+    if (!isEnabled) {
+      return child;
+    }
+    return HookBuilder(
+      builder: (context) {
+        final identityAnimation = useAnimationController();
+        useEffect(() {
+          void onChange(AnimationStatus status) {
+            if (status == AnimationStatus.completed) {
+              identityAnimation.animateTo(
+                identityAnimation.lowerBound,
+                duration: const Duration(milliseconds: 120),
+              );
+            }
+          }
 
-      identityAnimation.addStatusListener(onChange);
-      return () {
-        identityAnimation.removeStatusListener(onChange);
-      };
-    }, [identityAnimation]);
-    final controller = useMemoized(
-      () => RequesterClientController(
-        port: port,
-        onIdentity: () {
-          identityAnimation.animateTo(
-            identityAnimation.upperBound,
-            duration: const Duration(milliseconds: 1500),
-            curve: const Interval(
-              0,
-              0.3,
-              curve: Curves.fastOutSlowIn,
-            ),
-          );
-        },
-      ),
-    );
-    useEffect(
-      () => () {
-        controller.dispose();
-      },
-      [controller],
-    );
-    useAppLifecycleAware(controller);
-    return _RequesterControllerHolder(
-      controller: controller,
-      child: Stack(
-        textDirection: TextDirection.ltr,
-        children: [
-          child,
-          HookBuilder(builder: (context) {
-            return Center(
-              child: FadeTransition(
-                opacity: identityAnimation,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.black54,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    child: Text(
-                      'Requester 客户端',
-                      textDirection: TextDirection.ltr,
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        fontSize: 32,
-                        color: Colors.white,
-                      ),
+          identityAnimation.addStatusListener(onChange);
+          return () {
+            identityAnimation.removeStatusListener(onChange);
+          };
+        }, [identityAnimation]);
+        final isIdentityVisible = useListenableSelector(identityAnimation, () => identityAnimation.value != 0);
+        final controller = useMemoized(
+              () => RequesterClientController(
+            port: port,
+            onIdentity: () {
+              identityAnimation.animateTo(
+                identityAnimation.upperBound,
+                duration: const Duration(milliseconds: 1500),
+                curve: const Interval(
+                  0,
+                  0.3,
+                  curve: Curves.fastOutSlowIn,
+                ),
+              );
+            },
+          ),
+        );
+        useEffect(
+              () => () {
+            controller.dispose();
+          },
+          [controller],
+        );
+        useAppLifecycleAware(controller);
+        return _RequesterControllerHolder(
+          controller: controller,
+          child: Stack(
+            textDirection: TextDirection.ltr,
+            children: [
+              child,
+              Visibility(
+                visible: isIdentityVisible,
+                child: Center(
+                    child: FadeTransition(
+                      opacity: identityAnimation,
+                      child: const _Identity(),
                     ),
                   ),
-                ),
               ),
-            );
-          }),
-        ],
+            ],
+          ),
+        );
+      }
+    );
+  }
+}
+
+class _Identity extends StatelessWidget {
+  const _Identity();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.black54,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: Text(
+          'Requester 客户端',
+          textDirection: TextDirection.ltr,
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+            fontSize: 32,
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }
