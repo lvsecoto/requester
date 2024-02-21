@@ -69,8 +69,12 @@ dependencies:
 
   requester_client:
     path: packages/requester_client
+  # 公共组件
   requester_common:
-    path: packages/requester_common
+    git:
+      url: https://github.com/lvsecoto/requester.git
+      path: packages/requester_common
+      ref: 906f2f7
   conduit_open_api:
     git:
       url: https://github.com/lvsecoto/conduit.git
