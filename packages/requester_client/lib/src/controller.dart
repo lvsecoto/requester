@@ -16,10 +16,10 @@ part 'widget/requester_client_widget.dart';
 /// 管理Requester客户端的发现服务注册以及提供给Requester的服务
 class RequesterClientController extends ChangeNotifier
     implements AppLifecycleAware {
-  static RequesterClientController of(BuildContext context) {
+  static RequesterClientController? of(BuildContext context) {
     return context
-        .findAncestorWidgetOfExactType<_RequesterControllerHolder>()!
-        .controller;
+        .findAncestorWidgetOfExactType<_RequesterControllerHolder>()
+        ?.controller;
   }
 
   RequesterClientController({

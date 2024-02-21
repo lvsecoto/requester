@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RequesterClientWidget(
+      // isEnabled: false,
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -36,7 +37,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   late final requesterClientController = RequesterClientController.of(context);
-  late final infoProvider = requesterClientController.clientInfoProvider;
+  late final infoProvider = requesterClientController?.clientInfoProvider;
   final dio = Dio();
 
   @override
@@ -45,8 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
     dio.interceptors.addAll(
       requesterClientController.buildDioInterceptors(),
     );
-    infoProvider.set('counter', _counter.toString());
-    infoProvider.on('counter', (value) {
+    infoProvider?.set('counter', _counter.toString());
+    infoProvider?.on('counter', (value) {
       _counter = int.tryParse(value) ?? _counter;
       setState(() {});
       return _counter.toString();
@@ -56,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _incrementCounter() {
     setState(() {
       _counter++;
-      infoProvider.set('counter', _counter.toString());
+      infoProvider?.set('counter', _counter.toString());
     });
   }
 
