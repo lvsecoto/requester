@@ -1,7 +1,7 @@
 part of 'log.dart';
 
 mixin _HostPortManager on _LogManager{
-  /// Requester Client日志应到发送到的端口
+  /// Requester 接收Client日志的端口
   final int port = 5200;
 
   /// 获取Requester Client日志发送到哪个HostPort
@@ -13,18 +13,10 @@ mixin _HostPortManager on _LogManager{
     );
   }
 
+ /// 获取用于接收日志的地址和端口
   Future<HostPort> _getSelfHostPort() async {
-    final info = NetworkInfo();
-    final ip = await info.getWifiIP();
-    if (ip == null) {
-      final ip = await intranetIpv4();
-      return HostPort(
-        host: ip.host,
-        port: port,
-      );
-    }
     return HostPort(
-      host: ip,
+      host: await getIntranetIpv4(),
       port: port,
     );
   }
