@@ -1,7 +1,7 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:requester/discovery/discovery.dart';
+import 'package:requester/service/service.dart';
 import 'package:requester_client/requester_client.dart';
 
 import '../../../../route/route.dart';
@@ -12,32 +12,30 @@ class ContentWidget extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RequesterClientDiscoveryControllerWidget(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('设备列表'),
-        ),
-        body: CustomScrollView(
-          slivers: [
-            HookBuilder(builder: (context) {
-              final controller = RequesterClientDiscoveryController.of(context);
-              final clients =
-                  useListenableSelector(controller, () => controller.clients);
-              return DiffSliverAnimatedList(
-                items: clients,
-                keySelector: (item) => item.hostPort,
-                itemBuilder: (context, client) => ClientItemWidget(
-                  client: client,
-                  onTap: (client) {
-                    RequesterClientDetailsRoute.fromClient(client).go(
-                      context,
-                    );
-                  },
-                ),
-              );
-            }),
-          ],
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('设备列表'),
+      ),
+      body: CustomScrollView(
+        slivers: [
+          HookBuilder(builder: (context) {
+            final controller = RequesterClientDiscoveryController.of(context);
+            final clients =
+                useListenableSelector(controller, () => controller.clients);
+            return DiffSliverAnimatedList(
+              items: clients,
+              keySelector: (item) => item.hostPort,
+              itemBuilder: (context, client) => ClientItemWidget(
+                client: client,
+                onTap: (client) {
+                  RequesterClientDetailsRoute.fromClient(client).go(
+                    context,
+                  );
+                },
+              ),
+            );
+          }),
+        ],
       ),
     );
   }

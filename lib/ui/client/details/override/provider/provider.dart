@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:requester/service/service.dart';
 import 'package:requester_client/requester_client.dart';
 import 'package:requester_client/rpc.dart' as rpc;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import 'package:requester/client/client.dart';
 
 part 'provider.g.dart';
 
