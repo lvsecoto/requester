@@ -18,14 +18,14 @@ class RequestListWidget extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final listProvider = ref.watch(provider.watchLogProviderProvider);
     final requests = ref.watch(listProvider).data;
-    final alwaysShowLastLog = useState(false);
-    if (alwaysShowLastLog.value) {
-      ref.listen(listProvider.select((it) => it.data.firstOrNull), (_, next) {
-        if (next != null) {
-          RequestRoute(next.id).go(context);
-        }
-      });
-    }
+
+    ref.listen(listProvider.select((it) => it.data.firstOrNull), (prev, next) {
+      final currentPath = GoRouterState.of(context).uri.toString();
+      if ((prev != null && currentPath == RequestRoute(prev.id).location) &&
+          next != null) {
+        RequestRoute(next.id).go(context);
+      }
+    });
 
     return CustomScrollView(
       slivers: [
@@ -40,9 +40,7 @@ class RequestListWidget extends HookConsumerWidget {
                       LogRequest() => _RequestItem(
                           item: item,
                           onTap: () async {
-                            alwaysShowLastLog.value = index == 0;
                             RequestRoute(item.id).go(context);
-                            alwaysShowLastLog.value = false;
                           },
                         ),
                       _ => throw '',
