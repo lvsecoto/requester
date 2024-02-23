@@ -21,33 +21,44 @@ service RequesterLogService {
 
 }
 
-// 请求日志
-message LogRequest {
-  // id，用来和LogResponse对应
+// 日志基本信息
+message Log {
+  // id，LogRequest可用来和LogResponse对应
   string id = 1;
 
-  uint64 time = 2;
+  // 设备的id，表示是哪个设备发出的日志
+  string client_uid = 2;
+
+  // 日志发送时间
+  uint64 time = 3;
+}
+
+// 请求日志
+message LogRequest {
+
+  // 基本的日志信息
+  Log log = 1;
 
   // 方法
-  string method = 3;
+  string method = 2;
 
   // 路径
-  string path = 4;
+  string path = 3;
 
   // 请求头
-  map<string, string> headers = 5;
+  map<string, string> headers = 4;
 
   // queries
-  map<string, string> queries = 6;
+  map<string, string> queries = 5;
 
   // 请求体
-  string body = 7;
+  string body = 6;
 }
 
 // 响应日志
 message LogResponse {
-  // id，用来和LogRequest对应
-  string id = 1;
+  // 基本的日志信息
+  Log log = 1;
 
   // 返回耗费时间
   uint32 spent_time = 2;

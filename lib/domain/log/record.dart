@@ -5,9 +5,10 @@ mixin _LogRecord on _LogManager {
   Future<void> onReceiveLogRequest(rpc.LogRequest logRequest) async {
     final id = await _logTable.insertOne(
       LogTableCompanion.insert(
-        time:
-            Value(DateTime.fromMillisecondsSinceEpoch(logRequest.time.toInt())),
-        requestId: Value(logRequest.id),
+        logId: logRequest.log.id,
+        logTime:
+            DateTime.fromMillisecondsSinceEpoch(logRequest.log.time.toInt()),
+        logClientUid: logRequest.log.clientUid,
         requestMethod: Value(logRequest.method),
         requestPath: Value(logRequest.path),
         requestHeaders: Value(logRequest.headers),
@@ -17,8 +18,8 @@ mixin _LogRecord on _LogManager {
     );
     _ref.read(_onLogAddProvider.notifier).select(LogRequest(
           id: id,
-          time: DateTime.fromMillisecondsSinceEpoch(logRequest.time.toInt()),
-          requestId: logRequest.id,
+          time:
+              DateTime.fromMillisecondsSinceEpoch(logRequest.log.time.toInt()),
           requestPath: logRequest.path,
           requestMethod: logRequest.method,
           requestQueries: logRequest.queries,
@@ -28,26 +29,29 @@ mixin _LogRecord on _LogManager {
   }
 
   Future<void> onReceiveLogResponse(rpc.LogResponse logResponse) async {
-    await (_logTable.update()
-          ..where((tbl) => tbl.requestId.equals(logResponse.id)))
-        .write(LogTableCompanion(
+    final log = (await (_logTable.update()
+              ..where((tbl) => tbl.logId.equals(logResponse.log.id)))
+            .writeReturning(LogTableCompanion(
       responseCode: Value(logResponse.code),
       responseSpentTime: Value(Duration(milliseconds: logResponse.spentTime)),
       responseError: Value(logResponse.error),
       responseBody: Value(logResponse.body),
-    ));
+    )))
+        .firstOrNull;
 
-    _ref.read(_onLogResponseUpdateProvider.notifier).select((
-      logResponse.id,
-      LogResponse(
-        code: logResponse.code,
-        body: logResponse.body,
-        error: logResponse.error,
-        spentTime: Duration(
-          milliseconds: logResponse.spentTime,
-        ),
-      )
-    ));
+    if (log != null) {
+      _ref.read(_onLogResponseUpdateProvider.notifier).select((
+        log.id,
+        LogResponse(
+          code: logResponse.code,
+          body: logResponse.body,
+          error: logResponse.error,
+          spentTime: Duration(
+            milliseconds: logResponse.spentTime,
+          ),
+        )
+      ));
+    }
   }
 
   /// 日志列表
@@ -108,8 +112,7 @@ mixin _LogRecord on _LogManager {
     }
     return LogRequest(
       id: record.read(_logTable.id)!,
-      time: record.readWithConverter(_logTable.time)!,
-      requestId: record.read(_logTable.requestId)!,
+      time: record.readWithConverter(_logTable.logTime)!,
       requestPath: record.read(_logTable.requestPath)!,
       requestMethod: record.read(_logTable.requestMethod)!,
       requestQueries: record.readWithConverter(_logTable.requestQueries)!,

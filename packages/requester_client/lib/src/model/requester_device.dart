@@ -30,8 +30,6 @@ class RequesterClient with _$RequesterClient {
     required HostPort hostPort,
   }) = _RequesterClient;
 
-  static const _kClientId = 'client_id';
-
   static Future<RequesterClient> create(HostPort hostPort) async {
     final info = await PackageInfo.fromPlatform();
     return RequesterClient(
@@ -79,6 +77,24 @@ class RequesterClient with _$RequesterClient {
     return utf8.decode(service.txt?[key]?.toList() ?? []);
   }
 
+  static const _kClientUid = 'client_uid';
+
+  /// 获取客户端唯一Id，用来标识客户端，用来区分客户端
+  ///
+  /// 用户不会看到这个Id
+  ///
+  /// 和[getClientId]不同，这个值一旦设置了就不会改变
+  static Future<String> getClientUid() async {
+    return await getObject(
+      _kClientUid,
+      decode: (input) => input,
+      encode: (input) => input,
+      defaultValue: _getRandomString(8),
+    );
+  }
+
+  static const _kClientId = 'client_id';
+
   /// 设置客户端Id
   static Future<void> setClientId(String id) async {
     await saveObject(_kClientId, id, encode: (it) => it);
@@ -96,11 +112,13 @@ class RequesterClient with _$RequesterClient {
 
   /// 转换为服务
   rpc.RequesterClientServiceClient toService() {
-    final client = grpc.ClientChannel(hostPort.host,
-        port: hostPort.port,
-        options: const grpc.ChannelOptions(
-          credentials: grpc.ChannelCredentials.insecure(),
-        ));
+    final client = grpc.ClientChannel(
+      hostPort.host,
+      port: hostPort.port,
+      options: const grpc.ChannelOptions(
+        credentials: grpc.ChannelCredentials.insecure(),
+      ),
+    );
     return rpc.RequesterClientServiceClient(
       client,
     );

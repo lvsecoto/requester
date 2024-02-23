@@ -28,8 +28,8 @@ class LogList extends _$LogList with PagingLoadNotifierMixin<Log, int> {
     ref.listen(_onLogResponseUpdateProvider, (_, updatedLogResponse) {
       if (updatedLogResponse != null) {
         final data = state.data;
-        final (requestId, response) = updatedLogResponse;
-        final index = data.indexWhere((it) => it.requestId == requestId);
+        final (id, response) = updatedLogResponse;
+        final index = data.indexWhere((it) => it.id == id);
         if (index != -1) {
           state = state.copyWith(
             data: [
@@ -87,7 +87,7 @@ class _OnLogAdd extends _$OnLogAdd with SelectableNotifier {
 @riverpod
 class _OnLogResponseUpdate extends _$OnLogResponseUpdate with SelectableNotifier {
   @override
-  (String, LogResponse)? build() {
+  (int, LogResponse)? build() {
     return null;
   }
 }
@@ -114,8 +114,8 @@ Future<Log> loadLog(LoadLogRef ref, int logId) async {
   final log = await ref.watch(logManagerProvider)._getLog(logId);
   ref.listen(_onLogResponseUpdateProvider, (_, next) {
     if (next != null) {
-      final (logRequestId, _) = next;
-      if (logRequestId == log.requestId) {
+      final (id, _) = next;
+      if (id == log.id) {
         ref.invalidateSelf();
       }
     }

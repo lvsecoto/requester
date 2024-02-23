@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:requester_client/requester_client.dart';
 import 'package:requester_client/rpc.dart' as rpc;
 import 'package:uuid/v1.dart';
 
@@ -15,7 +16,8 @@ class RequesterLogDioInterceptor extends Interceptor {
   static const _kLogTime = 'log_time';
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  void onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
     super.onRequest(options, handler);
     final logId = const UuidV1().generate();
     final now = DateTime.now();
@@ -33,31 +35,38 @@ class RequesterLogDioInterceptor extends Interceptor {
     final query = uri.queryParameters;
 
     final logRequest = rpc.LogRequest(
-      id: logId,
+      log: rpc.Log(
+        id: logId,
+        clientUid: await RequesterClient.getClientUid(),
+        time: rpc.Int64(now.millisecondsSinceEpoch),
+      ),
       path: path,
       queries: query,
-      time: rpc.Int64(now.millisecondsSinceEpoch),
       headers:
           options.headers.map((key, value) => MapEntry(key, value.toString())),
       method: options.method,
       body: _captureBody(data),
     );
-    logProvider.client?.sendRequest(logRequest);
+    await logProvider.client?.sendRequest(logRequest);
   }
 
   @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
+  void onResponse(Response response, ResponseInterceptorHandler handler) async {
     super.onResponse(response, handler);
 
     final logId = response.requestOptions.extra[_kLogId]!;
     DateTime requestTime = response.requestOptions.extra[_kLogTime]!;
     final logResponse = rpc.LogResponse(
-      id: logId,
+      log: rpc.Log(
+        id: logId,
+        clientUid: await RequesterClient.getClientUid(),
+        time: rpc.Int64(),
+      ),
       spentTime: DateTime.now().difference(requestTime).inMilliseconds,
       code: response.statusCode,
       body: _captureBody(response.data),
     );
-    logProvider.client?.sendResponse(logResponse);
+    await logProvider.client?.sendResponse(logResponse);
   }
 
   String _captureBody(data) {
@@ -69,15 +78,21 @@ class RequesterLogDioInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
     super.onError(err, handler);
     final logId = err.requestOptions.extra[_kLogId]!;
     final logResponse = rpc.LogResponse(
-      id: logId,
+      log: rpc.Log(
+        id: logId,
+        clientUid: await RequesterClient.getClientUid(),
+        time: rpc.Int64(),
+      ),
       code: err.response?.statusCode ?? -1,
-      body: err.response != null ? _captureBody(err.response!.data) : err.error.toString(),
+      body: err.response != null
+          ? _captureBody(err.response!.data)
+          : err.error.toString(),
       error: err.type.toString(),
     );
-    logProvider.client?.sendResponse(logResponse);
+    await logProvider.client?.sendResponse(logResponse);
   }
 }

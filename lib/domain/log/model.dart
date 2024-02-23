@@ -39,7 +39,6 @@ class Log with _$Log {
     required int id,
     required DateTime time,
 
-    required String requestId,
     required String requestPath,
     required String requestMethod,
     required Map<String, String> requestQueries,

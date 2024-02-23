@@ -14,11 +14,92 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
+/// 日志基本信息
+class Log extends $pb.GeneratedMessage {
+  factory Log({
+    $core.String? id,
+    $core.String? clientUid,
+    $fixnum.Int64? time,
+  }) {
+    final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
+    if (clientUid != null) {
+      $result.clientUid = clientUid;
+    }
+    if (time != null) {
+      $result.time = time;
+    }
+    return $result;
+  }
+  Log._() : super();
+  factory Log.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Log.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Log', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'clientUid')
+    ..a<$fixnum.Int64>(3, _omitFieldNames ? '' : 'time', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Log clone() => Log()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Log copyWith(void Function(Log) updates) => super.copyWith((message) => updates(message as Log)) as Log;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static Log create() => Log._();
+  Log createEmptyInstance() => create();
+  static $pb.PbList<Log> createRepeated() => $pb.PbList<Log>();
+  @$core.pragma('dart2js:noInline')
+  static Log getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Log>(create);
+  static Log? _defaultInstance;
+
+  /// id，LogRequest可用来和LogResponse对应
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  /// 设备的id，表示是哪个设备发出的日志
+  @$pb.TagNumber(2)
+  $core.String get clientUid => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set clientUid($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasClientUid() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearClientUid() => clearField(2);
+
+  /// 日志发送时间
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get time => $_getI64(2);
+  @$pb.TagNumber(3)
+  set time($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasTime() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearTime() => clearField(3);
+}
+
 /// 请求日志
 class LogRequest extends $pb.GeneratedMessage {
   factory LogRequest({
-    $core.String? id,
-    $fixnum.Int64? time,
+    Log? log,
     $core.String? method,
     $core.String? path,
     $core.Map<$core.String, $core.String>? headers,
@@ -26,11 +107,8 @@ class LogRequest extends $pb.GeneratedMessage {
     $core.String? body,
   }) {
     final $result = create();
-    if (id != null) {
-      $result.id = id;
-    }
-    if (time != null) {
-      $result.time = time;
+    if (log != null) {
+      $result.log = log;
     }
     if (method != null) {
       $result.method = method;
@@ -54,13 +132,12 @@ class LogRequest extends $pb.GeneratedMessage {
   factory LogRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LogRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'id')
-    ..a<$fixnum.Int64>(2, _omitFieldNames ? '' : 'time', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..aOS(3, _omitFieldNames ? '' : 'method')
-    ..aOS(4, _omitFieldNames ? '' : 'path')
-    ..m<$core.String, $core.String>(5, _omitFieldNames ? '' : 'headers', entryClassName: 'LogRequest.HeadersEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
-    ..m<$core.String, $core.String>(6, _omitFieldNames ? '' : 'queries', entryClassName: 'LogRequest.QueriesEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
-    ..aOS(7, _omitFieldNames ? '' : 'body')
+    ..aOM<Log>(1, _omitFieldNames ? '' : 'log', subBuilder: Log.create)
+    ..aOS(2, _omitFieldNames ? '' : 'method')
+    ..aOS(3, _omitFieldNames ? '' : 'path')
+    ..m<$core.String, $core.String>(4, _omitFieldNames ? '' : 'headers', entryClassName: 'LogRequest.HeadersEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
+    ..m<$core.String, $core.String>(5, _omitFieldNames ? '' : 'queries', entryClassName: 'LogRequest.QueriesEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
+    ..aOS(6, _omitFieldNames ? '' : 'body')
     ..hasRequiredFields = false
   ;
 
@@ -85,68 +162,61 @@ class LogRequest extends $pb.GeneratedMessage {
   static LogRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LogRequest>(create);
   static LogRequest? _defaultInstance;
 
-  /// id，用来和LogResponse对应
+  /// 基本的日志信息
   @$pb.TagNumber(1)
-  $core.String get id => $_getSZ(0);
+  Log get log => $_getN(0);
   @$pb.TagNumber(1)
-  set id($core.String v) { $_setString(0, v); }
+  set log(Log v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasId() => $_has(0);
+  $core.bool hasLog() => $_has(0);
   @$pb.TagNumber(1)
-  void clearId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $fixnum.Int64 get time => $_getI64(1);
-  @$pb.TagNumber(2)
-  set time($fixnum.Int64 v) { $_setInt64(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasTime() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearTime() => clearField(2);
+  void clearLog() => clearField(1);
+  @$pb.TagNumber(1)
+  Log ensureLog() => $_ensure(0);
 
   /// 方法
-  @$pb.TagNumber(3)
-  $core.String get method => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set method($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasMethod() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearMethod() => clearField(3);
+  @$pb.TagNumber(2)
+  $core.String get method => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set method($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMethod() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMethod() => clearField(2);
 
   /// 路径
-  @$pb.TagNumber(4)
-  $core.String get path => $_getSZ(3);
-  @$pb.TagNumber(4)
-  set path($core.String v) { $_setString(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasPath() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearPath() => clearField(4);
+  @$pb.TagNumber(3)
+  $core.String get path => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set path($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasPath() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPath() => clearField(3);
 
   /// 请求头
-  @$pb.TagNumber(5)
-  $core.Map<$core.String, $core.String> get headers => $_getMap(4);
+  @$pb.TagNumber(4)
+  $core.Map<$core.String, $core.String> get headers => $_getMap(3);
 
   /// queries
-  @$pb.TagNumber(6)
-  $core.Map<$core.String, $core.String> get queries => $_getMap(5);
+  @$pb.TagNumber(5)
+  $core.Map<$core.String, $core.String> get queries => $_getMap(4);
 
   /// 请求体
-  @$pb.TagNumber(7)
-  $core.String get body => $_getSZ(6);
-  @$pb.TagNumber(7)
-  set body($core.String v) { $_setString(6, v); }
-  @$pb.TagNumber(7)
-  $core.bool hasBody() => $_has(6);
-  @$pb.TagNumber(7)
-  void clearBody() => clearField(7);
+  @$pb.TagNumber(6)
+  $core.String get body => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set body($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasBody() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearBody() => clearField(6);
 }
 
 /// 响应日志
 class LogResponse extends $pb.GeneratedMessage {
   factory LogResponse({
-    $core.String? id,
+    Log? log,
     $core.int? spentTime,
     $core.int? code,
     $core.String? body,
@@ -154,8 +224,8 @@ class LogResponse extends $pb.GeneratedMessage {
     $core.Map<$core.String, $core.String>? headers,
   }) {
     final $result = create();
-    if (id != null) {
-      $result.id = id;
+    if (log != null) {
+      $result.log = log;
     }
     if (spentTime != null) {
       $result.spentTime = spentTime;
@@ -179,7 +249,7 @@ class LogResponse extends $pb.GeneratedMessage {
   factory LogResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LogResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOM<Log>(1, _omitFieldNames ? '' : 'log', subBuilder: Log.create)
     ..a<$core.int>(2, _omitFieldNames ? '' : 'spentTime', $pb.PbFieldType.OU3)
     ..a<$core.int>(3, _omitFieldNames ? '' : 'code', $pb.PbFieldType.O3)
     ..aOS(4, _omitFieldNames ? '' : 'body')
@@ -209,15 +279,17 @@ class LogResponse extends $pb.GeneratedMessage {
   static LogResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LogResponse>(create);
   static LogResponse? _defaultInstance;
 
-  /// id，用来和LogRequest对应
+  /// 基本的日志信息
   @$pb.TagNumber(1)
-  $core.String get id => $_getSZ(0);
+  Log get log => $_getN(0);
   @$pb.TagNumber(1)
-  set id($core.String v) { $_setString(0, v); }
+  set log(Log v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasId() => $_has(0);
+  $core.bool hasLog() => $_has(0);
   @$pb.TagNumber(1)
-  void clearId() => clearField(1);
+  void clearLog() => clearField(1);
+  @$pb.TagNumber(1)
+  Log ensureLog() => $_ensure(0);
 
   /// 返回耗费时间
   @$pb.TagNumber(2)

@@ -5,14 +5,17 @@ import 'converter/converter.dart';
 /// 日志表
 class LogTable extends Table {
 
-  /// 日志id
+  /// id
   IntColumn get id => integer().autoIncrement()();
 
-  /// 发生时间
-  IntColumn get time => integer().nullable().map(const DataTimeConverter())();
+  /// 日志Id
+  TextColumn get logId => text()();
 
-  /// 用于识别请求
-  TextColumn get requestId => text().nullable()();
+  /// 日志发生时间
+  IntColumn get logTime => integer().map(const DataTimeConverter())();
+
+  /// 日志发送方
+  TextColumn get logClientUid => text()();
 
   /// 请求方法
   TextColumn get requestMethod => text().nullable()();
