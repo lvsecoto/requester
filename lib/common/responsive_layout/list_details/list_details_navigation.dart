@@ -179,20 +179,13 @@ class ListDetailsNavigation extends HookConsumerWidget {
                 top: isCompact ? 0 : savePaddingTop.coerceAtLeast(kPadding),
                 bottom:
                     isCompact ? 0 : savePaddingBottom.coerceAtLeast(kPadding),
-                child: AnimatedVisibilityWidget(
-                  // 在小屏幕，被详情覆盖的时候，也要隐藏，在WindowClass切换动画时，列表和详情一起显示，视觉上很奇怪
-                  isVisible: !(isCompact && !isDetailsEmpty),
-                  animationWidgetBuilder:
-                      AnimatedVisibilityWidget.fadeAnimationWidgetBuilder,
-                  duration: kThemeAnimationDuration,
-                  child: FadeTransition(
-                    opacity: WindowClassNotifierWidget.animation(context),
-                    child: MediaQuery(
-                      data: data,
-                      child: Theme(
-                        data: listTheme,
-                        child: list,
-                      ),
+                child: FadeTransition(
+                  opacity: WindowClassNotifierWidget.animation(context),
+                  child: MediaQuery(
+                    data: data,
+                    child: Theme(
+                      data: listTheme,
+                      child: list,
                     ),
                   ),
                 ),
