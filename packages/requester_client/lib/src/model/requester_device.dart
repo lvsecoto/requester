@@ -22,6 +22,7 @@ class RequesterClient with _$RequesterClient {
   const RequesterClient._();
 
   const factory RequesterClient({
+    required String clientUid,
     required String appName,
     required String appVersion,
     required String clientId,
@@ -33,6 +34,7 @@ class RequesterClient with _$RequesterClient {
   static Future<RequesterClient> create(HostPort hostPort) async {
     final info = await PackageInfo.fromPlatform();
     return RequesterClient(
+      clientUid: await getClientUid(),
       appName: info.appName,
       appVersion: '${info.version}+${info.buildNumber}',
       clientId: await getClientId(),
@@ -51,6 +53,7 @@ class RequesterClient with _$RequesterClient {
       ],
       type: '_requester._tcp',
       txt: {
+        'client_uid': utf8.encode(clientUid),
         'host': utf8.encode(hostPort.host),
         'port': utf8.encode(hostPort.port.toString()),
         'app_name': utf8.encode(appName),
@@ -63,6 +66,7 @@ class RequesterClient with _$RequesterClient {
   /// 从NSD服务创建Client
   static RequesterClient fromNsdService(nsd.Service service) {
     return RequesterClient(
+      clientUid: _decode(service, 'client_uid'),
       appName: _decode(service, 'app_name'),
       appVersion: _decode(service, 'app_version'),
       clientId: _decode(service, 'client_id'),

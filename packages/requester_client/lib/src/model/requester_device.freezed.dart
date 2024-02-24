@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$RequesterClient {
+  String get clientUid => throw _privateConstructorUsedError;
   String get appName => throw _privateConstructorUsedError;
   String get appVersion => throw _privateConstructorUsedError;
   String get clientId => throw _privateConstructorUsedError;
@@ -35,7 +36,11 @@ abstract class $RequesterClientCopyWith<$Res> {
       _$RequesterClientCopyWithImpl<$Res, RequesterClient>;
   @useResult
   $Res call(
-      {String appName, String appVersion, String clientId, HostPort hostPort});
+      {String clientUid,
+      String appName,
+      String appVersion,
+      String clientId,
+      HostPort hostPort});
 
   $HostPortCopyWith<$Res> get hostPort;
 }
@@ -53,12 +58,17 @@ class _$RequesterClientCopyWithImpl<$Res, $Val extends RequesterClient>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? clientUid = null,
     Object? appName = null,
     Object? appVersion = null,
     Object? clientId = null,
     Object? hostPort = null,
   }) {
     return _then(_value.copyWith(
+      clientUid: null == clientUid
+          ? _value.clientUid
+          : clientUid // ignore: cast_nullable_to_non_nullable
+              as String,
       appName: null == appName
           ? _value.appName
           : appName // ignore: cast_nullable_to_non_nullable
@@ -96,7 +106,11 @@ abstract class _$$RequesterClientImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String appName, String appVersion, String clientId, HostPort hostPort});
+      {String clientUid,
+      String appName,
+      String appVersion,
+      String clientId,
+      HostPort hostPort});
 
   @override
   $HostPortCopyWith<$Res> get hostPort;
@@ -113,12 +127,17 @@ class __$$RequesterClientImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? clientUid = null,
     Object? appName = null,
     Object? appVersion = null,
     Object? clientId = null,
     Object? hostPort = null,
   }) {
     return _then(_$RequesterClientImpl(
+      clientUid: null == clientUid
+          ? _value.clientUid
+          : clientUid // ignore: cast_nullable_to_non_nullable
+              as String,
       appName: null == appName
           ? _value.appName
           : appName // ignore: cast_nullable_to_non_nullable
@@ -143,12 +162,15 @@ class __$$RequesterClientImplCopyWithImpl<$Res>
 
 class _$RequesterClientImpl extends _RequesterClient {
   const _$RequesterClientImpl(
-      {required this.appName,
+      {required this.clientUid,
+      required this.appName,
       required this.appVersion,
       required this.clientId,
       required this.hostPort})
       : super._();
 
+  @override
+  final String clientUid;
   @override
   final String appName;
   @override
@@ -162,7 +184,7 @@ class _$RequesterClientImpl extends _RequesterClient {
 
   @override
   String toString() {
-    return 'RequesterClient(appName: $appName, appVersion: $appVersion, clientId: $clientId, hostPort: $hostPort)';
+    return 'RequesterClient(clientUid: $clientUid, appName: $appName, appVersion: $appVersion, clientId: $clientId, hostPort: $hostPort)';
   }
 
   @override
@@ -170,6 +192,8 @@ class _$RequesterClientImpl extends _RequesterClient {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RequesterClientImpl &&
+            (identical(other.clientUid, clientUid) ||
+                other.clientUid == clientUid) &&
             (identical(other.appName, appName) || other.appName == appName) &&
             (identical(other.appVersion, appVersion) ||
                 other.appVersion == appVersion) &&
@@ -180,8 +204,8 @@ class _$RequesterClientImpl extends _RequesterClient {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, appName, appVersion, clientId, hostPort);
+  int get hashCode => Object.hash(
+      runtimeType, clientUid, appName, appVersion, clientId, hostPort);
 
   @JsonKey(ignore: true)
   @override
@@ -193,12 +217,15 @@ class _$RequesterClientImpl extends _RequesterClient {
 
 abstract class _RequesterClient extends RequesterClient {
   const factory _RequesterClient(
-      {required final String appName,
+      {required final String clientUid,
+      required final String appName,
       required final String appVersion,
       required final String clientId,
       required final HostPort hostPort}) = _$RequesterClientImpl;
   const _RequesterClient._() : super._();
 
+  @override
+  String get clientUid;
   @override
   String get appName;
   @override

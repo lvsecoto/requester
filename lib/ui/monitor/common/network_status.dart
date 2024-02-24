@@ -32,6 +32,7 @@ class NetworkStatus extends StatelessWidget {
             .labelMedium!
             .copyWith(color: Colors.green),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             const _Circle(
               color: Colors.green,
@@ -44,6 +45,7 @@ class NetworkStatus extends StatelessWidget {
     } else if (response?.error != null) {
       final duration = response!.spentTime;
       child = Row(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const _Circle(
@@ -60,6 +62,7 @@ class NetworkStatus extends StatelessWidget {
       );
     } else {
       child = Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox.square(
             dimension: 8,

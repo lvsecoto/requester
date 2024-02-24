@@ -1,6 +1,6 @@
 part of 'discovery.dart';
 
-class RequesterClientDiscoveryControllerWidget extends HookWidget {
+class RequesterClientDiscoveryControllerWidget extends HookConsumerWidget {
   /// 用于发现客户端
   const RequesterClientDiscoveryControllerWidget({
     super.key,
@@ -10,8 +10,10 @@ class RequesterClientDiscoveryControllerWidget extends HookWidget {
   final Widget child;
 
   @override
-  Widget build(BuildContext context) {
-    final controller = useMemoized(() => RequesterClientDiscoveryController());
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = useMemoized(() => RequesterClientDiscoveryController(
+          ref.read(clientManagerProvider),
+        ));
     useAppLifecycleAware(controller);
     return _ClientDiscoveryControllerHolder(
       controller: controller,

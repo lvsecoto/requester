@@ -99,6 +99,10 @@ class AppTheme extends ThemeExtension<AppTheme> {
 }
 
 extension TextStyleEx on TextStyle {
+  TextStyle get bold => copyWith(
+        fontWeight: FontWeight.bold,
+      );
+
   TextStyle get highEmphasis => copyWith(
         color: color!.withOpacity(0.87),
       );

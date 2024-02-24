@@ -68,7 +68,7 @@ class ResponsePanel extends ConsumerWidget {
               title,
               if (request != null) ...[
                 const SizedBox(width: 12),
-                DCStatusCodeWidget(request: request),
+                StatusCodeWidget(request: request),
               ]
             ],
           ),

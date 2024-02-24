@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:requester/common/tag_widget.dart';
 import 'package:requester/domain/log/log.dart';
 
-class DCStatusCodeWidget extends StatelessWidget {
+class StatusCodeWidget extends StatelessWidget {
   /// 返回状态码
-  const DCStatusCodeWidget({
+  const StatusCodeWidget({
     super.key,
     required this.request,
   });

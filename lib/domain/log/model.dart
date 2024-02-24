@@ -38,6 +38,7 @@ class Log with _$Log {
   const factory Log.request({
     required int id,
     required DateTime time,
+    required String clientUid,
 
     required String requestPath,
     required String requestMethod,

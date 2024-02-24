@@ -20,6 +20,7 @@ mixin _LogRecord on _LogManager {
           id: id,
           time:
               DateTime.fromMillisecondsSinceEpoch(logRequest.log.time.toInt()),
+          clientUid: logRequest.log.clientUid,
           requestPath: logRequest.path,
           requestMethod: logRequest.method,
           requestQueries: logRequest.queries,
@@ -113,6 +114,7 @@ mixin _LogRecord on _LogManager {
     return LogRequest(
       id: record.read(_logTable.id)!,
       time: record.readWithConverter(_logTable.logTime)!,
+      clientUid: record.read(_logTable.logClientUid)!,
       requestPath: record.read(_logTable.requestPath)!,
       requestMethod: record.read(_logTable.requestMethod)!,
       requestQueries: record.readWithConverter(_logTable.requestQueries)!,

@@ -3,9 +3,13 @@ part of 'discovery.dart';
 /// [RequesterClient]客户端发现控制器
 class RequesterClientDiscoveryController extends ChangeNotifier
     implements AppLifecycleAware {
+  RequesterClientDiscoveryController(this._manager);
+
   static RequesterClientDiscoveryController of(BuildContext context) {
     return _ClientDiscoveryControllerHolder._of(context).controller;
   }
+
+  late final ClientManager _manager;
 
   nsd.Discovery? _nsdDiscovery;
 
@@ -28,6 +32,7 @@ class RequesterClientDiscoveryController extends ChangeNotifier
         _clients = services
             .map((service) => RequesterClient.fromNsdService(service))
             .toList();
+        _manager.onClientsFoundChanged(_clients);
         notifyListeners();
       });
   }

@@ -22,6 +22,7 @@ AppDatabase appDataBase(AppDataBaseRef ref) {
 
 @DriftDatabase(tables: [
   LogTable,
+  ClientTable,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
