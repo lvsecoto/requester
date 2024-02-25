@@ -2,24 +2,35 @@ import 'package:curl_converter/curl_converter.dart';
 import 'package:dartx/dartx.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_split_view/multi_split_view.dart';
+import 'package:requester/domain/client/client.dart';
 import 'package:requester/domain/document/document.dart';
 import 'package:requester/domain/log/log.dart';
 import 'package:requester/ui/monitor/common/common.dart';
+import 'package:requester_client/requester_client.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'provider.g.dart';
 
+/// 日志Id
 @Riverpod(dependencies: [])
 int requestLogId(RequestLogIdRef ref) {
   throw UnimplementedError();
 }
 
+/// 加载请求日志
 LogRequest? loadLogRequest(WidgetRef ref) {
   final requestId = ref.watch(requestLogIdProvider);
   final provider = ref.watch(logManagerProvider).provideLoadLog(requestId);
   return ref.watch(provider).valueOrNull as LogRequest?;
 }
 
+LogRequest? getLogRequest(WidgetRef ref) {
+  final requestId = ref.read(requestLogIdProvider);
+  final provider = ref.read(logManagerProvider).provideLoadLog(requestId);
+  return ref.read(provider).valueOrNull as LogRequest?;
+}
+
+/// 加载请求参数
 Map<String, ParametersTableValue> loadLogRequestQueries(
   WidgetRef ref,
 ) {
@@ -33,6 +44,7 @@ Map<String, ParametersTableValue> loadLogRequestQueries(
   return _analyzeParameterData(documentQuery, request.requestQueries);
 }
 
+/// 加载请求头
 Map<String, ParametersTableValue> loadLogRequestHeaders(
   WidgetRef ref,
 ) {
@@ -96,6 +108,7 @@ DataWidgetData loadLogRequestBody(
   );
 }
 
+/// 加载返回体
 DataWidgetData loadLogResponseBody(
   WidgetRef ref,
 ) {
@@ -122,8 +135,9 @@ Raw<MultiSplitViewController> splitViewController(SplitViewControllerRef ref) {
   return MultiSplitViewController(areas: kDefaultMonitorSplitAreas);
 }
 
+/// 获取请求curl
 String? getRequestCurl(WidgetRef ref) {
-  final request = loadLogRequest(ref);
+  final request = getLogRequest(ref);
   if (request == null) {
     return null;
   }
@@ -137,12 +151,24 @@ String? getRequestCurl(WidgetRef ref) {
   return curlString;
 }
 
+/// 获取请求url
 String? getRequestUrl(WidgetRef ref) {
-  final request = loadLogRequest(ref);
+  final request = getLogRequest(ref);
   if (request == null) {
     return null;
   }
-  return Uri.tryParse(request.requestPath)?.replace(
-    queryParameters: request.requestQueries
-  ).toString().removeSuffix('?');
+  return Uri.tryParse(request.requestPath)
+      ?.replace(queryParameters: request.requestQueries)
+      .toString()
+      .removeSuffix('?');
+}
+
+/// 加载发送此日志的客户端
+RequesterClient? getLogRequesterClient(WidgetRef ref) {
+  final request = getLogRequest(ref);
+  if (request == null) {
+    return null;
+  }
+  final provider = ref.read(clientManagerProvider).provideRequesterClient(request.clientUid);
+  return ref.read(provider).valueOrNull;
 }

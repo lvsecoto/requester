@@ -21,9 +21,9 @@ class RequestListWidget extends HookConsumerWidget {
 
     ref.listen(listProvider.select((it) => it.data.firstOrNull), (prev, next) {
       final currentPath = GoRouterState.of(context).uri.toString();
-      if ((prev != null && currentPath == RequestRoute(prev.id).location) &&
+      if ((prev != null && currentPath == LogDetailsRoute(prev.id).location) &&
           next != null) {
-        RequestRoute(next.id).go(context);
+        LogDetailsRoute(next.id).go(context);
       }
     });
 
@@ -40,7 +40,7 @@ class RequestListWidget extends HookConsumerWidget {
                       LogRequest() => _RequestItem(
                           item: item,
                           onTap: () async {
-                            RequestRoute(item.id).go(context);
+                            LogDetailsRoute(item.id).go(context);
                           },
                         ),
                       _ => throw '',
@@ -67,7 +67,7 @@ class _RequestItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentId = RequestRoute.from(GoRouterState.of(context))?.id;
+    final currentId = LogDetailsRoute.from(GoRouterState.of(context))?.id;
     return Material(
       animationDuration: const Duration(seconds: 1),
       color: item.id == currentId

@@ -9,8 +9,8 @@ import 'package:requester_client/requester_client.dart';
 import 'package:requester_client/rpc.dart';
 import 'package:requester_common/requester_common.dart';
 
-class QuickCreateRequestOverrideAction extends ConsumerWidget {
-  const QuickCreateRequestOverrideAction({
+class ActionQuickCreateRequestOverride extends ConsumerWidget {
+  const ActionQuickCreateRequestOverride({
     super.key,
   });
 
@@ -21,8 +21,10 @@ class QuickCreateRequestOverrideAction extends ConsumerWidget {
         final request = provider.loadLogRequest(ref);
         if (request == null) return;
 
-        final client = await showRequestClientListDialog(context);
-        if (client != null && context.mounted) {
+        final client = provider.getLogRequesterClient(ref) ??
+            await showRequestClientListDialog(context);
+
+        if (context.mounted && client != null) {
           final override = await showOverrideRequestDialog(
             context,
             overrideRequest: OverrideRequest(
@@ -46,7 +48,7 @@ class QuickCreateRequestOverrideAction extends ConsumerWidget {
                 action: SnackBarAction(
                   label: '前往查看',
                   onPressed: () {
-                    RequestViewClientRequestOverrideRoute.fromClient(client)
+                    LogDetailsClientDetailsRoute.fromClient(context, client)
                         .push(context);
                   },
                 ),

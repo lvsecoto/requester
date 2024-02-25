@@ -8,7 +8,7 @@ import 'package:requester/ui/common/common.dart';
 import 'package:requester/ui/monitor/common/common.dart';
 import 'package:requester/ui/monitor/request/provider/provider.dart';
 
-import 'quick_create_request_override_action.dart';
+import 'actions/actions.dart';
 import 'request_panel.dart';
 import 'response_panel.dart';
 
@@ -37,7 +37,7 @@ class ContentWidget extends HookConsumerWidget {
           centerTitle: false,
           backgroundColor: Colors.transparent,
           actions: const [
-            QuickCreateRequestOverrideAction(),
+            ActionQuickCreateRequestOverride(),
           ],
         ),
         body: MultiSplitViewTheme(

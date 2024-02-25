@@ -37,6 +37,7 @@ class RequesterClientDetailsRoute extends GoRouteData {
   /// 设备的主机地址和端口
   final String hostPort;
 
+  /// 设备详情路由
   const RequesterClientDetailsRoute(this.hostPort);
 
   static RequesterClientDetailsRoute fromClient(RequesterClient client) {
