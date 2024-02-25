@@ -37,6 +37,7 @@ class ClientManager {
       clients
           .map((client) => ClientTableCompanion.insert(
                 appName: client.appName,
+                appVersion: client.appVersion,
                 clientUid: client.clientUid,
                 clientId: client.clientId,
                 host: client.hostPort.host,
@@ -56,11 +57,11 @@ class ClientManager {
       clientId: data.clientId,
       clientUid: clientUid,
       appName: data.appName,
+      appVersion: data.appVersion,
       hostPort: HostPort(
         host: data.host,
         port: data.port,
       ),
-      appVersion: data.appName,
     );
   }
 

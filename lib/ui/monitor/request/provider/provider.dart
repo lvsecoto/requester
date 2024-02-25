@@ -18,7 +18,7 @@ int requestLogId(RequestLogIdRef ref) {
 }
 
 /// 加载请求日志
-LogRequest? loadLogRequest(WidgetRef ref) {
+LogRequest? watchLogRequest(WidgetRef ref) {
   final requestId = ref.watch(requestLogIdProvider);
   final provider = ref.watch(logManagerProvider).provideLoadLog(requestId);
   return ref.watch(provider).valueOrNull as LogRequest?;
@@ -31,10 +31,10 @@ LogRequest? getLogRequest(WidgetRef ref) {
 }
 
 /// 加载请求参数
-Map<String, ParametersTableValue> loadLogRequestQueries(
+Map<String, ParametersTableValue> watchLogRequestQueries(
   WidgetRef ref,
 ) {
-  final request = loadLogRequest(ref);
+  final request = watchLogRequest(ref);
   if (request == null) {
     return {};
   }
@@ -45,10 +45,10 @@ Map<String, ParametersTableValue> loadLogRequestQueries(
 }
 
 /// 加载请求头
-Map<String, ParametersTableValue> loadLogRequestHeaders(
+Map<String, ParametersTableValue> watchLogRequestHeaders(
   WidgetRef ref,
 ) {
-  final request = loadLogRequest(ref);
+  final request = watchLogRequest(ref);
   if (request == null) {
     return {};
   }
@@ -92,10 +92,10 @@ Map<String, ParametersTableValue> _analyzeParameterData(
 }
 
 /// 加载请求体
-DataWidgetData loadLogRequestBody(
+DataWidgetData watchLogRequestBody(
   WidgetRef ref,
 ) {
-  final request = loadLogRequest(ref);
+  final request = watchLogRequest(ref);
   if (request == null) {
     return DataWidgetData(data: '');
   }
@@ -112,7 +112,7 @@ DataWidgetData loadLogRequestBody(
 DataWidgetData loadLogResponseBody(
   WidgetRef ref,
 ) {
-  final request = loadLogRequest(ref);
+  final request = watchLogRequest(ref);
   if (request == null) {
     return DataWidgetData(data: '');
   }
@@ -171,4 +171,14 @@ RequesterClient? getLogRequesterClient(WidgetRef ref) {
   }
   final provider = ref.read(clientManagerProvider).provideRequesterClient(request.clientUid);
   return ref.read(provider).valueOrNull;
+}
+
+/// 观察发送此日志的客户端
+RequesterClient? watchLogRequesterClient(WidgetRef ref) {
+  final request = watchLogRequest(ref);
+  if (request == null) {
+    return null;
+  }
+  final provider = ref.watch(clientManagerProvider).provideRequesterClient(request.clientUid);
+  return ref.watch(provider).valueOrNull;
 }

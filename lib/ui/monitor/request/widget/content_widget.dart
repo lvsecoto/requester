@@ -89,7 +89,7 @@ class ContentWidget extends HookConsumerWidget {
 class _Title extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final request = loadLogRequest(ref);
+    final request = watchLogRequest(ref);
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: () {

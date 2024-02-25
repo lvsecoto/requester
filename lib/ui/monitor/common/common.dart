@@ -6,3 +6,4 @@ export 'parameters_table_widget.dart';
 export 'request_summary_widget.dart';
 export 'status_code_widget.dart';
 export 'network_status.dart';
+export 'client_widget.dart';

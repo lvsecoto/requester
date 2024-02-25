@@ -18,7 +18,7 @@ class ActionQuickCreateRequestOverride extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
       onPressed: () async {
-        final request = provider.loadLogRequest(ref);
+        final request = provider.watchLogRequest(ref);
         if (request == null) return;
 
         final client = provider.getLogRequesterClient(ref) ??

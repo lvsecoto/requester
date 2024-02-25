@@ -11,7 +11,7 @@ class ResponsePanel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final request = loadLogRequest(ref);
+    final request = watchLogRequest(ref);
     final error = request?.requestResponse?.error;
     final response = request?.requestResponse;
 

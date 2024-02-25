@@ -15,6 +15,9 @@ class ClientTable extends Table {
   /// 应用名称
   TextColumn get appName => text()();
 
+  /// 应用版本
+  TextColumn get appVersion => text()();
+
   /// 对Requester Host
   TextColumn get host => text()();
 
