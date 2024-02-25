@@ -31,7 +31,7 @@ GoRouter router(RouterRef ref) => GoRouter(
           $requesterClientListRoute,
           ResponsiveLayoutNavigationDestination(
             icon: const Icon(Icons.devices),
-            title: '设备',
+            title: '客户端',
           ),
         ),
         ResponsiveLayoutNavigationDestinationRoute(

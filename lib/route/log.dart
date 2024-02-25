@@ -118,7 +118,7 @@ class LogDetailsClientDetailsRoute extends GoRouteData {
 
 const _logDetailsClientRequestOverrideRoute =
     TypedGoRoute<LogDetailsClientRequestOverrideRoute>(
-  path: 'clientRequestOverride',
+  path: 'requestOverride',
 );
 
 /// 请求重载

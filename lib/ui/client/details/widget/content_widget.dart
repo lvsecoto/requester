@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:requester/common/responsive_layout/responsive_column.dart';
 import 'package:requester/route/route.dart';
@@ -21,8 +22,14 @@ class ContentWidget extends HookConsumerWidget {
           actions: [
             IconButton(
               onPressed: () {
-                final hostPort = RequesterClientServiceController.of(context).hostPort;
-                ClientRequestOverrideRoute(hostPort.encode()).go(context);
+                var uri = GoRouterState.of(context).uri;
+                uri = uri.replace(
+                  pathSegments: [...uri.pathSegments, 'requestOverride'],
+                  queryParameters: {
+                    ...uri.queryParameters,
+                  },
+                );
+                GoRouter.of(context).go('/$uri');
               },
               icon: const Icon(Icons.flash_on),
             ),
