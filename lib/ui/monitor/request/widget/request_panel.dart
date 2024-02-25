@@ -81,7 +81,7 @@ class _Client extends StatelessWidget {
         LogDetailsClientDetailsRoute.fromClient(context, client).go(context);
       },
       child: Padding(
-        padding: const EdgeInsets.only(left: 12, right: 12, bottom: 6),
+        padding: const EdgeInsets.only(left: 16, right: 12, bottom: 6),
         child: Row(
           children: [
             ClientWidget(requesterClient: client),

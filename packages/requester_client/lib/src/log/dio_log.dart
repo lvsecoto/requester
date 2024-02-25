@@ -31,7 +31,10 @@ class RequesterLogDioInterceptor extends Interceptor {
     options.path;
 
     final uri = options.uri;
-    final path = uri.replace(queryParameters: {}).normalizePath().toString();
+    var path = uri.replace(queryParameters: {}).normalizePath().toString();
+    if (path.endsWith('?')) {
+      path = path.substring(0, path.length - 1);
+    }
     final query = uri.queryParameters;
 
     final logRequest = rpc.LogRequest(
