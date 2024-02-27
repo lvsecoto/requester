@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:requester_common/requester_common.dart';
 
 import 'override.dart';
@@ -8,15 +9,21 @@ class RequesterOverrideDioInterceptor extends Interceptor {
     this.overrideProvider,
   );
 
+  static const kRequesterOverridden = 'requester_overridden';
+
   final OverrideProvider overrideProvider;
 
   @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+    // OverrideRequest? matched =
+    await _match(options);
+    /// todo 对请求的操作
+    /// _actionToRequest(options, matched);
+  }
+
+  @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
-    final overrides = await overrideProvider.getOverrideList();
-    final requestUri = response.requestOptions.uri;
-
-    OverrideRequest? matched = _match(overrides, requestUri);
-
+    final matched = await _match(response.requestOptions);
     if (matched != null) {
       _actionToResponse(matched, response);
       handler.next(response);
@@ -27,9 +34,7 @@ class RequesterOverrideDioInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
-    final overrides = await overrideProvider.getOverrideList();
-    final matched = _match(overrides, err.requestOptions.uri);
-
+    final matched = await _match(err.requestOptions);
     if (matched != null) {
       final response = err.response;
       _actionToResponse(matched, response);
@@ -39,11 +44,18 @@ class RequesterOverrideDioInterceptor extends Interceptor {
     }
   }
 
-  /// 在[overrides]中找到符合[requestUri]的[OverrideRequest]
+  /// 先从[requestOptions.extra]找，然后再在
+  /// 在[overrideProvider.getOverrideList]中找到符合[requestOptions]的[OverrideRequest]
   ///
   /// 找不到就返回null
-  OverrideRequest? _match(List<OverrideRequest> overrides, Uri requestUri) {
-    final matched = overrides.cast<OverrideRequest?>().firstWhere((it) {
+  Future<OverrideRequest?> _match(RequestOptions requestOptions) async {
+    var matched = requestOptions.extra[kRequesterOverridden] as OverrideRequest?;
+    if (matched != null) {
+      return matched;
+    }
+    final requestUri = requestOptions.uri;
+    final overrides = await overrideProvider.getOverrideList();
+    matched = overrides.cast<OverrideRequest?>().firstWhere((it) {
       final overrideUri = Uri.tryParse(it!.matcher.path);
       if (overrideUri == null) {
         return false;
@@ -68,6 +80,7 @@ class RequesterOverrideDioInterceptor extends Interceptor {
         }
       }
     }, orElse: () => null);
+    requestOptions.extra[kRequesterOverridden] = matched;
     return matched;
   }
 

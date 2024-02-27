@@ -38,6 +38,7 @@ const LogRequest$json = {
     {'1': 'headers', '3': 4, '4': 3, '5': 11, '6': '.requester_client.LogRequest.HeadersEntry', '10': 'headers'},
     {'1': 'queries', '3': 5, '4': 3, '5': 11, '6': '.requester_client.LogRequest.QueriesEntry', '10': 'queries'},
     {'1': 'body', '3': 6, '4': 1, '5': 9, '10': 'body'},
+    {'1': 'request_overridden', '3': 7, '4': 1, '5': 11, '6': '.common.RpcJson', '10': 'requestOverridden'},
   ],
   '3': [LogRequest_HeadersEntry$json, LogRequest_QueriesEntry$json],
 };
@@ -68,9 +69,10 @@ final $typed_data.Uint8List logRequestDescriptor = $convert.base64Decode(
     'oGbWV0aG9kGAIgASgJUgZtZXRob2QSEgoEcGF0aBgDIAEoCVIEcGF0aBJDCgdoZWFkZXJzGAQg'
     'AygLMikucmVxdWVzdGVyX2NsaWVudC5Mb2dSZXF1ZXN0LkhlYWRlcnNFbnRyeVIHaGVhZGVycx'
     'JDCgdxdWVyaWVzGAUgAygLMikucmVxdWVzdGVyX2NsaWVudC5Mb2dSZXF1ZXN0LlF1ZXJpZXNF'
-    'bnRyeVIHcXVlcmllcxISCgRib2R5GAYgASgJUgRib2R5GjoKDEhlYWRlcnNFbnRyeRIQCgNrZX'
-    'kYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGjoKDFF1ZXJpZXNFbnRyeRIQ'
-    'CgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgB');
+    'bnRyeVIHcXVlcmllcxISCgRib2R5GAYgASgJUgRib2R5Ej4KEnJlcXVlc3Rfb3ZlcnJpZGRlbh'
+    'gHIAEoCzIPLmNvbW1vbi5ScGNKc29uUhFyZXF1ZXN0T3ZlcnJpZGRlbho6CgxIZWFkZXJzRW50'
+    'cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ARo6CgxRdWVyaW'
+    'VzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4AQ==');
 
 @$core.Deprecated('Use logResponseDescriptor instead')
 const LogResponse$json = {
@@ -82,6 +84,7 @@ const LogResponse$json = {
     {'1': 'body', '3': 4, '4': 1, '5': 9, '10': 'body'},
     {'1': 'error', '3': 5, '4': 1, '5': 9, '10': 'error'},
     {'1': 'headers', '3': 6, '4': 3, '5': 11, '6': '.requester_client.LogResponse.HeadersEntry', '10': 'headers'},
+    {'1': 'request_overridden', '3': 7, '4': 1, '5': 11, '6': '.common.RpcJson', '10': 'requestOverridden'},
   ],
   '3': [LogResponse_HeadersEntry$json],
 };
@@ -101,7 +104,8 @@ final $typed_data.Uint8List logResponseDescriptor = $convert.base64Decode(
     'CgtMb2dSZXNwb25zZRInCgNsb2cYASABKAsyFS5yZXF1ZXN0ZXJfY2xpZW50LkxvZ1IDbG9nEh'
     '0KCnNwZW50X3RpbWUYAiABKA1SCXNwZW50VGltZRISCgRjb2RlGAMgASgFUgRjb2RlEhIKBGJv'
     'ZHkYBCABKAlSBGJvZHkSFAoFZXJyb3IYBSABKAlSBWVycm9yEkQKB2hlYWRlcnMYBiADKAsyKi'
-    '5yZXF1ZXN0ZXJfY2xpZW50LkxvZ1Jlc3BvbnNlLkhlYWRlcnNFbnRyeVIHaGVhZGVycxo6CgxI'
-    'ZWFkZXJzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4AQ'
-    '==');
+    '5yZXF1ZXN0ZXJfY2xpZW50LkxvZ1Jlc3BvbnNlLkhlYWRlcnNFbnRyeVIHaGVhZGVycxI+ChJy'
+    'ZXF1ZXN0X292ZXJyaWRkZW4YByABKAsyDy5jb21tb24uUnBjSnNvblIRcmVxdWVzdE92ZXJyaW'
+    'RkZW4aOgoMSGVhZGVyc0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2'
+    'YWx1ZToCOAE=');
 

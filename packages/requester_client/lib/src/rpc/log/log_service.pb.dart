@@ -14,6 +14,8 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import '../common/common.pb.dart' as $1;
+
 /// 日志基本信息
 class Log extends $pb.GeneratedMessage {
   factory Log({
@@ -105,6 +107,7 @@ class LogRequest extends $pb.GeneratedMessage {
     $core.Map<$core.String, $core.String>? headers,
     $core.Map<$core.String, $core.String>? queries,
     $core.String? body,
+    $1.RpcJson? requestOverridden,
   }) {
     final $result = create();
     if (log != null) {
@@ -125,6 +128,9 @@ class LogRequest extends $pb.GeneratedMessage {
     if (body != null) {
       $result.body = body;
     }
+    if (requestOverridden != null) {
+      $result.requestOverridden = requestOverridden;
+    }
     return $result;
   }
   LogRequest._() : super();
@@ -138,6 +144,7 @@ class LogRequest extends $pb.GeneratedMessage {
     ..m<$core.String, $core.String>(4, _omitFieldNames ? '' : 'headers', entryClassName: 'LogRequest.HeadersEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
     ..m<$core.String, $core.String>(5, _omitFieldNames ? '' : 'queries', entryClassName: 'LogRequest.QueriesEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
     ..aOS(6, _omitFieldNames ? '' : 'body')
+    ..aOM<$1.RpcJson>(7, _omitFieldNames ? '' : 'requestOverridden', subBuilder: $1.RpcJson.create)
     ..hasRequiredFields = false
   ;
 
@@ -211,6 +218,18 @@ class LogRequest extends $pb.GeneratedMessage {
   $core.bool hasBody() => $_has(5);
   @$pb.TagNumber(6)
   void clearBody() => clearField(6);
+
+  /// (有)请求重载
+  @$pb.TagNumber(7)
+  $1.RpcJson get requestOverridden => $_getN(6);
+  @$pb.TagNumber(7)
+  set requestOverridden($1.RpcJson v) { setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasRequestOverridden() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearRequestOverridden() => clearField(7);
+  @$pb.TagNumber(7)
+  $1.RpcJson ensureRequestOverridden() => $_ensure(6);
 }
 
 /// 响应日志
@@ -222,6 +241,7 @@ class LogResponse extends $pb.GeneratedMessage {
     $core.String? body,
     $core.String? error,
     $core.Map<$core.String, $core.String>? headers,
+    $1.RpcJson? requestOverridden,
   }) {
     final $result = create();
     if (log != null) {
@@ -242,6 +262,9 @@ class LogResponse extends $pb.GeneratedMessage {
     if (headers != null) {
       $result.headers.addAll(headers);
     }
+    if (requestOverridden != null) {
+      $result.requestOverridden = requestOverridden;
+    }
     return $result;
   }
   LogResponse._() : super();
@@ -255,6 +278,7 @@ class LogResponse extends $pb.GeneratedMessage {
     ..aOS(4, _omitFieldNames ? '' : 'body')
     ..aOS(5, _omitFieldNames ? '' : 'error')
     ..m<$core.String, $core.String>(6, _omitFieldNames ? '' : 'headers', entryClassName: 'LogResponse.HeadersEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
+    ..aOM<$1.RpcJson>(7, _omitFieldNames ? '' : 'requestOverridden', subBuilder: $1.RpcJson.create)
     ..hasRequiredFields = false
   ;
 
@@ -335,6 +359,18 @@ class LogResponse extends $pb.GeneratedMessage {
   /// 返回头
   @$pb.TagNumber(6)
   $core.Map<$core.String, $core.String> get headers => $_getMap(5);
+
+  /// (有)请求重载
+  @$pb.TagNumber(7)
+  $1.RpcJson get requestOverridden => $_getN(6);
+  @$pb.TagNumber(7)
+  set requestOverridden($1.RpcJson v) { setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasRequestOverridden() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearRequestOverridden() => clearField(7);
+  @$pb.TagNumber(7)
+  $1.RpcJson ensureRequestOverridden() => $_ensure(6);
 }
 
 

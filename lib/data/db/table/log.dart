@@ -43,4 +43,7 @@ class LogTable extends Table {
 
   /// 返回错误（没返回时为空）
   TextColumn get responseError => text().nullable()();
+
+  /// 请求重载（没重载时为空）
+  TextColumn get requestOverridden => text().nullable().map(overrideRequestConverter)();
 }

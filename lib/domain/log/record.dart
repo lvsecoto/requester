@@ -14,6 +14,9 @@ mixin _LogRecord on _LogManager {
         requestHeaders: Value(logRequest.headers),
         requestQueries: Value(logRequest.queries),
         requestBody: Value(logRequest.body),
+        requestOverridden: Value(
+          OverrideRequest.tryFromJson(logRequest.requestOverridden.toJson()),
+        ),
       ),
     );
     _ref.read(_onLogAddProvider.notifier).select(LogRequest(

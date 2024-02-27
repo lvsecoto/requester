@@ -74,6 +74,14 @@ class OverrideRequest with _$OverrideRequest {
 
   factory OverrideRequest.fromJson(Map<String, dynamic> json) =>
       _$OverrideRequestFromJson(json);
+
+  static OverrideRequest? tryFromJson(Map<String, dynamic>? json) {
+    try {
+      return OverrideRequest.fromJson(json!);
+    } catch (_) {
+      return null;
+    }
+  }
 }
 
 @freezed

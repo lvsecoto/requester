@@ -53,6 +53,9 @@ message LogRequest {
 
   // 请求体
   string body = 6;
+
+  // (有)请求重载
+  common.RpcJson request_overridden = 7;
 }
 
 // 响应日志
@@ -75,4 +78,7 @@ message LogResponse {
 
   // 返回头
   map<string, string> headers = 6;
+
+  // (有)请求重载
+  common.RpcJson request_overridden = 7;
 }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:requester_client/requester_client.dart';
 import 'package:requester_client/rpc.dart' as rpc;
+import 'package:requester_client/src/override/dio_override.dart';
 import 'package:uuid/v1.dart';
 
 import 'log.dart';
@@ -49,6 +50,7 @@ class RequesterLogDioInterceptor extends Interceptor {
           options.headers.map((key, value) => MapEntry(key, value.toString())),
       method: options.method,
       body: _captureBody(data),
+      requestOverridden: _captureRequestOverridden(options),
     );
     await logProvider.client?.sendRequest(logRequest);
   }
@@ -68,16 +70,9 @@ class RequesterLogDioInterceptor extends Interceptor {
       spentTime: DateTime.now().difference(requestTime).inMilliseconds,
       code: response.statusCode,
       body: _captureBody(response.data),
+      requestOverridden: _captureRequestOverridden(response.requestOptions)
     );
     await logProvider.client?.sendResponse(logResponse);
-  }
-
-  String _captureBody(data) {
-    return switch (data) {
-      String() || Map<String, dynamic>() || List<dynamic>() => jsonEncode(data),
-      null => '',
-      _ => data.runtimeType.toString(),
-    };
   }
 
   @override
@@ -95,7 +90,21 @@ class RequesterLogDioInterceptor extends Interceptor {
           ? _captureBody(err.response!.data)
           : err.error.toString(),
       error: err.type.toString(),
+      requestOverridden: _captureRequestOverridden(err.requestOptions)
     );
     await logProvider.client?.sendResponse(logResponse);
+  }
+
+  String _captureBody(data) => switch (data) {
+      String() || Map<String, dynamic>() || List<dynamic>() => jsonEncode(data),
+      null => '',
+      _ => data.runtimeType.toString(),
+    };
+
+  /// 获取重载配置来日志，如果没有，返回空
+  rpc.RpcJson? _captureRequestOverridden(RequestOptions options) {
+    return (options.extra[RequesterOverrideDioInterceptor.kRequesterOverridden]
+    as OverrideRequest?)
+        ?.toJson().toRpcJson().jsonValue;
   }
 }
