@@ -9,6 +9,10 @@ import 'package:uuid/v1.dart';
 import 'log.dart';
 
 class RequesterLogDioInterceptor extends Interceptor {
+  /// 对dio请求抓取日志
+  ///
+  /// 注意日志对请求，会抓取应用层对请求的处理，而对响应的抓取，则是服务器原始数据
+  /// 应用层 -> (其他拦截器) -> 日志 -> 服务器 -> 日志 -> (其他拦截器) ->  应用层
   RequesterLogDioInterceptor(this.logProvider);
 
   final LogProvider logProvider;
@@ -19,6 +23,7 @@ class RequesterLogDioInterceptor extends Interceptor {
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
+    // 先让其他拦截器处理好请求
     super.onRequest(options, handler);
     final logId = const UuidV1().generate();
     final now = DateTime.now();
@@ -57,8 +62,6 @@ class RequesterLogDioInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
-    super.onResponse(response, handler);
-
     final logId = response.requestOptions.extra[_kLogId]!;
     DateTime requestTime = response.requestOptions.extra[_kLogTime]!;
     final logResponse = rpc.LogResponse(
@@ -72,6 +75,8 @@ class RequesterLogDioInterceptor extends Interceptor {
       body: _captureBody(response.data),
       requestOverridden: _captureRequestOverridden(response.requestOptions)
     );
+    // 必须先抓取日志，再继续处理，不然抓取的是后面拦截器处理过的数据，不准确
+    super.onResponse(response, handler);
     await logProvider.client?.sendResponse(logResponse);
   }
 
