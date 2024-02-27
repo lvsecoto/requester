@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:requester/route/route.dart';
 import 'package:requester/ui/client/client.dart';
 import 'package:requester/ui/client/details/override/edit/edit.dart';
-import 'package:requester/ui/monitor/request/provider/provider.dart'
+import 'package:requester/ui/log/request/provider/provider.dart'
     as provider;
 import 'package:requester_client/requester_client.dart';
 import 'package:requester_client/rpc.dart';

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:requester/route/route.dart';
-import 'package:requester/ui/monitor/common/common.dart';
-import 'package:requester/ui/monitor/request/provider/provider.dart'
+import 'package:requester/ui/log/common/common.dart';
+import 'package:requester/ui/log/request/provider/provider.dart'
     as provider;
-import 'package:requester_client/src/model/requester_device.dart';
+import 'package:requester_client/requester_client.dart';
 
 import 'panel_widget.dart';
 import 'tab_panel_widget.dart';

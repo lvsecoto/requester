@@ -5,8 +5,8 @@ import 'package:multi_split_view/multi_split_view.dart';
 import 'package:requester/app/theme/theme.dart';
 import 'package:requester/common/common.dart';
 import 'package:requester/ui/common/common.dart';
-import 'package:requester/ui/monitor/common/common.dart';
-import 'package:requester/ui/monitor/request/provider/provider.dart';
+import 'package:requester/ui/log/common/common.dart';
+import 'package:requester/ui/log/request/provider/provider.dart';
 
 import 'actions/actions.dart';
 import 'request_panel.dart';

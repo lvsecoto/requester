@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:requester/ui/monitor/request/provider/provider.dart';
+import 'package:requester/ui/log/request/provider/provider.dart';
 
 import 'widget/content_widget.dart';
 
-class RequestScreen extends ConsumerWidget {
-  const RequestScreen({
+class LogRequestScreen extends ConsumerWidget {
+  const LogRequestScreen({
     super.key,
     required this.id,
   });

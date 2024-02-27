@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:requester/app/theme/theme.dart';
-import 'package:requester/ui/monitor/provider/provider.dart' as provider;
+import 'package:requester/ui/log/provider/provider.dart' as provider;
 
 class LogSearchBar extends StatelessWidget {
   const LogSearchBar({

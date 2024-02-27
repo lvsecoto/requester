@@ -13,14 +13,14 @@ part 'router.g.dart';
 @riverpod
 // ignore: unsupported_provider_value
 GoRouter router(RouterRef ref) => GoRouter(
-  initialLocation: const MonitorRoute().location,
+  initialLocation: const LogListRoute().location,
   debugLogDiagnostics: true,
   routes: [
     ResponsiveLayoutShellRoute(
       routes: [
         ResponsiveLayoutNavigationDestinationRoute(
-          const MonitorRoute().location,
-          $monitorRoute,
+          const LogListRoute().location,
+          $logListRoute,
           ResponsiveLayoutNavigationDestination(
             icon: const Icon(Icons.monitor_heart),
             title: '日志',

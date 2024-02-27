@@ -1,12 +1,12 @@
 part of 'route.dart';
 
-@TypedShellRoute<MonitorRoute>(
+@TypedShellRoute<LogListRoute>(
   routes: [
     TypedGoRoute<ListDetailsEmptyRoute>(
-      path: '/monitorList',
+      path: '/logList',
       routes: [
         TypedGoRoute<LogDetailsRoute>(
-          path: 'monitor',
+          path: 'log',
           routes: [
             _logDetailsClientDetailsRoute,
           ]
@@ -15,8 +15,8 @@ part of 'route.dart';
     ),
   ],
 )
-class MonitorRoute extends ShellRouteData {
-  const MonitorRoute();
+class LogListRoute extends ShellRouteData {
+  const LogListRoute();
 
   // 默认的位置是没选择任何列表内容
   String get location => const ListDetailsEmptyRoute().location;
@@ -26,7 +26,7 @@ class MonitorRoute extends ShellRouteData {
     return ListDetailsNavigation(
       navigator: navigator,
       isDetailsEmpty: state.uri.path == const ListDetailsEmptyRoute().location,
-      list: const MonitorScreen(),
+      list: const LogListScreen(),
     );
   }
 }
@@ -59,7 +59,7 @@ class LogDetailsRoute extends GoRouteData {
           child: child,
         );
       },
-      child: RequestScreen(
+      child: LogRequestScreen(
         key: ValueKey(id),
         id: id,
       ),

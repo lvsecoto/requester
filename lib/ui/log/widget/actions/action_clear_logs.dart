@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:requester/ui/monitor/provider/provider.dart' as provider;
+import 'package:requester/ui/log/provider/provider.dart' as provider;
 
 class ActionClearLogs extends ConsumerWidget {
   const ActionClearLogs({

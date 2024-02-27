@@ -1,3 +1,3 @@
 export 'client/client.dart';
-export 'monitor/monitor.dart';
+export 'log/log.dart';
 export 'settings/settings.dart';

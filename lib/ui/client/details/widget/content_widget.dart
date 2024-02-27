@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:requester/common/responsive_layout/responsive_column.dart';
-import 'package:requester/route/route.dart';
-import 'package:requester/service/service.dart';
 import 'package:requester/ui/client/details/provider/provider.dart' as provider;
 import 'package:requester/ui/client/details/widget/log_info_widget.dart';
 

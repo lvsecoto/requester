@@ -1,8 +1,8 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:requester/ui/monitor/common/common.dart';
-import 'package:requester/ui/monitor/request/provider/provider.dart';
+import 'package:requester/ui/log/common/common.dart';
+import 'package:requester/ui/log/request/provider/provider.dart';
 
 import 'panel_widget.dart';
 
