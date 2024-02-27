@@ -15,6 +15,7 @@ class RequesterOverrideDioInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+    super.onRequest(options, handler);
     // OverrideRequest? matched =
     await _match(options);
     /// todo 对请求的操作
