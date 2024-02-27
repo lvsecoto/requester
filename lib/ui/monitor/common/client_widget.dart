@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:requester/app/theme/theme.dart';
 import 'package:requester_client/requester_client.dart';
@@ -23,14 +25,19 @@ class ClientWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
           children: [
+            Transform.translate(
+              offset: const Offset(0, 4),
+              child: const Icon(Icons.devices, size: 20),
+            ),
+            const Gap(8),
             Text(
               requesterClient.appName,
               style: textTheme.bodyLarge!.bold,
             ),
-            const Gap(8),
+            const Gap(4),
             Text(
               requesterClient.appVersion,
-              style: textTheme.bodySmall!.mediumEmphasis,
+              style: textTheme.bodyMedium!.mediumEmphasis,
             ),
           ],
         ),
@@ -38,9 +45,11 @@ class ClientWidget extends StatelessWidget {
           children: [
             Text(
               '${requesterClient.clientUid}   ${requesterClient.hostPort.encode()}',
-              style: textTheme.labelSmall!.copyWith(
-                height: 0.8,
-              ).disabled,
+              style: textTheme.labelSmall!
+                  .copyWith(
+                    height: 0.8,
+                  )
+                  .disabled,
             ),
           ],
         ),
