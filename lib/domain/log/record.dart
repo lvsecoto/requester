@@ -3,6 +3,8 @@ part of 'log.dart';
 mixin _LogRecord on _LogManager {
   /// 接收到请求日志时的回调
   Future<void> onReceiveLogRequest(rpc.LogRequest logRequest) async {
+    final overridden =
+        OverrideRequest.tryFromJson(logRequest.requestOverridden.toJson());
     final id = await _logTable.insertOne(
       LogTableCompanion.insert(
         logId: logRequest.log.id,
@@ -14,9 +16,7 @@ mixin _LogRecord on _LogManager {
         requestHeaders: Value(logRequest.headers),
         requestQueries: Value(logRequest.queries),
         requestBody: Value(logRequest.body),
-        requestOverridden: Value(
-          OverrideRequest.tryFromJson(logRequest.requestOverridden.toJson()),
-        ),
+        requestOverridden: Value(overridden),
       ),
     );
     _ref.read(_onLogAddProvider.notifier).select(LogRequest(
@@ -29,13 +29,17 @@ mixin _LogRecord on _LogManager {
           requestQueries: logRequest.queries,
           requestHeaders: logRequest.headers,
           requestBody: logRequest.body,
+          requestOverridden: overridden,
         ));
   }
 
   Future<void> onReceiveLogResponse(rpc.LogResponse logResponse) async {
+    final requestOverridden =
+        OverrideRequest.tryFromJson(logResponse.requestOverridden.toJson());
     final log = (await (_logTable.update()
               ..where((tbl) => tbl.logId.equals(logResponse.log.id)))
             .writeReturning(LogTableCompanion(
+      requestOverridden: Value(requestOverridden),
       responseCode: Value(logResponse.code),
       responseSpentTime: Value(Duration(milliseconds: logResponse.spentTime)),
       responseError: Value(logResponse.error),
@@ -46,6 +50,7 @@ mixin _LogRecord on _LogManager {
     if (log != null) {
       _ref.read(_onLogResponseUpdateProvider.notifier).select((
         log.id,
+        requestOverridden,
         LogResponse(
           code: logResponse.code,
           body: logResponse.body,
@@ -114,7 +119,7 @@ mixin _LogRecord on _LogManager {
         spentTime: record.readWithConverter(_logTable.responseSpentTime)!,
       );
     }
-    return LogRequest(
+    return Log.request(
       id: record.read(_logTable.id)!,
       time: record.readWithConverter(_logTable.logTime)!,
       clientUid: record.read(_logTable.logClientUid)!,
@@ -124,6 +129,8 @@ mixin _LogRecord on _LogManager {
       requestHeaders: record.readWithConverter(_logTable.requestHeaders)!,
       requestBody: record.read(_logTable.requestBody)!,
       requestResponse: response,
-    );
+      requestOverridden: record.readWithConverter<OverrideRequest?, String>(
+          _logTable.requestOverridden),
+    ) as LogRequest;
   }
 }

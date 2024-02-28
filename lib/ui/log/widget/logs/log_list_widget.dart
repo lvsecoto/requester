@@ -8,8 +8,8 @@ import 'package:requester/ui/log/provider/provider.dart' as provider;
 
 import 'item/item.dart';
 
-class RequestListWidget extends HookConsumerWidget {
-  const RequestListWidget({
+class LogListWidget extends HookConsumerWidget {
+  const LogListWidget({
     super.key,
   });
 
@@ -75,7 +75,7 @@ class _RequestItem extends ConsumerWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
         onTap: onTap,
-        child: RequestItemWidget(
+        child: LogRequestItemWidget(
           logRequest: item,
         ),
       ),

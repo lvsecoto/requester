@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'actions/actions.dart';
 import 'log_search_bar.dart';
-import 'request/request.dart';
+import 'logs/logs.dart';
 
 class ContentWidget extends HookConsumerWidget {
   const ContentWidget({super.key});
@@ -22,7 +22,7 @@ class ContentWidget extends HookConsumerWidget {
         ),
         SizedBox(height: 8),
         Expanded(
-          child: RequestListWidget(),
+          child: LogListWidget(),
         ),
       ],
     );

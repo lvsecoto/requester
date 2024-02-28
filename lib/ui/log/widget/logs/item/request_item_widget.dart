@@ -9,8 +9,9 @@ import 'package:requester/ui/common/common.dart';
 import 'package:requester/ui/log/common/common.dart';
 import 'package:requester/ui/log/provider/provider.dart';
 
-class RequestItemWidget extends StatelessWidget {
-  const RequestItemWidget({
+class LogRequestItemWidget extends StatelessWidget {
+  /// 请求日志条目
+  const LogRequestItemWidget({
     super.key,
     required this.logRequest,
   });
@@ -44,7 +45,13 @@ class RequestItemWidget extends StatelessWidget {
             );
           }),
           const Gap(2),
-          HostWidget(logRequest: logRequest),
+          Row(
+            children: [
+              HostWidget(logRequest: logRequest),
+              const Spacer(),
+              _IsOverridden(logRequest: logRequest),
+            ],
+          ),
           const Gap(6),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -88,6 +95,28 @@ class _ClientDetails extends ConsumerWidget {
           child: Text(summary),
         ),
       ],
+    );
+  }
+}
+
+class _IsOverridden extends StatelessWidget {
+  /// 标识请求是否被重载
+  const _IsOverridden({
+    required this.logRequest,
+  });
+
+  final LogRequest logRequest;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorOverridden = AppTheme.of(context).colorOverridden;
+    return AnimatedVisibilityWidget(
+      isVisible: logRequest.requestOverridden != null,
+      child: Icon(
+        size: 14,
+        color: colorOverridden,
+        Icons.flash_on,
+      ),
     );
   }
 }

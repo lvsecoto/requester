@@ -47,6 +47,9 @@ class Log with _$Log {
     required String requestBody,
 
     LogResponse? requestResponse,
+
+    /// 如果有重载，不为空
+    OverrideRequest? requestOverridden,
   }) = LogRequest;
 }
 
