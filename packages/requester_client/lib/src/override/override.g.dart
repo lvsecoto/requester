@@ -10,6 +10,8 @@ _$OverrideRequestImpl _$$OverrideRequestImplFromJson(
         Map<String, dynamic> json) =>
     _$OverrideRequestImpl(
       id: json['id'] as String?,
+      remark: json['remark'] as String? ?? '',
+      isEnabled: json['isEnabled'] as bool? ?? true,
       matcher: OverrideRequestMatcher.fromJson(
           json['matcher'] as Map<String, dynamic>),
       action: OverrideRequestAction.fromJson(
@@ -20,6 +22,8 @@ Map<String, dynamic> _$$OverrideRequestImplToJson(
         _$OverrideRequestImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'remark': instance.remark,
+      'isEnabled': instance.isEnabled,
       'matcher': instance.matcher,
       'action': instance.action,
     };

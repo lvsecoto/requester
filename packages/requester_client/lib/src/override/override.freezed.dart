@@ -21,6 +21,12 @@ OverrideRequest _$OverrideRequestFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$OverrideRequest {
   String? get id => throw _privateConstructorUsedError;
+
+  /// 备注，方便可视化
+  String get remark => throw _privateConstructorUsedError;
+
+  /// 是否启用
+  bool get isEnabled => throw _privateConstructorUsedError;
   OverrideRequestMatcher get matcher => throw _privateConstructorUsedError;
   OverrideRequestAction get action => throw _privateConstructorUsedError;
 
@@ -38,6 +44,8 @@ abstract class $OverrideRequestCopyWith<$Res> {
   @useResult
   $Res call(
       {String? id,
+      String remark,
+      bool isEnabled,
       OverrideRequestMatcher matcher,
       OverrideRequestAction action});
 
@@ -59,6 +67,8 @@ class _$OverrideRequestCopyWithImpl<$Res, $Val extends OverrideRequest>
   @override
   $Res call({
     Object? id = freezed,
+    Object? remark = null,
+    Object? isEnabled = null,
     Object? matcher = null,
     Object? action = null,
   }) {
@@ -67,6 +77,14 @@ class _$OverrideRequestCopyWithImpl<$Res, $Val extends OverrideRequest>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
+      remark: null == remark
+          ? _value.remark
+          : remark // ignore: cast_nullable_to_non_nullable
+              as String,
+      isEnabled: null == isEnabled
+          ? _value.isEnabled
+          : isEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
       matcher: null == matcher
           ? _value.matcher
           : matcher // ignore: cast_nullable_to_non_nullable
@@ -105,6 +123,8 @@ abstract class _$$OverrideRequestImplCopyWith<$Res>
   @useResult
   $Res call(
       {String? id,
+      String remark,
+      bool isEnabled,
       OverrideRequestMatcher matcher,
       OverrideRequestAction action});
 
@@ -126,6 +146,8 @@ class __$$OverrideRequestImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? remark = null,
+    Object? isEnabled = null,
     Object? matcher = null,
     Object? action = null,
   }) {
@@ -134,6 +156,14 @@ class __$$OverrideRequestImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
+      remark: null == remark
+          ? _value.remark
+          : remark // ignore: cast_nullable_to_non_nullable
+              as String,
+      isEnabled: null == isEnabled
+          ? _value.isEnabled
+          : isEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
       matcher: null == matcher
           ? _value.matcher
           : matcher // ignore: cast_nullable_to_non_nullable
@@ -150,13 +180,27 @@ class __$$OverrideRequestImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$OverrideRequestImpl implements _OverrideRequest {
   const _$OverrideRequestImpl(
-      {this.id, required this.matcher, required this.action});
+      {this.id,
+      this.remark = '',
+      this.isEnabled = true,
+      required this.matcher,
+      required this.action});
 
   factory _$OverrideRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$OverrideRequestImplFromJson(json);
 
   @override
   final String? id;
+
+  /// 备注，方便可视化
+  @override
+  @JsonKey()
+  final String remark;
+
+  /// 是否启用
+  @override
+  @JsonKey()
+  final bool isEnabled;
   @override
   final OverrideRequestMatcher matcher;
   @override
@@ -164,7 +208,7 @@ class _$OverrideRequestImpl implements _OverrideRequest {
 
   @override
   String toString() {
-    return 'OverrideRequest(id: $id, matcher: $matcher, action: $action)';
+    return 'OverrideRequest(id: $id, remark: $remark, isEnabled: $isEnabled, matcher: $matcher, action: $action)';
   }
 
   @override
@@ -173,13 +217,17 @@ class _$OverrideRequestImpl implements _OverrideRequest {
         (other.runtimeType == runtimeType &&
             other is _$OverrideRequestImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.remark, remark) || other.remark == remark) &&
+            (identical(other.isEnabled, isEnabled) ||
+                other.isEnabled == isEnabled) &&
             (identical(other.matcher, matcher) || other.matcher == matcher) &&
             (identical(other.action, action) || other.action == action));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, matcher, action);
+  int get hashCode =>
+      Object.hash(runtimeType, id, remark, isEnabled, matcher, action);
 
   @JsonKey(ignore: true)
   @override
@@ -199,6 +247,8 @@ class _$OverrideRequestImpl implements _OverrideRequest {
 abstract class _OverrideRequest implements OverrideRequest {
   const factory _OverrideRequest(
       {final String? id,
+      final String remark,
+      final bool isEnabled,
       required final OverrideRequestMatcher matcher,
       required final OverrideRequestAction action}) = _$OverrideRequestImpl;
 
@@ -207,6 +257,14 @@ abstract class _OverrideRequest implements OverrideRequest {
 
   @override
   String? get id;
+  @override
+
+  /// 备注，方便可视化
+  String get remark;
+  @override
+
+  /// 是否启用
+  bool get isEnabled;
   @override
   OverrideRequestMatcher get matcher;
   @override

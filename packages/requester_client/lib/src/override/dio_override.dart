@@ -54,7 +54,7 @@ class RequesterOverrideDioInterceptor extends Interceptor {
       return matched;
     }
     final requestUri = requestOptions.uri;
-    final overrides = await overrideProvider.getOverrideList();
+    final overrides = (await overrideProvider.getOverrideList()).where((it) => it.isEnabled);
     matched = overrides.cast<OverrideRequest?>().firstWhere((it) {
       final overrideUri = Uri.tryParse(it!.matcher.path);
       if (overrideUri == null) {

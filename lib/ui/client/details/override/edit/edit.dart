@@ -12,6 +12,7 @@ Future<OverrideRequest?> showOverrideRequestDialog(
   Widget? actionTitle,
   OverrideRequest? overrideRequest,
 }) async {
+  final editRemark = TextEditingController(text: overrideRequest?.remark);
   final editPath = TextEditingController(text: overrideRequest?.matcher.path);
   final editMethod =
       TextEditingController(text: overrideRequest?.matcher.method);
@@ -23,6 +24,7 @@ Future<OverrideRequest?> showOverrideRequestDialog(
     context,
     title: title ?? const Text('添加重载规则'),
     body: EditOverrideRequestDialog(
+      editRemark: editRemark,
       editPath: editPath,
       editMethod: editMethod,
       editResponseCode: editResponseCode,
@@ -37,6 +39,7 @@ Future<OverrideRequest?> showOverrideRequestDialog(
               ? () {
                   Navigator.of(context).pop(
                     overrideRequest?.copyWith(
+                          remark: editRemark.text,
                           matcher: OverrideRequestMatcher(
                             path: editPath.text,
                             method: editMethod.text,
@@ -69,12 +72,14 @@ Future<OverrideRequest?> showOverrideRequestDialog(
 class EditOverrideRequestDialog extends HookWidget {
   const EditOverrideRequestDialog({
     super.key,
+    required this.editRemark,
     required this.editPath,
     required this.editMethod,
     required this.editResponseCode,
     required this.editResponseBody,
   });
 
+  final TextEditingController editRemark;
   final TextEditingController editPath;
   final TextEditingController editMethod;
   final TextEditingController editResponseCode;
@@ -86,6 +91,17 @@ class EditOverrideRequestDialog extends HookWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
+        const Gap(12),
+        TextField(
+          controller: editRemark,
+          maxLines: null,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: '备注',
+            hintText: '输入备注方便区分规则',
+          ),
+        ),
+        const Gap(16),
         const Text('匹配'),
         const Gap(12),
         TextField(

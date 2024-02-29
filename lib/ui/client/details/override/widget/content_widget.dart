@@ -1,4 +1,5 @@
 import 'package:common/common.dart';
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/ui/client/details/override/provider/provider.dart'
@@ -38,32 +39,43 @@ class ContentWidget extends ConsumerWidget {
                     [];
             return DiffSliverAnimatedList(
               items: items,
-              itemBuilder: (context, item) => ListTile(
-                title: Text(item.matcher.path),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.edit),
-                      onPressed: () async {
-                        final override = await showOverrideRequestDialog(context, overrideRequest: item);
-                        if (override != null) {
-                          provider.actionUpdateOverrideRequest(ref, override);
-                        }
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () async {
-                        final confirmed = await showConfirmDialog(context, title: const Text('确认删除?'));
-                        if (confirmed) {
-                          provider.actionRemoveOverrideRequest(ref, item);
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              ),
+              itemBuilder: (context, item) {
+                final title =
+                    item.remark.isNotBlank ? item.remark : item.matcher.path;
+                return ListTile(
+                  title: AnimatedSizeAndFade(
+                    alignment: Alignment.centerLeft,
+                    childKey: title,
+                    child: Text(title),
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.edit),
+                        onPressed: () async {
+                          final override = await showOverrideRequestDialog(
+                              context,
+                              overrideRequest: item);
+                          if (override != null) {
+                            provider.actionUpdateOverrideRequest(ref, override);
+                          }
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () async {
+                          final confirmed = await showConfirmDialog(context,
+                              title: const Text('确认删除?'));
+                          if (confirmed) {
+                            provider.actionRemoveOverrideRequest(ref, item);
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
             );
           }),
         ],
