@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:requester/route/route.dart';
@@ -31,7 +32,7 @@ class ActionQuickCreateRequestOverride extends ConsumerWidget {
               matcher: OverrideRequestMatcher(
                 path: Uri.parse(request.requestPath).replace(
                   queryParameters: request.requestQueries,
-                ).toString(),
+                ).toString().removeSuffix('?'),
                 method: request.requestMethod,
               ),
               action: OverrideRequestAction.replace(
