@@ -8,6 +8,7 @@ import 'package:requester/ui/log/request/provider/provider.dart'
     as provider;
 import 'package:requester_client/requester_client.dart';
 
+import 'actions/actions.dart';
 import 'panel_widget.dart';
 import 'tab_panel_widget.dart';
 
@@ -33,9 +34,11 @@ class RequestPanel extends HookConsumerWidget {
         final client = provider.watchLogRequesterClient(ref);
         return Row(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text('请求'),
+            const Gap(24),
+            const ActionViewOverriddenWidget(),
             const Spacer(),
             if (client != null) _Client(client: client),
           ],

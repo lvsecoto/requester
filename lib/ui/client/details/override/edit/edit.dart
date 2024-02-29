@@ -8,6 +8,8 @@ import 'package:requester_client/requester_client.dart';
 
 Future<OverrideRequest?> showOverrideRequestDialog(
   BuildContext context, {
+  Widget? title,
+  Widget? actionTitle,
   OverrideRequest? overrideRequest,
 }) async {
   final editPath = TextEditingController(text: overrideRequest?.matcher.path);
@@ -19,7 +21,7 @@ Future<OverrideRequest?> showOverrideRequestDialog(
       text: overrideRequest?.action.responseBody?.toString());
   return showResponsiveDialog<OverrideRequest>(
     context,
-    title: const Text('添加重载规则'),
+    title: title ?? const Text('添加重载规则'),
     body: EditOverrideRequestDialog(
       editPath: editPath,
       editMethod: editMethod,
@@ -57,7 +59,7 @@ Future<OverrideRequest?> showOverrideRequestDialog(
                   );
                 }
               : null,
-          child: const Text('确定'),
+          child: actionTitle ?? const Text('确定'),
         );
       }),
     ],

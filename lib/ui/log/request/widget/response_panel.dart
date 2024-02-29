@@ -63,7 +63,7 @@ class ResponsePanel extends ConsumerWidget {
         child: KeyedSubtree(
           key: ValueKey(state),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               title,
               if (request != null) ...[
