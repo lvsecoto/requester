@@ -29,7 +29,9 @@ class ActionQuickCreateRequestOverride extends ConsumerWidget {
             context,
             overrideRequest: OverrideRequest(
               matcher: OverrideRequestMatcher(
-                path: request.requestPath,
+                path: Uri.parse(request.requestPath).replace(
+                  queryParameters: request.requestQueries,
+                ).toString(),
                 method: request.requestMethod,
               ),
               action: OverrideRequestAction.replace(
