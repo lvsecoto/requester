@@ -38,7 +38,10 @@ class OverrideProvider {
   /// 添加重载规则
   Future<void> addOverride(OverrideRequest overrideRequest) async {
     final overrides = await getOverrideList();
-    await _setOverrideList([...overrides, overrideRequest]);
+    await _setOverrideList([
+      overrideRequest,
+      ...overrides,
+    ]);
   }
 
   /// 删除重载规则
@@ -68,8 +71,10 @@ class OverrideProvider {
 class OverrideRequest with _$OverrideRequest {
   const factory OverrideRequest({
     String? id,
+
     /// 备注，方便可视化
     @Default('') String remark,
+
     /// 是否启用
     @Default(true) bool isEnabled,
     required OverrideRequestMatcher matcher,
