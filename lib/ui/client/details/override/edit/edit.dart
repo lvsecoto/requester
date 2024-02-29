@@ -90,6 +90,7 @@ class EditOverrideRequestDialog extends HookWidget {
         const Gap(12),
         TextField(
           controller: editPath,
+          maxLines: null,
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
             labelText: '路径',
