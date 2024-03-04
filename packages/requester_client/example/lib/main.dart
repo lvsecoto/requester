@@ -81,6 +81,14 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 32),
             ElevatedButton(
               onPressed: () {
+                int i = 0;
+                while(i < 10000000) {
+                  i++;
+                  int j = 0;
+                  while(j < 1000) {
+                    j++;
+                  }
+                }
                 dio.get(
                     'https://petstore3.swagger.io/api/v3/pet/findByStatus?status=available',
                     queryParameters: {'meta': '2'});

@@ -1,3 +1,4 @@
+import 'package:common/common.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/domain/log/log.dart';
 import 'package:requester/service/service.dart';
@@ -97,4 +98,42 @@ Future<void> actionBindClientLogHostPortToSelf(WidgetRef ref) async {
   final manager = ref.watch(logManagerProvider);
   await manager.bindClientLogHostPortToSelf(_readClient(ref));
   ref.invalidate(loadClientLogHostPortProvider);
+}
+
+@Riverpod(dependencies: [clientService])
+class _DisplayPerformance extends _$DisplayPerformance
+    with StreamValueNotifier {
+  @override
+  (DateTime, rpc.DisplayPerformance)? build() {
+    return onBuild();
+  }
+
+  @override
+  Stream<(DateTime, rpc.DisplayPerformance)> buildStream() {
+    return _watchClient(ref)
+        .observeDisplayPerformance(rpc.Empty())
+        .map((performance) => (DateTime.now(), performance));
+  }
+}
+
+/// 观察帧率
+(DateTime, double) watchDisplayPerformanceFps(WidgetRef ref) {
+  return ref.watch(
+    _displayPerformanceProvider.select((it) {
+      if (it == null) {
+        return (DateTime.now(), 0.0);
+      }
+      return (it.$1, it.$2.fps);
+    }),
+  );
+}
+
+/// 观察帧率
+ProviderListenable<(DateTime, double)> provideDisplayPerformanceFps(WidgetRef ref) {
+  return _displayPerformanceProvider.select((it) {
+    if (it == null) {
+      return (DateTime.now(), 0.0);
+    }
+    return (it.$1, it.$2.fps);
+  });
 }

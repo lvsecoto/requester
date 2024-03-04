@@ -3,8 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:requester/common/responsive_layout/responsive_column.dart';
 import 'package:requester/ui/client/details/provider/provider.dart' as provider;
-import 'package:requester/ui/client/details/widget/log_info_widget.dart';
 
+import 'display_performance.dart';
+import 'log_info_widget.dart';
 import 'client_id_widget.dart';
 import 'client_infos_widget.dart';
 
@@ -53,6 +54,10 @@ class ContentWidget extends HookConsumerWidget {
                       LogInfoWidget(),
                     ],
                   ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 16, top: 12, right: 16),
+                  child: DisplayPerformance(),
                 ),
                 ClientInfosWidget(),
               ],

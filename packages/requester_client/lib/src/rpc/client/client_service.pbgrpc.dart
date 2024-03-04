@@ -66,6 +66,10 @@ class RequesterClientServiceClient extends $grpc.Client {
       '/requester_client.RequesterClientService/UpdateRequestOverrides',
       ($1.RpcJson value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
+  static final _$observeDisplayPerformance = $grpc.ClientMethod<$1.Empty, $0.DisplayPerformance>(
+      '/requester_client.RequesterClientService/ObserveDisplayPerformance',
+      ($1.Empty value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.DisplayPerformance.fromBuffer(value));
 
   RequesterClientServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -115,6 +119,10 @@ class RequesterClientServiceClient extends $grpc.Client {
 
   $grpc.ResponseFuture<$1.Empty> updateRequestOverrides($1.RpcJson request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateRequestOverrides, request, options: options);
+  }
+
+  $grpc.ResponseStream<$0.DisplayPerformance> observeDisplayPerformance($1.Empty request, {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$observeDisplayPerformance, $async.Stream.fromIterable([request]), options: options);
   }
 }
 
@@ -200,6 +208,13 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.RpcJson.fromBuffer(value),
         ($1.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.Empty, $0.DisplayPerformance>(
+        'ObserveDisplayPerformance',
+        observeDisplayPerformance_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) => $1.Empty.fromBuffer(value),
+        ($0.DisplayPerformance value) => value.writeToBuffer()));
   }
 
   $async.Future<$1.Empty> setClientId_Pre($grpc.ServiceCall call, $async.Future<$0.ClientId> request) async {
@@ -246,6 +261,10 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
     return updateRequestOverrides(call, await request);
   }
 
+  $async.Stream<$0.DisplayPerformance> observeDisplayPerformance_Pre($grpc.ServiceCall call, $async.Future<$1.Empty> request) async* {
+    yield* observeDisplayPerformance(call, await request);
+  }
+
   $async.Future<$1.Empty> setClientId($grpc.ServiceCall call, $0.ClientId request);
   $async.Future<$0.ClientId> getClientId($grpc.ServiceCall call, $1.Empty request);
   $async.Future<$1.Empty> identify($grpc.ServiceCall call, $1.Empty request);
@@ -257,4 +276,5 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
   $async.Future<$1.Empty> addRequestOverrides($grpc.ServiceCall call, $1.RpcJson request);
   $async.Future<$1.Empty> removeRequestOverrides($grpc.ServiceCall call, $1.RpcJson request);
   $async.Future<$1.Empty> updateRequestOverrides($grpc.ServiceCall call, $1.RpcJson request);
+  $async.Stream<$0.DisplayPerformance> observeDisplayPerformance($grpc.ServiceCall call, $1.Empty request);
 }

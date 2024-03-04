@@ -290,6 +290,57 @@ class LogHostPort extends $pb.GeneratedMessage {
   void clearPort() => clearField(2);
 }
 
+class DisplayPerformance extends $pb.GeneratedMessage {
+  factory DisplayPerformance({
+    $core.double? fps,
+  }) {
+    final $result = create();
+    if (fps != null) {
+      $result.fps = fps;
+    }
+    return $result;
+  }
+  DisplayPerformance._() : super();
+  factory DisplayPerformance.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DisplayPerformance.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DisplayPerformance', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
+    ..a<$core.double>(1, _omitFieldNames ? '' : 'fps', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  DisplayPerformance clone() => DisplayPerformance()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DisplayPerformance copyWith(void Function(DisplayPerformance) updates) => super.copyWith((message) => updates(message as DisplayPerformance)) as DisplayPerformance;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static DisplayPerformance create() => DisplayPerformance._();
+  DisplayPerformance createEmptyInstance() => create();
+  static $pb.PbList<DisplayPerformance> createRepeated() => $pb.PbList<DisplayPerformance>();
+  @$core.pragma('dart2js:noInline')
+  static DisplayPerformance getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DisplayPerformance>(create);
+  static DisplayPerformance? _defaultInstance;
+
+  /// / 帧率，每秒帧数
+  @$pb.TagNumber(1)
+  $core.double get fps => $_getN(0);
+  @$pb.TagNumber(1)
+  set fps($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasFps() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearFps() => clearField(1);
+}
+
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
 const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

@@ -1,11 +1,9 @@
 import 'package:common/common.dart';
-import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/ui/client/details/override/provider/provider.dart'
     as provider;
 import 'package:requester/ui/client/details/override/widget/overridden_item_widget.dart';
-import 'package:requester/ui/common/common.dart';
 
 import '../edit/edit.dart';
 

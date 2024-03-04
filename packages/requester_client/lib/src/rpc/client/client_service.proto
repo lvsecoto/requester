@@ -40,6 +40,9 @@ service RequesterClientService {
 
   // Requester向客户端更新重载规则
   rpc UpdateRequestOverrides(common.RpcJson) returns (common.Empty);
+
+  // Requester观察客户端性能
+  rpc ObserveDisplayPerformance(common.Empty) returns (stream DisplayPerformance);
 }
 
 message ClientId {
@@ -65,4 +68,9 @@ message ClientMetaValue {
 message LogHostPort {
   string host = 1;
   int32 port = 2;
+}
+
+message DisplayPerformance {
+  /// 帧率，每秒帧数
+  double fps = 1;
 }

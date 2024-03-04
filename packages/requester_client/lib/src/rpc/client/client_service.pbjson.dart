@@ -89,3 +89,15 @@ const LogHostPort$json = {
 final $typed_data.Uint8List logHostPortDescriptor = $convert.base64Decode(
     'CgtMb2dIb3N0UG9ydBISCgRob3N0GAEgASgJUgRob3N0EhIKBHBvcnQYAiABKAVSBHBvcnQ=');
 
+@$core.Deprecated('Use displayPerformanceDescriptor instead')
+const DisplayPerformance$json = {
+  '1': 'DisplayPerformance',
+  '2': [
+    {'1': 'fps', '3': 1, '4': 1, '5': 1, '10': 'fps'},
+  ],
+};
+
+/// Descriptor for `DisplayPerformance`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List displayPerformanceDescriptor = $convert.base64Decode(
+    'ChJEaXNwbGF5UGVyZm9ybWFuY2USEAoDZnBzGAEgASgBUgNmcHM=');
+

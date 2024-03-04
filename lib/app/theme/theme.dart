@@ -16,6 +16,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.priorityLow,
     required this.colorDocument,
     required this.colorOverridden,
+    required this.colorStatusGood,
+    required this.colorStatusRisk,
+    required this.colorStatusBad,
   });
 
   factory AppTheme.from({required Color colorSeed}) {
@@ -24,8 +27,13 @@ class AppTheme extends ThemeExtension<AppTheme> {
     // 业务颜色
     final priorityHeight = Colors.red.tone(40);
     final priorityLow = Color(palette.neutral.get(40));
+
     final colorDocument = Colors.blue.tone(40);
     final colorOverridden = Colors.red.tone(40);
+
+    final colorStatusGood = Colors.green.tone(80);
+    final colorStatusRisk = Colors.yellow.tone(85);
+    final colorStatusBad = Colors.red.tone(60);
 
     return AppTheme(
       surfaceContainerLowest: Color(palette.neutral.get(100)),
@@ -38,6 +46,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
       priorityLow: priorityLow,
       colorDocument: colorDocument,
       colorOverridden: colorOverridden,
+      colorStatusGood: colorStatusGood,
+      colorStatusRisk: colorStatusRisk,
+      colorStatusBad: colorStatusBad,
     );
   }
 
@@ -54,6 +65,10 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final Color colorDocument;
   final Color colorOverridden;
 
+  final Color colorStatusGood;
+  final Color colorStatusRisk;
+  final Color colorStatusBad;
+
   static AppTheme of(BuildContext context) =>
       Theme.of(context).extension<AppTheme>()!;
 
@@ -69,6 +84,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
         priorityLow: priorityLow,
         colorDocument: colorDocument,
         colorOverridden: colorOverridden,
+        colorStatusGood: colorStatusGood,
+        colorStatusRisk: colorStatusRisk,
+        colorStatusBad: colorStatusBad,
       );
 
   @override
@@ -100,6 +118,12 @@ class AppTheme extends ThemeExtension<AppTheme> {
       colorDocument: Color.lerp(colorDocument, other.colorDocument, t) ??
           Colors.transparent,
       colorOverridden: Color.lerp(colorOverridden, other.colorOverridden, t) ??
+          Colors.transparent,
+      colorStatusGood: Color.lerp(colorStatusGood, other.colorStatusGood, t) ??
+          Colors.transparent,
+      colorStatusRisk: Color.lerp(colorStatusRisk, other.colorStatusRisk, t) ??
+          Colors.transparent,
+      colorStatusBad: Color.lerp(colorStatusBad, other.colorStatusBad, t) ??
           Colors.transparent,
     );
   }

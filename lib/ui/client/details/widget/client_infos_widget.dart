@@ -14,9 +14,9 @@ class ClientInfosWidget extends ConsumerWidget {
         ref.watch(provider.observeClientInfoProvider).valueOrNull?.entries ??
             [];
     return Padding(
-      padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+      padding: const EdgeInsets.only(left: 16, top: 12, right: 16),
       child: Material(
-        color: AppTheme.of(context).surfaceContainer,
+        color: AppTheme.of(context).surfaceContainerHigh,
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: Column(
           mainAxisSize: MainAxisSize.min,

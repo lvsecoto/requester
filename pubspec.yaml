@@ -117,6 +117,7 @@ dev_dependencies:
       ref: ddd186b
 
   drift_dev: ^2.15.0
+  flutter_gen_runner: ^5.4.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -125,6 +126,11 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+  fonts:
+    - family: Digital
+      fonts:
+        - asset: assets/fonts/sa-digital-number.ttf
 
 # 修改应用图标
 # flutter pub run flutter_launcher_icons
@@ -138,3 +144,6 @@ flutter_launcher_icons:
   remove_alpha_ios: true
   image_path: "icon.png"
   min_sdk_android: 21
+
+flutter_gen:
+  output: lib/assets/

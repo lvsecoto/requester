@@ -1,5 +1,6 @@
 import 'package:grpc/grpc.dart';
 import 'package:requester_client/requester_client.dart';
+import 'package:requester_client/src/display_performance/display_performance.dart';
 import 'package:requester_client/src/rpc/rpc.dart' as rpc;
 
 import 'log/log.dart';
@@ -10,6 +11,7 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
     required this.clientInfoProvider,
     required this.logProvider,
     required this.overrideProvider,
+    required this.displayPerformanceProvider,
     required this.onClientIdChanged,
     required this.onIdentify,
   });
@@ -20,6 +22,8 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
   final LogProvider logProvider;
 
   final OverrideProvider overrideProvider;
+
+  final DisplayPerformanceProvider displayPerformanceProvider;
 
   /// 客户端id改变回调
   final Function() onClientIdChanged;
@@ -118,5 +122,10 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
       OverrideRequest.fromJson(request.toJson()),
     );
     return rpc.Empty();
+  }
+
+  @override
+  Stream<rpc.DisplayPerformance> observeDisplayPerformance(ServiceCall call, rpc.Empty request) {
+    return displayPerformanceProvider.stream;
   }
 }
