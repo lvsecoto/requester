@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_import
+
 import 'package:common/common.dart';
 import 'package:dartx/dartx.dart';
 import 'package:drift/drift.dart' hide JsonKey;
