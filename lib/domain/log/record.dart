@@ -63,6 +63,33 @@ mixin _LogRecord on _LogManager {
     }
   }
 
+  /// 当接收到App状态日志时
+  Future<void> onReceiveLogAppState(rpc.LogAppState logAppState) async {
+    final logId = logAppState.log.id;
+    final logTime =
+        DateTime.fromMillisecondsSinceEpoch(logAppState.log.time.toInt());
+    final logClientUid = logAppState.log.clientUid;
+    final appState = AppState.fromRpc(logAppState.appState);
+    final id = await _logTable.insertOne(
+      LogTableCompanion.insert(
+        logId: logId,
+        logTime: logTime,
+        logClientUid: logClientUid,
+        appState: Value(
+          appState,
+        ),
+      ),
+    );
+    _ref.read(_onLogAddProvider.notifier).select(
+          Log.appState(
+            id: id,
+            time: logTime,
+            clientUid: logClientUid,
+            state: appState,
+          ),
+        );
+  }
+
   /// 日志列表
   late final providerLogList = logListProvider;
 
@@ -93,7 +120,7 @@ mixin _LogRecord on _LogManager {
                   : _logTable.id.isSmallerThanValue(dataAfterId)))
           ..limit(pageSize + 1))
         .map((record) {
-      return _mapToLogRequest(record);
+      return _mapToLog(record);
     }).get();
 
     final hasMore = data.length > pageSize;
@@ -107,6 +134,15 @@ mixin _LogRecord on _LogManager {
     );
   }
 
+  Log _mapToLog(TypedResult record) {
+    if (record.read(_logTable.appState) != null) {
+      return _mapToLogAppState(record);
+    } else {
+      return _mapToLogRequest(record);
+    }
+  }
+
+  /// 映射成请求日志
   LogRequest _mapToLogRequest(TypedResult record) {
     final responseCode = record.read(_logTable.responseCode);
     LogResponse? response;
@@ -132,5 +168,16 @@ mixin _LogRecord on _LogManager {
       requestOverridden: record.readWithConverter<OverrideRequest?, String>(
           _logTable.requestOverridden),
     ) as LogRequest;
+  }
+
+  /// 映射成App状态日志
+  LogAppState _mapToLogAppState(TypedResult record) {
+    final appState = record.readWithConverter(_logTable.appState);
+    return LogAppState(
+      id: record.read(_logTable.id)!,
+      time: record.readWithConverter(_logTable.logTime)!,
+      clientUid: record.read(_logTable.logClientUid)!,
+      state: appState!,
+    );
   }
 }

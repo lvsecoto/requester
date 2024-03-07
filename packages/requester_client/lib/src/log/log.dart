@@ -2,11 +2,21 @@ import 'package:requester_client/rpc.dart' as rpc;
 import 'package:requester_common/requester_common.dart';
 import 'package:requester_client/requester_client.dart';
 import 'package:grpc/grpc.dart' as grpc;
+import 'package:uuid/v1.dart';
 
 class LogProvider implements AppLifecycleAware {
   static const _kLogHostPort = 'log_host_port';
 
   HostPort? _hostPort;
+
+  /// 生成基础日志信息
+  Future<rpc.Log> createLog({String? id}) async {
+    return rpc.Log(
+      id: id ?? const UuidV1().generate(),
+      clientUid: await RequesterClient.getClientUid(),
+      time: rpc.Int64(DateTime.now().millisecondsSinceEpoch),
+    );
+  }
 
   /// 设置日志要发送的地址
   Future<void> setLogHostPort(HostPort hostPort) async {
@@ -79,4 +89,3 @@ class LogProvider implements AppLifecycleAware {
     _stop();
   }
 }
-

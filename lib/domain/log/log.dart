@@ -47,7 +47,7 @@ class LogManager extends _LogManager with _HostPortManager, _LogRecord {
     return (_logTable.selectOnly()
           ..addColumns(_logTable.$columns)
           ..where(_logTable.id.equals(logId)))
-        .map(_mapToLogRequest)
+        .map(_mapToLog)
         .getSingle();
   }
 

@@ -14,6 +14,7 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import '../client/client_service.pbenum.dart' as $0;
 import '../common/common.pb.dart' as $1;
 
 /// 日志基本信息
@@ -39,7 +40,7 @@ class Log extends $pb.GeneratedMessage {
   factory Log.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Log.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Log', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Log', package: const $pb.PackageName(_omitMessageNames ? '' : 'log_service'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..aOS(2, _omitFieldNames ? '' : 'clientUid')
     ..a<$fixnum.Int64>(3, _omitFieldNames ? '' : 'time', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
@@ -137,12 +138,12 @@ class LogRequest extends $pb.GeneratedMessage {
   factory LogRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory LogRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LogRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LogRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'log_service'), createEmptyInstance: create)
     ..aOM<Log>(1, _omitFieldNames ? '' : 'log', subBuilder: Log.create)
     ..aOS(2, _omitFieldNames ? '' : 'method')
     ..aOS(3, _omitFieldNames ? '' : 'path')
-    ..m<$core.String, $core.String>(4, _omitFieldNames ? '' : 'headers', entryClassName: 'LogRequest.HeadersEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
-    ..m<$core.String, $core.String>(5, _omitFieldNames ? '' : 'queries', entryClassName: 'LogRequest.QueriesEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
+    ..m<$core.String, $core.String>(4, _omitFieldNames ? '' : 'headers', entryClassName: 'LogRequest.HeadersEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('log_service'))
+    ..m<$core.String, $core.String>(5, _omitFieldNames ? '' : 'queries', entryClassName: 'LogRequest.QueriesEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('log_service'))
     ..aOS(6, _omitFieldNames ? '' : 'body')
     ..aOM<$1.RpcJson>(7, _omitFieldNames ? '' : 'requestOverridden', subBuilder: $1.RpcJson.create)
     ..hasRequiredFields = false
@@ -271,13 +272,13 @@ class LogResponse extends $pb.GeneratedMessage {
   factory LogResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory LogResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LogResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LogResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'log_service'), createEmptyInstance: create)
     ..aOM<Log>(1, _omitFieldNames ? '' : 'log', subBuilder: Log.create)
     ..a<$core.int>(2, _omitFieldNames ? '' : 'spentTime', $pb.PbFieldType.OU3)
     ..a<$core.int>(3, _omitFieldNames ? '' : 'code', $pb.PbFieldType.O3)
     ..aOS(4, _omitFieldNames ? '' : 'body')
     ..aOS(5, _omitFieldNames ? '' : 'error')
-    ..m<$core.String, $core.String>(6, _omitFieldNames ? '' : 'headers', entryClassName: 'LogResponse.HeadersEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('requester_client'))
+    ..m<$core.String, $core.String>(6, _omitFieldNames ? '' : 'headers', entryClassName: 'LogResponse.HeadersEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('log_service'))
     ..aOM<$1.RpcJson>(7, _omitFieldNames ? '' : 'requestOverridden', subBuilder: $1.RpcJson.create)
     ..hasRequiredFields = false
   ;
@@ -371,6 +372,74 @@ class LogResponse extends $pb.GeneratedMessage {
   void clearRequestOverridden() => clearField(7);
   @$pb.TagNumber(7)
   $1.RpcJson ensureRequestOverridden() => $_ensure(6);
+}
+
+/// App状态日志
+class LogAppState extends $pb.GeneratedMessage {
+  factory LogAppState({
+    Log? log,
+    $0.AppState? appState,
+  }) {
+    final $result = create();
+    if (log != null) {
+      $result.log = log;
+    }
+    if (appState != null) {
+      $result.appState = appState;
+    }
+    return $result;
+  }
+  LogAppState._() : super();
+  factory LogAppState.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LogAppState.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LogAppState', package: const $pb.PackageName(_omitMessageNames ? '' : 'log_service'), createEmptyInstance: create)
+    ..aOM<Log>(1, _omitFieldNames ? '' : 'log', subBuilder: Log.create)
+    ..e<$0.AppState>(2, _omitFieldNames ? '' : 'appState', $pb.PbFieldType.OE, defaultOrMaker: $0.AppState.APP_STATE_RESUMED, valueOf: $0.AppState.valueOf, enumValues: $0.AppState.values)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LogAppState clone() => LogAppState()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LogAppState copyWith(void Function(LogAppState) updates) => super.copyWith((message) => updates(message as LogAppState)) as LogAppState;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static LogAppState create() => LogAppState._();
+  LogAppState createEmptyInstance() => create();
+  static $pb.PbList<LogAppState> createRepeated() => $pb.PbList<LogAppState>();
+  @$core.pragma('dart2js:noInline')
+  static LogAppState getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LogAppState>(create);
+  static LogAppState? _defaultInstance;
+
+  /// 基本的日志信息
+  @$pb.TagNumber(1)
+  Log get log => $_getN(0);
+  @$pb.TagNumber(1)
+  set log(Log v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasLog() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLog() => clearField(1);
+  @$pb.TagNumber(1)
+  Log ensureLog() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $0.AppState get appState => $_getN(1);
+  @$pb.TagNumber(2)
+  set appState($0.AppState v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasAppState() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAppState() => clearField(2);
 }
 
 

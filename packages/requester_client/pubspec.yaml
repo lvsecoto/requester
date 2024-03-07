@@ -63,7 +63,7 @@ dependencies:
   fixnum: ^1.1.0
 
   # 网络请求相关
-  dio: ^5.4.0
+  dio: ^5.4.1
 
   # 工具类
   uuid: ^4.3.3

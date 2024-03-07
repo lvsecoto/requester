@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package requester_client;
+package client_service;
 
 import "common/common.proto";
 
@@ -43,6 +43,9 @@ service RequesterClientService {
 
   // Requester观察客户端性能
   rpc ObserveDisplayPerformance(common.Empty) returns (stream DisplayPerformance);
+
+  // Requester观察客户端状态
+  rpc ObserveAppState(common.Empty) returns (stream ClientAppState);
 }
 
 message ClientId {
@@ -73,4 +76,20 @@ message LogHostPort {
 message DisplayPerformance {
   /// 帧率，每秒帧数
   double fps = 1;
+}
+
+enum AppState {
+
+  // 应用正在运行
+  APP_STATE_RESUMED = 0;
+
+  // 应用暂停，失去焦点
+  APP_STATE_INACTIVE = 1;
+
+  // 应用隐藏
+  APP_STATE_HIDDE = 2;
+}
+
+message ClientAppState {
+  AppState app_state = 1;
 }

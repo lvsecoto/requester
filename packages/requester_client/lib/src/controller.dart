@@ -10,6 +10,7 @@ import 'log/log.dart';
 import 'model/model.dart';
 import 'override/override.dart';
 import 'display_performance/display_performance.dart';
+import 'app_state/app_state.dart';
 import 'service.dart';
 
 part 'widget/requester_client_widget.dart';
@@ -39,6 +40,9 @@ class RequesterClientController extends ChangeNotifier
 
   /// 管理日志相关
   final logProvider = LogProvider();
+
+  /// 管理App状态
+  late final appStateProvider = AppStateProvider(logProvider);
 
   /// 管理重载
   final overrideProvider = OverrideProvider();
@@ -71,6 +75,7 @@ class RequesterClientController extends ChangeNotifier
         logProvider: logProvider,
         overrideProvider: overrideProvider,
         displayPerformanceProvider: displayPerformanceProvider,
+        appStateProvider: appStateProvider,
         // todo, 改成provider
         onClientIdChanged: () {
           _restartNsd();

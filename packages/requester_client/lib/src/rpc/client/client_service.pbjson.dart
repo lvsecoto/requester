@@ -13,6 +13,21 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use appStateDescriptor instead')
+const AppState$json = {
+  '1': 'AppState',
+  '2': [
+    {'1': 'APP_STATE_RESUMED', '2': 0},
+    {'1': 'APP_STATE_INACTIVE', '2': 1},
+    {'1': 'APP_STATE_HIDDE', '2': 2},
+  ],
+};
+
+/// Descriptor for `AppState`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List appStateDescriptor = $convert.base64Decode(
+    'CghBcHBTdGF0ZRIVChFBUFBfU1RBVEVfUkVTVU1FRBAAEhYKEkFQUF9TVEFURV9JTkFDVElWRR'
+    'ABEhMKD0FQUF9TVEFURV9ISURERRAC');
+
 @$core.Deprecated('Use clientIdDescriptor instead')
 const ClientId$json = {
   '1': 'ClientId',
@@ -29,7 +44,7 @@ final $typed_data.Uint8List clientIdDescriptor = $convert.base64Decode(
 const ClientInfo$json = {
   '1': 'ClientInfo',
   '2': [
-    {'1': 'meta', '3': 2, '4': 3, '5': 11, '6': '.requester_client.ClientInfo.MetaEntry', '10': 'meta'},
+    {'1': 'meta', '3': 2, '4': 3, '5': 11, '6': '.client_service.ClientInfo.MetaEntry', '10': 'meta'},
   ],
   '3': [ClientInfo_MetaEntry$json],
 };
@@ -39,30 +54,30 @@ const ClientInfo_MetaEntry$json = {
   '1': 'MetaEntry',
   '2': [
     {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    {'1': 'value', '3': 2, '4': 1, '5': 11, '6': '.requester_client.ClientMetaValue', '10': 'value'},
+    {'1': 'value', '3': 2, '4': 1, '5': 11, '6': '.client_service.ClientMetaValue', '10': 'value'},
   ],
   '7': {'7': true},
 };
 
 /// Descriptor for `ClientInfo`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List clientInfoDescriptor = $convert.base64Decode(
-    'CgpDbGllbnRJbmZvEjoKBG1ldGEYAiADKAsyJi5yZXF1ZXN0ZXJfY2xpZW50LkNsaWVudEluZm'
-    '8uTWV0YUVudHJ5UgRtZXRhGloKCU1ldGFFbnRyeRIQCgNrZXkYASABKAlSA2tleRI3CgV2YWx1'
-    'ZRgCIAEoCzIhLnJlcXVlc3Rlcl9jbGllbnQuQ2xpZW50TWV0YVZhbHVlUgV2YWx1ZToCOAE=');
+    'CgpDbGllbnRJbmZvEjgKBG1ldGEYAiADKAsyJC5jbGllbnRfc2VydmljZS5DbGllbnRJbmZvLk'
+    '1ldGFFbnRyeVIEbWV0YRpYCglNZXRhRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSNQoFdmFsdWUY'
+    'AiABKAsyHy5jbGllbnRfc2VydmljZS5DbGllbnRNZXRhVmFsdWVSBXZhbHVlOgI4AQ==');
 
 @$core.Deprecated('Use clientInfoEntryDescriptor instead')
 const ClientInfoEntry$json = {
   '1': 'ClientInfoEntry',
   '2': [
     {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    {'1': 'value', '3': 2, '4': 1, '5': 11, '6': '.requester_client.ClientMetaValue', '10': 'value'},
+    {'1': 'value', '3': 2, '4': 1, '5': 11, '6': '.client_service.ClientMetaValue', '10': 'value'},
   ],
 };
 
 /// Descriptor for `ClientInfoEntry`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List clientInfoEntryDescriptor = $convert.base64Decode(
-    'Cg9DbGllbnRJbmZvRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSNwoFdmFsdWUYAiABKAsyIS5yZX'
-    'F1ZXN0ZXJfY2xpZW50LkNsaWVudE1ldGFWYWx1ZVIFdmFsdWU=');
+    'Cg9DbGllbnRJbmZvRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSNQoFdmFsdWUYAiABKAsyHy5jbG'
+    'llbnRfc2VydmljZS5DbGllbnRNZXRhVmFsdWVSBXZhbHVl');
 
 @$core.Deprecated('Use clientMetaValueDescriptor instead')
 const ClientMetaValue$json = {
@@ -100,4 +115,17 @@ const DisplayPerformance$json = {
 /// Descriptor for `DisplayPerformance`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List displayPerformanceDescriptor = $convert.base64Decode(
     'ChJEaXNwbGF5UGVyZm9ybWFuY2USEAoDZnBzGAEgASgBUgNmcHM=');
+
+@$core.Deprecated('Use clientAppStateDescriptor instead')
+const ClientAppState$json = {
+  '1': 'ClientAppState',
+  '2': [
+    {'1': 'app_state', '3': 1, '4': 1, '5': 14, '6': '.client_service.AppState', '10': 'appState'},
+  ],
+};
+
+/// Descriptor for `ClientAppState`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List clientAppStateDescriptor = $convert.base64Decode(
+    'Cg5DbGllbnRBcHBTdGF0ZRI1CglhcHBfc3RhdGUYASABKA4yGC5jbGllbnRfc2VydmljZS5BcH'
+    'BTdGF0ZVIIYXBwU3RhdGU=');
 

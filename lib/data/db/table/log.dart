@@ -46,4 +46,8 @@ class LogTable extends Table {
 
   /// 请求重载（没重载时为空）
   TextColumn get requestOverridden => text().nullable().map(overrideRequestConverter)();
+
+  /// App状态日志
+  IntColumn get appState => integer().nullable().map(const EnumIndexConverter(AppState.values))();
+
 }

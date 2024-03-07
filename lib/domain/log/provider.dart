@@ -34,7 +34,7 @@ class LogList extends _$LogList with PagingLoadNotifierMixin<Log, int> {
           state = state.copyWith(
             data: [
               ...data,
-            ]..[index] = data[index].copyWith(
+            ]..[index] = (data[index] as LogRequest).copyWith(
               requestOverridden: requestOverridden,
               requestResponse: response,
             ),

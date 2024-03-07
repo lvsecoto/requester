@@ -66,4 +66,10 @@ class LogServiceController extends rpc.RequesterLogServiceBase implements AppLif
     ref.read(logManagerProvider).onReceiveLogResponse(request);
     return rpc.Empty();
   }
+
+  @override
+  Future<rpc.Empty> logAppSate(grpc.ServiceCall call, rpc.LogAppState request) async {
+    ref.read(logManagerProvider).onReceiveLogAppState(request);
+    return rpc.Empty();
+  }
 }

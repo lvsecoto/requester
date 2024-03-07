@@ -20,56 +20,60 @@ import 'client_service.pb.dart' as $0;
 
 export 'client_service.pb.dart';
 
-@$pb.GrpcServiceName('requester_client.RequesterClientService')
+@$pb.GrpcServiceName('client_service.RequesterClientService')
 class RequesterClientServiceClient extends $grpc.Client {
   static final _$setClientId = $grpc.ClientMethod<$0.ClientId, $1.Empty>(
-      '/requester_client.RequesterClientService/SetClientId',
+      '/client_service.RequesterClientService/SetClientId',
       ($0.ClientId value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
   static final _$getClientId = $grpc.ClientMethod<$1.Empty, $0.ClientId>(
-      '/requester_client.RequesterClientService/GetClientId',
+      '/client_service.RequesterClientService/GetClientId',
       ($1.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.ClientId.fromBuffer(value));
   static final _$identify = $grpc.ClientMethod<$1.Empty, $1.Empty>(
-      '/requester_client.RequesterClientService/Identify',
+      '/client_service.RequesterClientService/Identify',
       ($1.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
   static final _$observeClientInfo = $grpc.ClientMethod<$1.Empty, $0.ClientInfo>(
-      '/requester_client.RequesterClientService/ObserveClientInfo',
+      '/client_service.RequesterClientService/ObserveClientInfo',
       ($1.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.ClientInfo.fromBuffer(value));
   static final _$updateClientInfo = $grpc.ClientMethod<$0.ClientInfoEntry, $1.Empty>(
-      '/requester_client.RequesterClientService/UpdateClientInfo',
+      '/client_service.RequesterClientService/UpdateClientInfo',
       ($0.ClientInfoEntry value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
   static final _$setLogHostPort = $grpc.ClientMethod<$0.LogHostPort, $1.Empty>(
-      '/requester_client.RequesterClientService/SetLogHostPort',
+      '/client_service.RequesterClientService/SetLogHostPort',
       ($0.LogHostPort value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
   static final _$getLogHostPort = $grpc.ClientMethod<$1.Empty, $0.LogHostPort>(
-      '/requester_client.RequesterClientService/GetLogHostPort',
+      '/client_service.RequesterClientService/GetLogHostPort',
       ($1.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.LogHostPort.fromBuffer(value));
   static final _$getRequestOverrides = $grpc.ClientMethod<$1.Empty, $1.RpcJsonListValue>(
-      '/requester_client.RequesterClientService/GetRequestOverrides',
+      '/client_service.RequesterClientService/GetRequestOverrides',
       ($1.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.RpcJsonListValue.fromBuffer(value));
   static final _$addRequestOverrides = $grpc.ClientMethod<$1.RpcJson, $1.Empty>(
-      '/requester_client.RequesterClientService/AddRequestOverrides',
+      '/client_service.RequesterClientService/AddRequestOverrides',
       ($1.RpcJson value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
   static final _$removeRequestOverrides = $grpc.ClientMethod<$1.RpcJson, $1.Empty>(
-      '/requester_client.RequesterClientService/RemoveRequestOverrides',
+      '/client_service.RequesterClientService/RemoveRequestOverrides',
       ($1.RpcJson value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
   static final _$updateRequestOverrides = $grpc.ClientMethod<$1.RpcJson, $1.Empty>(
-      '/requester_client.RequesterClientService/UpdateRequestOverrides',
+      '/client_service.RequesterClientService/UpdateRequestOverrides',
       ($1.RpcJson value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
   static final _$observeDisplayPerformance = $grpc.ClientMethod<$1.Empty, $0.DisplayPerformance>(
-      '/requester_client.RequesterClientService/ObserveDisplayPerformance',
+      '/client_service.RequesterClientService/ObserveDisplayPerformance',
       ($1.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.DisplayPerformance.fromBuffer(value));
+  static final _$observeAppState = $grpc.ClientMethod<$1.Empty, $0.ClientAppState>(
+      '/client_service.RequesterClientService/ObserveAppState',
+      ($1.Empty value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.ClientAppState.fromBuffer(value));
 
   RequesterClientServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -124,11 +128,15 @@ class RequesterClientServiceClient extends $grpc.Client {
   $grpc.ResponseStream<$0.DisplayPerformance> observeDisplayPerformance($1.Empty request, {$grpc.CallOptions? options}) {
     return $createStreamingCall(_$observeDisplayPerformance, $async.Stream.fromIterable([request]), options: options);
   }
+
+  $grpc.ResponseStream<$0.ClientAppState> observeAppState($1.Empty request, {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$observeAppState, $async.Stream.fromIterable([request]), options: options);
+  }
 }
 
-@$pb.GrpcServiceName('requester_client.RequesterClientService')
+@$pb.GrpcServiceName('client_service.RequesterClientService')
 abstract class RequesterClientServiceBase extends $grpc.Service {
-  $core.String get $name => 'requester_client.RequesterClientService';
+  $core.String get $name => 'client_service.RequesterClientService';
 
   RequesterClientServiceBase() {
     $addMethod($grpc.ServiceMethod<$0.ClientId, $1.Empty>(
@@ -215,6 +223,13 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $1.Empty.fromBuffer(value),
         ($0.DisplayPerformance value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.Empty, $0.ClientAppState>(
+        'ObserveAppState',
+        observeAppState_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) => $1.Empty.fromBuffer(value),
+        ($0.ClientAppState value) => value.writeToBuffer()));
   }
 
   $async.Future<$1.Empty> setClientId_Pre($grpc.ServiceCall call, $async.Future<$0.ClientId> request) async {
@@ -265,6 +280,10 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
     yield* observeDisplayPerformance(call, await request);
   }
 
+  $async.Stream<$0.ClientAppState> observeAppState_Pre($grpc.ServiceCall call, $async.Future<$1.Empty> request) async* {
+    yield* observeAppState(call, await request);
+  }
+
   $async.Future<$1.Empty> setClientId($grpc.ServiceCall call, $0.ClientId request);
   $async.Future<$0.ClientId> getClientId($grpc.ServiceCall call, $1.Empty request);
   $async.Future<$1.Empty> identify($grpc.ServiceCall call, $1.Empty request);
@@ -277,4 +296,5 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
   $async.Future<$1.Empty> removeRequestOverrides($grpc.ServiceCall call, $1.RpcJson request);
   $async.Future<$1.Empty> updateRequestOverrides($grpc.ServiceCall call, $1.RpcJson request);
   $async.Stream<$0.DisplayPerformance> observeDisplayPerformance($grpc.ServiceCall call, $1.Empty request);
+  $async.Stream<$0.ClientAppState> observeAppState($grpc.ServiceCall call, $1.Empty request);
 }

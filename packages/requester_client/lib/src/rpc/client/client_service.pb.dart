@@ -13,6 +13,10 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'client_service.pbenum.dart';
+
+export 'client_service.pbenum.dart';
+
 class ClientId extends $pb.GeneratedMessage {
   factory ClientId({
     $core.String? id,
@@ -27,7 +31,7 @@ class ClientId extends $pb.GeneratedMessage {
   factory ClientId.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ClientId.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ClientId', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ClientId', package: const $pb.PackageName(_omitMessageNames ? '' : 'client_service'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..hasRequiredFields = false
   ;
@@ -78,8 +82,8 @@ class ClientInfo extends $pb.GeneratedMessage {
   factory ClientInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ClientInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ClientInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
-    ..m<$core.String, ClientMetaValue>(2, _omitFieldNames ? '' : 'meta', entryClassName: 'ClientInfo.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OM, valueCreator: ClientMetaValue.create, valueDefaultOrMaker: ClientMetaValue.getDefault, packageName: const $pb.PackageName('requester_client'))
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ClientInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'client_service'), createEmptyInstance: create)
+    ..m<$core.String, ClientMetaValue>(2, _omitFieldNames ? '' : 'meta', entryClassName: 'ClientInfo.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OM, valueCreator: ClientMetaValue.create, valueDefaultOrMaker: ClientMetaValue.getDefault, packageName: const $pb.PackageName('client_service'))
     ..hasRequiredFields = false
   ;
 
@@ -127,7 +131,7 @@ class ClientInfoEntry extends $pb.GeneratedMessage {
   factory ClientInfoEntry.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ClientInfoEntry.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ClientInfoEntry', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ClientInfoEntry', package: const $pb.PackageName(_omitMessageNames ? '' : 'client_service'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'key')
     ..aOM<ClientMetaValue>(2, _omitFieldNames ? '' : 'value', subBuilder: ClientMetaValue.create)
     ..hasRequiredFields = false
@@ -189,7 +193,7 @@ class ClientMetaValue extends $pb.GeneratedMessage {
   factory ClientMetaValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ClientMetaValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ClientMetaValue', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ClientMetaValue', package: const $pb.PackageName(_omitMessageNames ? '' : 'client_service'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'value')
     ..hasRequiredFields = false
   ;
@@ -244,7 +248,7 @@ class LogHostPort extends $pb.GeneratedMessage {
   factory LogHostPort.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory LogHostPort.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LogHostPort', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LogHostPort', package: const $pb.PackageName(_omitMessageNames ? '' : 'client_service'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'host')
     ..a<$core.int>(2, _omitFieldNames ? '' : 'port', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
@@ -304,7 +308,7 @@ class DisplayPerformance extends $pb.GeneratedMessage {
   factory DisplayPerformance.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory DisplayPerformance.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DisplayPerformance', package: const $pb.PackageName(_omitMessageNames ? '' : 'requester_client'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DisplayPerformance', package: const $pb.PackageName(_omitMessageNames ? '' : 'client_service'), createEmptyInstance: create)
     ..a<$core.double>(1, _omitFieldNames ? '' : 'fps', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
@@ -339,6 +343,56 @@ class DisplayPerformance extends $pb.GeneratedMessage {
   $core.bool hasFps() => $_has(0);
   @$pb.TagNumber(1)
   void clearFps() => clearField(1);
+}
+
+class ClientAppState extends $pb.GeneratedMessage {
+  factory ClientAppState({
+    AppState? appState,
+  }) {
+    final $result = create();
+    if (appState != null) {
+      $result.appState = appState;
+    }
+    return $result;
+  }
+  ClientAppState._() : super();
+  factory ClientAppState.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ClientAppState.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ClientAppState', package: const $pb.PackageName(_omitMessageNames ? '' : 'client_service'), createEmptyInstance: create)
+    ..e<AppState>(1, _omitFieldNames ? '' : 'appState', $pb.PbFieldType.OE, defaultOrMaker: AppState.APP_STATE_RESUMED, valueOf: AppState.valueOf, enumValues: AppState.values)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ClientAppState clone() => ClientAppState()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ClientAppState copyWith(void Function(ClientAppState) updates) => super.copyWith((message) => updates(message as ClientAppState)) as ClientAppState;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ClientAppState create() => ClientAppState._();
+  ClientAppState createEmptyInstance() => create();
+  static $pb.PbList<ClientAppState> createRepeated() => $pb.PbList<ClientAppState>();
+  @$core.pragma('dart2js:noInline')
+  static ClientAppState getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ClientAppState>(create);
+  static ClientAppState? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  AppState get appState => $_getN(0);
+  @$pb.TagNumber(1)
+  set appState(AppState v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasAppState() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearAppState() => clearField(1);
 }
 
 

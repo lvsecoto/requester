@@ -17,13 +17,15 @@ class LogFilter with _$LogFilter {
 
   bool isMatched(Log log) {
     if (log is LogRequest) {
-      return log.requestPath.contains(query)
-    || log.requestQueries.keys.any((it) => it.contains(query))
-          || log.requestQueries.values.any((it) => it.contains(query))
-          || log.requestHeaders.keys.any((it) => it.contains(query))
-          || log.requestHeaders.values.any((it) => it.contains(query))
-          || log.requestBody.contains(query)
-          || (log.requestResponse?.body.contains(query) ?? false);
+      return log.requestPath.contains(query) ||
+          log.requestQueries.keys.any((it) => it.contains(query)) ||
+          log.requestQueries.values.any((it) => it.contains(query)) ||
+          log.requestHeaders.keys.any((it) => it.contains(query)) ||
+          log.requestHeaders.values.any((it) => it.contains(query)) ||
+          log.requestBody.contains(query) ||
+          (log.requestResponse?.body.contains(query) ?? false);
+    } else if (log is LogAppState) {
+      return true;
     } else {
       return false;
     }
@@ -32,25 +34,36 @@ class LogFilter with _$LogFilter {
 
 /// 代表一个日志
 @freezed
-class Log with _$Log {
-
+sealed class Log with _$Log {
   /// 请求日志
   const factory Log.request({
     required int id,
     required DateTime time,
     required String clientUid,
-
     required String requestPath,
     required String requestMethod,
     required Map<String, String> requestQueries,
     required Map<String, String> requestHeaders,
     required String requestBody,
-
     LogResponse? requestResponse,
 
     /// 如果有重载，不为空
     OverrideRequest? requestOverridden,
   }) = LogRequest;
+
+  /// 应用状态日志
+  const factory Log.appState({
+    required int id,
+    required DateTime time,
+    required String clientUid,
+    required AppState state,
+  }) = LogAppState;
+
+// /// 路由日志
+// const factory Log.route({
+//   required String name,
+//   required String path,
+// }) = LogApp;
 }
 
 @freezed
@@ -63,6 +76,28 @@ class LogResponse with _$LogResponse {
     /// 响应时间
     required Duration spentTime,
   }) = _LogResponse;
+}
+
+/// 应用日志
+enum AppState {
+  /// 应用正在运行
+  resumed,
+
+  /// 应用暂停，失去焦点
+  inactive,
+
+  /// 应用隐藏
+  hidden,
+  ;
+
+  static AppState fromRpc(rpc.AppState appState) {
+    return switch (appState) {
+      rpc.AppState.APP_STATE_RESUMED => AppState.resumed,
+      rpc.AppState.APP_STATE_INACTIVE => AppState.inactive,
+      rpc.AppState.APP_STATE_HIDDE => AppState.hidden,
+      _ => throw UnimplementedError(),
+    };
+  }
 }
 
 class LogPagingData implements PagingData<int, Log> {

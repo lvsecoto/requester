@@ -5,9 +5,10 @@ option java_package = "io.grpc.examples.requester_device";
 option java_outer_classname = "HelloWorldProto";
 option objc_class_prefix = "HLW";
 
-package requester_client;
+package log_service;
 
 import "common/common.proto";
+import "client/client_service.proto";
 
 // Requester日志服务
 // 由Requester提供
@@ -19,6 +20,8 @@ service RequesterLogService {
   // 客户端向Requester发送响应日志
   rpc SendResponse(LogResponse) returns (common.Empty) {};
 
+  // 客户端向Requester发送应用状态日志
+  rpc LogAppSate(LogAppState) returns (common.Empty) {};
 }
 
 // 日志基本信息
@@ -81,4 +84,11 @@ message LogResponse {
 
   // (有)请求重载
   common.RpcJson request_overridden = 7;
+}
+
+// App状态日志
+message LogAppState {
+  // 基本的日志信息
+  Log log = 1;
+  client_service.AppState app_state = 2;;
 }

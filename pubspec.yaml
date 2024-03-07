@@ -64,7 +64,7 @@ dependencies:
   protobuf: ^3.1.0
   curl_converter: ^1.0.4
 
-  drift: ^2.15.0
+  drift: ^2.16.0
   sqlite3_flutter_libs: ^0.5.19+1
 
   requester_client:
@@ -90,6 +90,7 @@ dependencies:
   material_color_utilities: ^0.8.0
   highlight: ^0.7.0
   collection: ^1.18.0
+  timeago: ^3.6.1
 
 dev_dependencies:
   flutter_test:
@@ -116,8 +117,11 @@ dev_dependencies:
       url: https://github.com/lvsecoto/flutter_persistence.git
       ref: ddd186b
 
-  drift_dev: ^2.15.0
+  drift_dev: ^2.16.0
   flutter_gen_runner: ^5.4.0
+
+dependency_overrides:
+  web: 0.5.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

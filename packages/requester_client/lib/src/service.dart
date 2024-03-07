@@ -1,9 +1,10 @@
 import 'package:grpc/grpc.dart';
 import 'package:requester_client/requester_client.dart';
-import 'package:requester_client/src/display_performance/display_performance.dart';
 import 'package:requester_client/src/rpc/rpc.dart' as rpc;
 
 import 'log/log.dart';
+import 'display_performance/display_performance.dart';
+import 'app_state/app_state.dart';
 
 class RequesterClientService extends rpc.RequesterClientServiceBase {
   /// Requester客户端提供服务实现
@@ -12,6 +13,7 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
     required this.logProvider,
     required this.overrideProvider,
     required this.displayPerformanceProvider,
+    required this.appStateProvider,
     required this.onClientIdChanged,
     required this.onIdentify,
   });
@@ -24,6 +26,8 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
   final OverrideProvider overrideProvider;
 
   final DisplayPerformanceProvider displayPerformanceProvider;
+
+  final AppStateProvider appStateProvider;
 
   /// 客户端id改变回调
   final Function() onClientIdChanged;
@@ -117,7 +121,8 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
   }
 
   @override
-  Future<rpc.Empty> updateRequestOverrides(ServiceCall call, rpc.RpcJson request) async {
+  Future<rpc.Empty> updateRequestOverrides(
+      ServiceCall call, rpc.RpcJson request) async {
     await overrideProvider.updateOverride(
       OverrideRequest.fromJson(request.toJson()),
     );
@@ -125,7 +130,14 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
   }
 
   @override
-  Stream<rpc.DisplayPerformance> observeDisplayPerformance(ServiceCall call, rpc.Empty request) {
+  Stream<rpc.DisplayPerformance> observeDisplayPerformance(
+      ServiceCall call, rpc.Empty request) {
     return displayPerformanceProvider.stream;
+  }
+
+  @override
+  Stream<rpc.ClientAppState> observeAppState(
+      ServiceCall call, rpc.Empty request) {
+    return appStateProvider.stream;
   }
 }

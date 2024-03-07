@@ -25,12 +25,11 @@ class RequesterLogDioInterceptor extends Interceptor {
       RequestOptions options, RequestInterceptorHandler handler) async {
     // 先让其他拦截器处理好请求
     super.onRequest(options, handler);
-    final logId = const UuidV1().generate();
-    final now = DateTime.now();
+    final log = await logProvider.createLog();
     options.extra = {
       ...options.extra,
-      _kLogId: logId,
-      _kLogTime: now,
+      _kLogId: log.id,
+      _kLogTime: DateTime.now(),
     };
 
     final data = options.data;
@@ -44,11 +43,7 @@ class RequesterLogDioInterceptor extends Interceptor {
     final query = uri.queryParameters;
 
     final logRequest = rpc.LogRequest(
-      log: rpc.Log(
-        id: logId,
-        clientUid: await RequesterClient.getClientUid(),
-        time: rpc.Int64(now.millisecondsSinceEpoch),
-      ),
+      log: log,
       path: path,
       queries: query,
       headers:
@@ -65,16 +60,13 @@ class RequesterLogDioInterceptor extends Interceptor {
     final logId = response.requestOptions.extra[_kLogId]!;
     DateTime requestTime = response.requestOptions.extra[_kLogTime]!;
     final logResponse = rpc.LogResponse(
-      log: rpc.Log(
-        id: logId,
-        clientUid: await RequesterClient.getClientUid(),
-        time: rpc.Int64(),
-      ),
-      spentTime: DateTime.now().difference(requestTime).inMilliseconds,
-      code: response.statusCode,
-      body: _captureBody(response.data),
-      requestOverridden: _captureRequestOverridden(response.requestOptions)
-    );
+        log: await logProvider.createLog(
+          id: logId,
+        ),
+        spentTime: DateTime.now().difference(requestTime).inMilliseconds,
+        code: response.statusCode,
+        body: _captureBody(response.data),
+        requestOverridden: _captureRequestOverridden(response.requestOptions));
     // 必须先抓取日志，再继续处理，不然抓取的是后面拦截器处理过的数据，不准确
     super.onResponse(response, handler);
     await logProvider.client?.sendResponse(logResponse);
@@ -85,31 +77,33 @@ class RequesterLogDioInterceptor extends Interceptor {
     super.onError(err, handler);
     final logId = err.requestOptions.extra[_kLogId]!;
     final logResponse = rpc.LogResponse(
-      log: rpc.Log(
-        id: logId,
-        clientUid: await RequesterClient.getClientUid(),
-        time: rpc.Int64(),
-      ),
-      code: err.response?.statusCode ?? -1,
-      body: err.response != null
-          ? _captureBody(err.response!.data)
-          : err.error.toString(),
-      error: err.type.toString(),
-      requestOverridden: _captureRequestOverridden(err.requestOptions)
-    );
+        log: await logProvider.createLog(
+          id: logId,
+        ),
+        code: err.response?.statusCode ?? -1,
+        body: err.response != null
+            ? _captureBody(err.response!.data)
+            : err.error.toString(),
+        error: err.type.toString(),
+        requestOverridden: _captureRequestOverridden(err.requestOptions));
     await logProvider.client?.sendResponse(logResponse);
   }
 
   String _captureBody(data) => switch (data) {
-      String() || Map<String, dynamic>() || List<dynamic>() => jsonEncode(data),
-      null => '',
-      _ => data.runtimeType.toString(),
-    };
+        String() ||
+        Map<String, dynamic>() ||
+        List<dynamic>() =>
+          jsonEncode(data),
+        null => '',
+        _ => data.runtimeType.toString(),
+      };
 
   /// 获取重载配置来日志，如果没有，返回空
   rpc.RpcJson? _captureRequestOverridden(RequestOptions options) {
     return (options.extra[RequesterOverrideDioInterceptor.kRequesterOverridden]
-    as OverrideRequest?)
-        ?.toJson().toRpcJson().jsonValue;
+            as OverrideRequest?)
+        ?.toJson()
+        .toRpcJson()
+        .jsonValue;
   }
 }
