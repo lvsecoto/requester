@@ -5,6 +5,8 @@ typedef RequesterClientService = rpc.RequesterClientServiceClient;
 
 class RequesterClientServiceController extends ChangeNotifier implements AppLifecycleAware {
 
+  bool _hasDisposed = false;
+
   /// 客户端服务控制器，输入客户端的[hostPort]，利用[clientService]和client通信
   ///
   /// 需要在Widget上和和App生命周期绑定好
@@ -44,9 +46,18 @@ class RequesterClientServiceController extends ChangeNotifier implements AppLife
   }
 
   @override
+  void notifyListeners() {
+    if (_hasDisposed) {
+      return;
+    }
+    super.notifyListeners();
+  }
+
+  @override
   void dispose() {
     super.dispose();
     _client?.shutdown();
     _service = null;
+    _hasDisposed = true;
   }
 }
