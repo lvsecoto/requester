@@ -137,3 +137,23 @@ ProviderListenable<(DateTime, double)> provideDisplayPerformanceFps(WidgetRef re
     return (it.$1, it.$2.fps);
   });
 }
+
+@Riverpod(dependencies: [clientService])
+class _AppState extends _$AppState
+    with StreamValueNotifier {
+  @override
+  AppState? build() {
+    return onBuild();
+  }
+
+  @override
+  Stream<AppState> buildStream() {
+    return _watchClient(ref)
+        .observeAppState(rpc.Empty())
+        .map((it) => AppState.fromRpc(it.appState));
+  }
+}
+
+AppState? watchAppState(WidgetRef ref) {
+  return ref.watch(_appStateProvider);
+}

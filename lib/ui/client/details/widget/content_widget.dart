@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:requester/common/responsive_layout/responsive_column.dart';
 import 'package:requester/ui/client/details/provider/provider.dart' as provider;
 
-import 'display_performance.dart';
+import 'state.dart';
 import 'log_info_widget.dart';
 import 'client_id_widget.dart';
 import 'client_infos_widget.dart';
@@ -57,7 +57,7 @@ class ContentWidget extends HookConsumerWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 16, top: 12, right: 16),
-                  child: DisplayPerformance(),
+                  child: ClientStateWidget(),
                 ),
                 ClientInfosWidget(),
               ],
