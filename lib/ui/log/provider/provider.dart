@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/domain/log/log.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+export 'package:requester/domain/log/log.dart' show Log, LogRequest, LogAppState, FoldedLogs;
+
 part 'provider.g.dart';
 
 /// 编辑搜索关键字

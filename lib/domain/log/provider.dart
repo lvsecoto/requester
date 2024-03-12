@@ -13,15 +13,35 @@ part of 'log.dart';
 /// * [LogList.loadMore]
 @riverpod
 class LogList extends _$LogList with PagingLoadNotifierMixin<Log, int> {
+  bool _foldAppState(Log log) {
+    return log is LogAppState;
+  }
+
+  /// 用于检测哪些日志需要折叠
+  late final _foldLogTests = {
+    _foldAppState,
+  };
+
+  @override
+  List<Log> onAppendNewData(List<Log> data, List<Log> newData) {
+    final logs = data.joinNextFoldLog(
+      newData.foldLogs({
+        _foldAppState,
+      }),
+      _foldLogTests,
+    );
+    return logs;
+  }
+
   @override
   PagingLoadState<Log> build(LogFilter filter) {
     ref.listen(_onLogAddProvider, (_, newLog) {
       if (newLog != null && filter.isMatched(newLog)) {
         state = state.copyWith(
-          data: [
-            newLog,
-            ...state.data,
-          ],
+          data: [newLog].foldLogs(_foldLogTests).joinNextFoldLog(
+                state.data,
+                _foldLogTests,
+              ),
         );
       }
     });
@@ -35,9 +55,9 @@ class LogList extends _$LogList with PagingLoadNotifierMixin<Log, int> {
             data: [
               ...data,
             ]..[index] = (data[index] as LogRequest).copyWith(
-              requestOverridden: requestOverridden,
-              requestResponse: response,
-            ),
+                requestOverridden: requestOverridden,
+                requestResponse: response,
+              ),
           );
         }
       }
@@ -68,7 +88,7 @@ class LogList extends _$LogList with PagingLoadNotifierMixin<Log, int> {
     final dataAfterId = nextPageArg ?? -1;
     if (dataAfterId != -1) {
       // 加载下一页的的时候，我们都放慢点速度
-      await Future.delayed(const Duration(milliseconds: 300));
+      await Future.delayed(const Duration(milliseconds: 100));
     }
     return ref.watch(logManagerProvider)._getLogs(
           filter: filter,
@@ -86,7 +106,8 @@ class _OnLogAdd extends _$OnLogAdd with SelectableNotifier {
 }
 
 @riverpod
-class _OnLogResponseUpdate extends _$OnLogResponseUpdate with SelectableNotifier {
+class _OnLogResponseUpdate extends _$OnLogResponseUpdate
+    with SelectableNotifier {
   @override
   (int, OverrideRequest?, LogResponse)? build() {
     return null;

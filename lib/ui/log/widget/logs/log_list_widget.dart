@@ -18,10 +18,11 @@ class LogListWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final listProvider = ref.watch(provider.watchLogProviderProvider);
-    final requests = ref.watch(listProvider).data;
+    final logsProvider = ref.watch(provider.watchLogProviderProvider);
+    final logs = ref.watch(logsProvider).data;
 
-    ref.listen(listProvider.select((it) => it.data.firstOrNull), (prev, next) {
+    // 实现自动切换至最新日志
+    ref.listen(logsProvider.select((it) => it.data.firstOrNull), (prev, next) {
       final currentPath = GoRouterState.of(context).uri.toString();
       if ((prev != null && currentPath == LogDetailsRoute(prev.id).location) &&
           next != null) {
@@ -32,66 +33,27 @@ class LogListWidget extends HookConsumerWidget {
     return CustomScrollView(
       slivers: [
         DiffSliverAnimatedList(
-            items: requests,
+            items: logs,
             keySelector: (it) => it.id,
-            indexedItemBuilder: (context, item, index) {
+            indexedItemBuilder: (context, log, index) {
               var isFirstItem = index == 0;
-              final isBetweenLogRequest = !isFirstItem &&(
-                      requests.elementAtOrNull(index - 1) is LogRequest ||
-                  requests.elementAtOrNull(index) is LogRequest);
+              final isBetweenLogRequest = !isFirstItem &&
+                  (logs.elementAtOrNull(index - 1) is LogRequest ||
+                      logs.elementAtOrNull(index) is LogRequest);
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   if (!isFirstItem && isBetweenLogRequest)
                     const Divider(indent: 16, endIndent: 16, height: 1),
-                  switch (item) {
-                    LogRequest() => _RequestItem(
-                        item: item,
-                        onTap: () async {
-                          LogDetailsRoute(item.id).go(context);
-                        },
-                      ),
-                    LogAppState() => LogAppStateItemWidget(
-                        logAppState: item,
-                      ),
-                  },
+                  LogItemWidget(log: log),
                 ],
               );
             }),
         PagingLoadMoreStateWidget(
-          pagingLoadProvider: listProvider,
+          pagingLoadProvider: logsProvider,
         ),
       ],
-    );
-  }
-}
-
-class _RequestItem extends ConsumerWidget {
-  const _RequestItem({
-    required this.item,
-    required this.onTap,
-  });
-
-  final LogRequest item;
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final currentId = LogDetailsRoute.from(GoRouterState.of(context))?.id;
-    return Material(
-      animationDuration: const Duration(seconds: 1),
-      color: item.id == currentId
-          ? Theme.of(context).colorScheme.primaryContainer
-          : Colors.transparent,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: InkWell(
-        onTap: onTap,
-        child: LogRequestItemWidget(
-          logRequest: item,
-        ),
-      ),
     );
   }
 }

@@ -255,8 +255,8 @@ class ObjectAnalysis with _$ObjectAnalysis {
   String? _getExpectedType(APIType? fieldType, fieldData) {
     return switch (fieldType) {
       null => null,
-      APIType.array => tryJsonDecode(fieldData) is List ? null : '列表',
-      APIType.object => tryJsonDecode(fieldData) is Map ? null : '对象',
+      APIType.array => tryJsonDecode(fieldData.toString()) is List ? null : '列表',
+      APIType.object => tryJsonDecode(fieldData.toString()) is Map ? null : '对象',
       APIType.string => fieldData is String ? null : 'string',
       APIType.integer => fieldData is int ? null : 'int',
       APIType.number => fieldData is num ? null : 'double',

@@ -7,7 +7,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.2.3 <4.0.0'
+  sdk: '>=3.3.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -28,7 +28,7 @@ dependencies:
   common:
     git:
       url: https://github.com/lvsecoto/flutter_common.git
-      ref: ee2abc5bd85dd2276dc5d661f46fe39e302ba2ef
+      ref: 4b654f2f9600128d7c33c2eccefb3e8a690911a4
 
   # 自动代码生成
   persistence_annotation:

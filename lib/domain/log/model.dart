@@ -59,12 +59,26 @@ sealed class Log with _$Log {
     required AppState state,
   }) = LogAppState;
 
+  /// 折叠后的日志
+  const factory Log.foldedLogs({
+    /// 这里可以放第一条日志id取负数
+    ///
+    /// 在这里，id没有实际作用，不指向任何一条日志，仅仅起区分日志作用
+    required int id,
+    /// 折叠条件
+    required FoldLogCondition condition,
+    required List<Log> logs,
+  }) = FoldedLogs;
+
 // /// 路由日志
 // const factory Log.route({
 //   required String name,
 //   required String path,
 // }) = LogApp;
 }
+
+/// 日志折叠条件
+typedef FoldLogCondition = bool Function(Log);
 
 @freezed
 class LogResponse with _$LogResponse {
