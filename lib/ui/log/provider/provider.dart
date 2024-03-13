@@ -64,6 +64,11 @@ class WatchLogProvider extends _$WatchLogProvider {
 }
 
 /// 操作：清除日志
+Future<void> actionDeleteLog(WidgetRef ref, Log log) async {
+  return ref.read(logManagerProvider).deleteLog(log);
+}
+
+/// 操作：清除日志
 Future<void> actionClearLog(WidgetRef ref) async {
   return ref.read(logManagerProvider).clear();
 }

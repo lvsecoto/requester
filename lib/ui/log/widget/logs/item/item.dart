@@ -7,9 +7,9 @@ import 'package:requester/ui/log/provider/provider.dart' as provider;
 import 'app_state_item_widget.dart';
 import 'folded_log_item_widget.dart';
 import 'request_item_widget.dart';
+import 'delete_log_widget.dart';
 
 class LogItemWidget extends StatelessWidget {
-
   /// 日志条目组件，显示日志[log]内容
   ///
   /// 会根据不同的日志类型显示不同的组件
@@ -23,20 +23,23 @@ class LogItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item = log;
-    return switch (item) {
-      provider.LogRequest() => _RequestItem(
-          item: item,
-          onTap: () async {
-            LogDetailsRoute(item.id).go(context);
-          },
-        ),
-      provider.LogAppState() => LogAppStateItemWidget(
-          logAppState: item,
-        ),
-      provider.FoldedLogs() => FoldedLogItemWidget(
-          foldedLogs: item,
-        ),
-    };
+    return DeleteLogWidget(
+      log: log,
+      child: switch (item) {
+        provider.LogRequest() => _RequestItem(
+            item: item,
+            onTap: () async {
+              LogDetailsRoute(item.id).go(context);
+            },
+          ),
+        provider.LogAppState() => LogAppStateItemWidget(
+            logAppState: item,
+          ),
+        provider.FoldedLogs() => FoldedLogItemWidget(
+            foldedLogs: item,
+          ),
+      },
+    );
   }
 }
 

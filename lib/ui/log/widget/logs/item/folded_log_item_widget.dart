@@ -176,6 +176,7 @@ class _Expanded extends StatelessWidget {
     final logs = foldedLogs.logs;
     return CustomScrollView(
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       slivers: [
         DiffSliverAnimatedList(
           items: logs.cast<LogAppState>(),

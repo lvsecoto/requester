@@ -42,6 +42,8 @@ abstract class _LogManager {
 }
 
 class LogManager extends _LogManager with _HostPortManager, _LogRecord {
+
+  /// 日志管理
   LogManager(this._ref);
 
   @override
@@ -56,6 +58,16 @@ class LogManager extends _LogManager with _HostPortManager, _LogRecord {
           ..where(_logTable.id.equals(logId)))
         .map(_mapToLog)
         .getSingle();
+  }
+
+  /// 删除日志
+  Future<void> deleteLog(Log log) async {
+    if (log is FoldedLogs) {
+      await _logTable.deleteWhere((it) => it.id.isIn(log.logs.map((it) => it.id)));
+    } else {
+      await _logTable.deleteWhere((it) => it.id.equals(log.id));
+    }
+    _ref.read(_onLogDeleteProvider.notifier).select(log);
   }
 
   /// 加载日志
