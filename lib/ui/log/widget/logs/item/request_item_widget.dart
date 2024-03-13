@@ -33,7 +33,7 @@ class LogRequestItemWidget extends StatelessWidget {
             logRequest: logRequest,
           ),
           const Gap(4),
-          Consumer(builder: (context, ref, _) {
+          HookConsumer(builder: (context, ref, _) {
             final summary = watchRequestDocumentSummary(ref, logRequest);
             return AnimatedVisibilityWidget(
               isVisible: summary.isNotBlank,

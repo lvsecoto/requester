@@ -30,6 +30,25 @@ LogRequest? getLogRequest(WidgetRef ref) {
   return ref.read(provider).valueOrNull as LogRequest?;
 }
 
+/// 加载请求日志分析
+@Riverpod(dependencies: [requestLogId])
+class LoadAnalyzeLogRequest extends _$LoadAnalyzeLogRequest {
+  @override
+  LogRequestAnalysis? build() {
+    final requestId = ref.watch(requestLogIdProvider);
+    final provider = ref.watch(logManagerProvider).provideLoadLog(requestId);
+    final logRequest = ref.watch(provider).valueOrNull as LogRequest?;
+    if (logRequest == null) {
+      return null;
+    }
+
+    final documentProvider =
+        ref.watch(documentManagerProvider).provideAnalyzeLogRequest(logRequest);
+    // 如果请求日志更新，那么它依然会继续使用更新之前加载好的分析结果，避免界面发生显示跳动
+    return ref.watch(documentProvider).valueOrNull ?? stateOrNull;
+  }
+}
+
 /// 加载请求参数
 Map<String, ParametersTableValue> watchLogRequestQueries(
   WidgetRef ref,
@@ -38,9 +57,7 @@ Map<String, ParametersTableValue> watchLogRequestQueries(
   if (request == null) {
     return {};
   }
-  final documentProvider =
-      ref.watch(documentManagerProvider).provideAnalyzeLogRequest(request);
-  final documentQuery = ref.watch(documentProvider).valueOrNull?.queries;
+  final documentQuery = ref.watch(loadAnalyzeLogRequestProvider)?.queries;
   return _analyzeParameterData(documentQuery, request.requestQueries);
 }
 
@@ -52,9 +69,7 @@ Map<String, ParametersTableValue> watchLogRequestHeaders(
   if (request == null) {
     return {};
   }
-  final documentProvider =
-      ref.watch(documentManagerProvider).provideAnalyzeLogRequest(request);
-  final documentHeaders = ref.watch(documentProvider).valueOrNull?.headers;
+  final documentHeaders = ref.watch(loadAnalyzeLogRequestProvider)?.headers;
   return _analyzeParameterData(documentHeaders, request.requestHeaders);
 }
 
@@ -99,9 +114,7 @@ DataWidgetData watchLogRequestBody(
   if (request == null) {
     return DataWidgetData(data: '');
   }
-  final documentProvider =
-      ref.watch(documentManagerProvider).provideAnalyzeLogRequest(request);
-  final documentBodies = ref.watch(documentProvider).valueOrNull?.requestBody;
+  final documentBodies = ref.watch(loadAnalyzeLogRequestProvider)?.requestBody;
   return DataWidgetData(
     data: request.requestBody,
     objectAnalysis: documentBodies,
@@ -116,9 +129,7 @@ DataWidgetData loadLogResponseBody(
   if (request == null) {
     return DataWidgetData(data: '');
   }
-  final documentProvider =
-      ref.watch(documentManagerProvider).provideAnalyzeLogRequest(request);
-  final documentBodies = ref.watch(documentProvider).valueOrNull?.responseBody;
+  final documentBodies = ref.watch(loadAnalyzeLogRequestProvider)?.responseBody;
   return DataWidgetData(
     data: request.requestResponse?.body ?? '',
     objectAnalysis: documentBodies?[request.requestResponse?.code.toString()],
@@ -169,7 +180,8 @@ RequesterClient? getLogRequesterClient(WidgetRef ref) {
   if (request == null) {
     return null;
   }
-  final provider = ref.read(clientManagerProvider).provideRequesterClient(request.clientUid);
+  final provider =
+      ref.read(clientManagerProvider).provideRequesterClient(request.clientUid);
   return ref.read(provider).valueOrNull;
 }
 
@@ -179,6 +191,8 @@ RequesterClient? watchLogRequesterClient(WidgetRef ref) {
   if (request == null) {
     return null;
   }
-  final provider = ref.watch(clientManagerProvider).provideRequesterClient(request.clientUid);
+  final provider = ref
+      .watch(clientManagerProvider)
+      .provideRequesterClient(request.clientUid);
   return ref.watch(provider).valueOrNull;
 }

@@ -1,4 +1,5 @@
 import 'package:common/common.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:requester/domain/client/client.dart';
 import 'package:requester/domain/document/document.dart';
 import 'package:rxdart/rxdart.dart';
@@ -73,9 +74,15 @@ Future<void> actionClearLog(WidgetRef ref) async {
   return ref.read(logManagerProvider).clear();
 }
 
+/// 观察请求文档
 String watchRequestDocumentSummary(WidgetRef ref, LogRequest logRequest) {
   final provider = ref.watch(documentManagerProvider).provideAnalyzeLogRequest(logRequest);
-  return ref.watch(provider).valueOrNull?.summary ?? '';
+  final notNullSummary = useRef<String?>(null);
+  final summary = ref.watch(provider).valueOrNull?.summary;
+  if (summary != null) {
+    notNullSummary.value = summary;
+  }
+  return notNullSummary.value ?? '';
 }
 
 /// 获取客户端描述
