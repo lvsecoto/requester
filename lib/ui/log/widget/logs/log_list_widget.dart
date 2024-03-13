@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import
 
 import 'package:common/common.dart';
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
@@ -21,8 +22,12 @@ class LogListWidget extends HookConsumerWidget {
     final logsProvider = ref.watch(provider.watchLogProviderProvider);
     final logs = ref.watch(logsProvider).data;
 
-    // 实现自动切换至最新日志
-    ref.listen(logsProvider.select((it) => it.data.firstOrNull), (prev, next) {
+    // 实现自动切换至最新的请求日志
+    // 通过监听最新的请求日志，当有新日志时，如果之前时停留在最新的请求日志，则切换至最新的日志
+    ref.listen(
+        logsProvider
+            .select((it) => it.data.firstOrNullWhere((it) => it is LogRequest)),
+        (prev, next) {
       final currentPath = GoRouterState.of(context).uri.toString();
       if ((prev != null && currentPath == LogDetailsRoute(prev.id).location) &&
           next != null) {
@@ -36,7 +41,7 @@ class LogListWidget extends HookConsumerWidget {
             items: logs,
             keySelector: (it) => it.id,
             indexedItemBuilder: (context, log, index) {
-              var isFirstItem = index == 0;
+              final isFirstItem = index == 0;
               final isBetweenLogRequest = !isFirstItem &&
                   (logs.elementAtOrNull(index - 1) is LogRequest ||
                       logs.elementAtOrNull(index) is LogRequest);

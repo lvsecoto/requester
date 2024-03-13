@@ -8,11 +8,8 @@ class RequesterClientIdentityWidget extends HookWidget {
   /// Requester客户端识别组件
   const RequesterClientIdentityWidget({
     super.key,
-    required this.controller,
     required this.child,
   });
-
-  final RequesterClientController controller;
 
   final Widget child;
 
@@ -21,6 +18,7 @@ class RequesterClientIdentityWidget extends HookWidget {
     final identityAnimation = _useUpAndDownAnimationController();
     final isIdentityVisible = useListenableSelector(
         identityAnimation, () => identityAnimation.value != 0);
+    final controller = RequesterClientController.of(context)!;
     useMemoized(() {
       controller.onIdentity = () {
         identityAnimation.animateTo(

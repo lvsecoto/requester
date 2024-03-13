@@ -54,9 +54,11 @@ class RequesterClientWidget extends HookWidget {
       useFPS(controller);
       useAppState(controller);
       useAppLifecycleAware(controller);
-      return RequesterClientIdentityWidget(
+      return _RequesterControllerHolder(
         controller: controller,
-        child: child,
+        child: RequesterClientIdentityWidget(
+          child: child,
+        ),
       );
     });
   }
