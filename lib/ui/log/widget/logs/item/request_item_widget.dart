@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:requester/app/theme/theme.dart';
-import 'package:requester/domain/log/log.dart';
 import 'package:requester/ui/common/common.dart';
 import 'package:requester/ui/log/common/common.dart';
 import 'package:requester/ui/log/provider/provider.dart';
