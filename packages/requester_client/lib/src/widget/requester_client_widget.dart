@@ -57,7 +57,9 @@ class RequesterClientWidget extends HookWidget {
       return _RequesterControllerHolder(
         controller: controller,
         child: RequesterClientIdentityWidget(
-          child: child,
+          child: RequesterScreenshotWidget(
+            child: child,
+          ),
         ),
       );
     });

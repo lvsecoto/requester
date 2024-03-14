@@ -91,6 +91,9 @@ dependencies:
   highlight: ^0.7.0
   collection: ^1.18.0
   timeago: ^3.6.1
+  saver_gallery: ^1.0.8
+  permission_handler: ^11.3.0
+  file_selector: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -120,8 +123,12 @@ dev_dependencies:
   drift_dev: ^2.16.0
   flutter_gen_runner: ^5.4.0
 
+  pro_image_editor: ^2.4.3
+
 dependency_overrides:
   web: 0.5.0
+  pro_image_editor:
+    path: ../pro_image_editor
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

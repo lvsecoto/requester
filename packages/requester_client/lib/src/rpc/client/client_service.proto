@@ -46,6 +46,9 @@ service RequesterClientService {
 
   // Requester观察客户端状态
   rpc ObserveAppState(common.Empty) returns (stream ClientAppState);
+
+  // Requester让给客户端截屏并回传图片
+  rpc TakeScreenshot(common.Empty) returns (Screenshot);
 }
 
 message ClientId {
@@ -92,4 +95,10 @@ enum AppState {
 
 message ClientAppState {
   AppState app_state = 1;
+}
+
+/// 截屏
+message Screenshot {
+  /// 截屏图片数据
+  bytes picture = 1;
 }

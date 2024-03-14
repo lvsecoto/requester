@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:common/common.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/domain/log/log.dart';
 import 'package:requester/service/service.dart';
@@ -156,4 +159,10 @@ class _AppState extends _$AppState
 
 AppState? watchAppState(WidgetRef ref) {
   return ref.watch(_appStateProvider);
+}
+
+/// 对设备进行截屏
+Future<Uint8List> actionTakeScreenshot(WidgetRef ref) async {
+  final data = await _readClient(ref).takeScreenshot(rpc.Empty());
+  return Uint8List.fromList(data.picture);
 }

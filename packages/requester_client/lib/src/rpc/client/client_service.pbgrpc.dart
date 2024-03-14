@@ -74,6 +74,10 @@ class RequesterClientServiceClient extends $grpc.Client {
       '/client_service.RequesterClientService/ObserveAppState',
       ($1.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.ClientAppState.fromBuffer(value));
+  static final _$takeScreenshot = $grpc.ClientMethod<$1.Empty, $0.Screenshot>(
+      '/client_service.RequesterClientService/TakeScreenshot',
+      ($1.Empty value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Screenshot.fromBuffer(value));
 
   RequesterClientServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -131,6 +135,10 @@ class RequesterClientServiceClient extends $grpc.Client {
 
   $grpc.ResponseStream<$0.ClientAppState> observeAppState($1.Empty request, {$grpc.CallOptions? options}) {
     return $createStreamingCall(_$observeAppState, $async.Stream.fromIterable([request]), options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Screenshot> takeScreenshot($1.Empty request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$takeScreenshot, request, options: options);
   }
 }
 
@@ -230,6 +238,13 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $1.Empty.fromBuffer(value),
         ($0.ClientAppState value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.Empty, $0.Screenshot>(
+        'TakeScreenshot',
+        takeScreenshot_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.Empty.fromBuffer(value),
+        ($0.Screenshot value) => value.writeToBuffer()));
   }
 
   $async.Future<$1.Empty> setClientId_Pre($grpc.ServiceCall call, $async.Future<$0.ClientId> request) async {
@@ -284,6 +299,10 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
     yield* observeAppState(call, await request);
   }
 
+  $async.Future<$0.Screenshot> takeScreenshot_Pre($grpc.ServiceCall call, $async.Future<$1.Empty> request) async {
+    return takeScreenshot(call, await request);
+  }
+
   $async.Future<$1.Empty> setClientId($grpc.ServiceCall call, $0.ClientId request);
   $async.Future<$0.ClientId> getClientId($grpc.ServiceCall call, $1.Empty request);
   $async.Future<$1.Empty> identify($grpc.ServiceCall call, $1.Empty request);
@@ -297,4 +316,5 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
   $async.Future<$1.Empty> updateRequestOverrides($grpc.ServiceCall call, $1.RpcJson request);
   $async.Stream<$0.DisplayPerformance> observeDisplayPerformance($grpc.ServiceCall call, $1.Empty request);
   $async.Stream<$0.ClientAppState> observeAppState($grpc.ServiceCall call, $1.Empty request);
+  $async.Future<$0.Screenshot> takeScreenshot($grpc.ServiceCall call, $1.Empty request);
 }

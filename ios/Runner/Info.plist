@@ -63,5 +63,9 @@
     <array>
         <string>_requester._tcp</string>
     </array>
-</dict>
+
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>需要保存图片</string>
+
+    </dict>
 </plist>

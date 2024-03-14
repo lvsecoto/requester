@@ -395,6 +395,58 @@ class ClientAppState extends $pb.GeneratedMessage {
   void clearAppState() => clearField(1);
 }
 
+/// / 截屏
+class Screenshot extends $pb.GeneratedMessage {
+  factory Screenshot({
+    $core.List<$core.int>? picture,
+  }) {
+    final $result = create();
+    if (picture != null) {
+      $result.picture = picture;
+    }
+    return $result;
+  }
+  Screenshot._() : super();
+  factory Screenshot.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Screenshot.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Screenshot', package: const $pb.PackageName(_omitMessageNames ? '' : 'client_service'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'picture', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Screenshot clone() => Screenshot()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Screenshot copyWith(void Function(Screenshot) updates) => super.copyWith((message) => updates(message as Screenshot)) as Screenshot;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static Screenshot create() => Screenshot._();
+  Screenshot createEmptyInstance() => create();
+  static $pb.PbList<Screenshot> createRepeated() => $pb.PbList<Screenshot>();
+  @$core.pragma('dart2js:noInline')
+  static Screenshot getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Screenshot>(create);
+  static Screenshot? _defaultInstance;
+
+  /// / 截屏图片数据
+  @$pb.TagNumber(1)
+  $core.List<$core.int> get picture => $_getN(0);
+  @$pb.TagNumber(1)
+  set picture($core.List<$core.int> v) { $_setBytes(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPicture() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPicture() => clearField(1);
+}
+
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
 const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

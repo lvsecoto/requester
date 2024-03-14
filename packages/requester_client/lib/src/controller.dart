@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:network_info_plus/network_info_plus.dart';
@@ -12,6 +14,7 @@ import 'model/model.dart';
 import 'override/override.dart';
 import 'display_performance/display_performance.dart';
 import 'app_state/app_state.dart';
+import 'screenshot/screenshot.dart';
 import 'service.dart';
 
 part 'widget/requester_client_widget.dart';
@@ -50,6 +53,9 @@ class RequesterClientController extends ChangeNotifier
   /// 当发起识别命令
   late VoidCallback onIdentity;
 
+  /// 当发起截屏命令，要求返回图片数据
+  late Future<Uint8List> Function() onTakeScreenshot;
+
   /// rpc服务
   grpc.Server? _rpcServer;
 
@@ -83,6 +89,7 @@ class RequesterClientController extends ChangeNotifier
         onIdentify: () {
           onIdentity();
         },
+        onTakeScreenshot: onTakeScreenshot,
       ),
     ]);
     await _rpcServer!.serve(

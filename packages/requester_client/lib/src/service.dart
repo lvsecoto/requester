@@ -1,3 +1,7 @@
+import 'dart:math';
+import 'dart:typed_data';
+
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:grpc/grpc.dart';
 import 'package:requester_client/requester_client.dart';
 import 'package:requester_client/src/rpc/rpc.dart' as rpc;
@@ -6,6 +10,7 @@ import 'log/log.dart';
 import 'display_performance/display_performance.dart';
 import 'app_state/app_state.dart';
 
+@internal
 class RequesterClientService extends rpc.RequesterClientServiceBase {
   /// Requester客户端提供服务实现
   RequesterClientService({
@@ -16,6 +21,7 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
     required this.appStateProvider,
     required this.onClientIdChanged,
     required this.onIdentify,
+    required this.onTakeScreenshot,
   });
 
   /// 向Requester提供客户端信息
@@ -34,6 +40,9 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
 
   /// 当发起识别命令
   final Function() onIdentify;
+
+  /// 当发起截屏命令
+  final Future<Uint8List> Function() onTakeScreenshot;
 
   @override
   Future<rpc.Empty> setClientId(ServiceCall call, rpc.ClientId request) async {
@@ -139,5 +148,12 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
   Stream<rpc.ClientAppState> observeAppState(
       ServiceCall call, rpc.Empty request) {
     return appStateProvider.stream;
+  }
+
+  @override
+  Future<rpc.Screenshot> takeScreenshot(
+      ServiceCall call, rpc.Empty request) async {
+    final picture = await onTakeScreenshot();
+    return rpc.Screenshot(picture: picture);
   }
 }

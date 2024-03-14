@@ -129,3 +129,15 @@ final $typed_data.Uint8List clientAppStateDescriptor = $convert.base64Decode(
     'Cg5DbGllbnRBcHBTdGF0ZRI1CglhcHBfc3RhdGUYASABKA4yGC5jbGllbnRfc2VydmljZS5BcH'
     'BTdGF0ZVIIYXBwU3RhdGU=');
 
+@$core.Deprecated('Use screenshotDescriptor instead')
+const Screenshot$json = {
+  '1': 'Screenshot',
+  '2': [
+    {'1': 'picture', '3': 1, '4': 1, '5': 12, '10': 'picture'},
+  ],
+};
+
+/// Descriptor for `Screenshot`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List screenshotDescriptor = $convert.base64Decode(
+    'CgpTY3JlZW5zaG90EhgKB3BpY3R1cmUYASABKAxSB3BpY3R1cmU=');
+
