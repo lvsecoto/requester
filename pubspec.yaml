@@ -127,8 +127,8 @@ dev_dependencies:
 
 dependency_overrides:
   web: 0.5.0
-  pro_image_editor:
-    path: ../pro_image_editor
+#  pro_image_editor:
+#    path: ../pro_image_editor
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

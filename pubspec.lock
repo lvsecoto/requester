@@ -1268,10 +1268,11 @@ packages:
   pro_image_editor:
     dependency: "direct dev"
     description:
-      path: "../pro_image_editor"
-      relative: true
-    source: path
-    version: "2.4.4"
+      name: pro_image_editor
+      sha256: "5787c3fe3874b101cef4408e0f6a6a99af8bfd678e69c7bfae3f3fc4b17a2838"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.5.3"
   protobuf:
     dependency: "direct main"
     description:
