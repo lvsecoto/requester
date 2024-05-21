@@ -1,6 +1,8 @@
 import 'package:common/common.dart';
 import 'package:dartx/dartx.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:requester/app/theme/theme.dart';
@@ -58,8 +60,10 @@ class LogRequestItemWidget extends StatelessWidget {
               StatusCodeWidget(request: logRequest),
               const Gap(8),
               NetworkStatus(logRequest: logRequest),
-              const Spacer(),
-              _ClientDetails(logRequest: logRequest),
+              const Gap(8),
+              Expanded(
+                child: _ClientDetails(logRequest: logRequest),
+              ),
             ],
           ),
         ],
@@ -89,9 +93,12 @@ class _ClientDetails extends ConsumerWidget {
       children: [
         const Icon(Icons.devices, size: 14),
         const Gap(4),
-        DefaultTextStyle(
-          style: Theme.of(context).textTheme.bodySmall!.bold,
-          child: Text(summary),
+        Expanded(
+          child: DefaultTextStyle(
+            style: Theme.of(context).textTheme.bodySmall!.bold,
+            overflow: TextOverflow.ellipsis,
+            child: Text(summary),
+          ),
         ),
       ],
     );
