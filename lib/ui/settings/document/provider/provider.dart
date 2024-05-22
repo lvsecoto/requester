@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/domain/document/document.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+export 'package:requester/domain/document/document.dart' show DocumentSource;
+
 part 'provider.g.dart';
 
 @riverpod
@@ -20,7 +22,7 @@ Future<void> actionAddDocumentSource(WidgetRef ref, String url) async {
 }
 
 /// 删除文档源
-Future<void> actionRemoveDocumentSource(WidgetRef ref, DocumentSource source) async {
+Future<void> actionDeleteDocumentSource(WidgetRef ref, DocumentSource source) async {
   await ref.read(documentManagerProvider).removeSource(source);
 }
 
