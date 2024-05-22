@@ -1,0 +1,35 @@
+name: Bug 上报
+description: 上报问题
+labels: ["类型/Bug"]
+body:
+  - type: textarea
+    id: actual
+    attributes:
+      label: Bug实际表现
+      description: 说一下Bug具体表现如何
+    validations:
+      required: false
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望表现
+      description: 输入你期望的运行结果
+    validations:
+      required: false
+  - type: textarea
+    id: when
+    attributes:
+      label: Bug发生条件
+      description: 说一下Bug在什么情况下会出现
+    validations:
+      required: false
+  - type: dropdown
+    id: frequence
+    attributes:
+      label: Bug的发生频率
+      multiple: false
+      options:
+        - 必现
+        - 偶发
+        - 极少概率
+  

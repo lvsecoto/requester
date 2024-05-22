@@ -1,0 +1,25 @@
+name: 源代码
+description: 优化，或处理代码上的错误
+labels: ["类型/代码"]
+body:
+  - type: input
+    id: scope
+    attributes:
+      label: 影响功能
+      description: 修改代码后会影响功能功能
+    validations:
+      required: false
+  - type: textarea
+    id: code
+    attributes:
+      label: 代码
+      description: 要优化的代码
+    validations:
+      required: false
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+      description: 描述要修改的地方
+    validations:
+      required: false
