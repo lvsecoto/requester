@@ -3,14 +3,13 @@ import 'dart:convert';
 import 'package:drift/drift.dart';
 export 'requester.dart';
 
-class DataTimeConverter extends TypeConverter<DateTime, int?> {
+class DataTimeConverter extends TypeConverter<DateTime, int> {
 
   /// 日期时间转换
   const DataTimeConverter();
 
   @override
-  DateTime fromSql(int? fromDb) {
-    if (fromDb == null) return DateTime.fromMillisecondsSinceEpoch(0);
+  DateTime fromSql(int fromDb) {
     return DateTime.fromMillisecondsSinceEpoch(fromDb);
   }
 
