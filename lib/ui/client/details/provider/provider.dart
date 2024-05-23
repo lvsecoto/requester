@@ -88,7 +88,7 @@ Future<HostPort> loadClientLogHostPort(LoadClientLogHostPortRef ref) async {
 }
 
 /// 获取客户端日志要发送的地址
-@Riverpod(dependencies: [clientService])
+@Riverpod(dependencies: [loadClientLogHostPort])
 Future<bool> loadIsClientLogToSelf(LoadIsClientLogToSelfRef ref) async {
   final manager = ref.watch(logManagerProvider);
   final hostPort = await ref.watch(loadClientLogHostPortProvider.future);
