@@ -137,8 +137,8 @@ DataWidgetData loadLogResponseBody(
 }
 
 final kDefaultMonitorSplitAreas = [
-  Area(minimalSize: 200),
-  Area(minimalSize: 200)
+  Area(min: 200),
+  Area(min: 200),
 ];
 
 @riverpod

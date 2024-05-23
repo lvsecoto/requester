@@ -141,3 +141,15 @@ const Screenshot$json = {
 final $typed_data.Uint8List screenshotDescriptor = $convert.base64Decode(
     'CgpTY3JlZW5zaG90EhgKB3BpY3R1cmUYASABKAxSB3BpY3R1cmU=');
 
+@$core.Deprecated('Use installBundleDescriptor instead')
+const InstallBundle$json = {
+  '1': 'InstallBundle',
+  '2': [
+    {'1': 'data', '3': 1, '4': 1, '5': 12, '10': 'data'},
+  ],
+};
+
+/// Descriptor for `InstallBundle`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List installBundleDescriptor = $convert.base64Decode(
+    'Cg1JbnN0YWxsQnVuZGxlEhIKBGRhdGEYASABKAxSBGRhdGE=');
+

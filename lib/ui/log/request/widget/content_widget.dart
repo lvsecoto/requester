@@ -75,10 +75,13 @@ class ContentWidget extends HookConsumerWidget {
                 ),
               );
             }),
-            children: const [
-              RequestPanel(),
-              ResponsePanel(),
-            ],
+            builder: (context, area) {
+              if (area.index == 0) {
+                return const RequestPanel();
+              } else {
+                return const ResponsePanel();
+              }
+            },
           ),
         ),
       ),

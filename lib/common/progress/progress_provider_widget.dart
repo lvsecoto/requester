@@ -1,10 +1,10 @@
 import 'package:animations/animations.dart';
-import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'progress.dart';
 import 'progress_loading_widget.dart';
+import '../common.dart';
 
 class ProgressProviderStateWidget extends HookConsumerWidget {
   /// 显示[provider]的加载状态

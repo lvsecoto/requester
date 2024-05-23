@@ -82,6 +82,7 @@ Future<void> _saveImage(Uint8List image) async {
       image,
       quality: 60,
       name: DateTime.now().toString(),
+      androidExistNotSave: false,
     );
   } else if (Platform.isMacOS || Platform.isWindows) {
     final file = await getSaveLocation(

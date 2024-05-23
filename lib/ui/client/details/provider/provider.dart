@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:common/common.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:requester/common/common.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/domain/log/log.dart';
 import 'package:requester/service/service.dart';

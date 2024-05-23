@@ -15,6 +15,7 @@ import 'override/override.dart';
 import 'display_performance/display_performance.dart';
 import 'app_state/app_state.dart';
 import 'screenshot/screenshot.dart';
+import 'app_installer/app_installer.dart';
 import 'service.dart';
 
 part 'widget/requester_client_widget.dart';
@@ -56,6 +57,9 @@ class RequesterClientController extends ChangeNotifier
   /// 当发起截屏命令，要求返回图片数据
   late Future<Uint8List> Function() onTakeScreenshot;
 
+  /// 管理App状态
+  late final appInstaller = AppInstallerProvider();
+
   /// rpc服务
   grpc.Server? _rpcServer;
 
@@ -90,6 +94,9 @@ class RequesterClientController extends ChangeNotifier
           onIdentity();
         },
         onTakeScreenshot: onTakeScreenshot,
+        onInstall: (data) async {
+          await appInstaller.installApp(data);
+        },
       ),
     ]);
     await _rpcServer!.serve(

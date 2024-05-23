@@ -1,4 +1,4 @@
-import 'package:common/common.dart';
+import 'package:requester/common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
@@ -103,7 +103,8 @@ class _Folded extends StatelessWidget {
   Widget build(BuildContext context) {
     final latestLog = foldedLogs.logs.first as LogAppState;
     final oldestLog = foldedLogs.logs.last as LogAppState;
-    final timeDescription = ' ${latestLog.time.toHumanReadable()} ~ ${oldestLog.time.toHumanReadable()}';
+    final timeDescription =
+        ' ${latestLog.time.toHumanReadable()} ~ ${oldestLog.time.toHumanReadable()}';
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
@@ -130,8 +131,9 @@ class _Folded extends StatelessWidget {
               Container(
                 height: 20,
                 decoration: ShapeDecoration(
-                    color: Theme.of(context).colorScheme.background,
-                    shape: const StadiumBorder()),
+                  color: Theme.of(context).colorScheme.surface,
+                  shape: const StadiumBorder(),
+                ),
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: AnimatedSizeAndFade(
                   childKey: foldedLogs.logs.length,

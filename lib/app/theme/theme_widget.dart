@@ -25,22 +25,16 @@ class ThemeWidget extends StatelessWidget {
     var appTheme = AppTheme.from(colorSeed: colorSeed);
     final colorTheme = ColorScheme.fromSeed(
       seedColor: colorSeed,
-      background: appTheme.surfaceContainerLow,
+      surface: appTheme.surfaceContainerLow,
     );
-    final themeData = ThemeData.from(
-      colorScheme: colorTheme,
-      useMaterial3: true,
-    );
+    final themeData = ThemeData.from(colorScheme: colorTheme);
     return themeData.copyWith(
       snackBarTheme: const SnackBarThemeData(
           behavior: SnackBarBehavior.floating, showCloseIcon: true),
       extensions: [
         appTheme,
-        // LoadingStateTheme(emptyBuilder: emptyBuilder),
       ],
-      colorScheme: themeData.colorScheme.copyWith(
-        background: appTheme.surfaceContainerLow,
-      ),
+      scaffoldBackgroundColor: appTheme.surfaceContainer,
       platform: Platform.isWindows
           // Windows向macOS靠拢
           ? TargetPlatform.macOS
@@ -51,7 +45,7 @@ class ThemeWidget extends StatelessWidget {
       appBarTheme: themeData.appBarTheme.copyWith(
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         foregroundColor: Colors.black,
-        backgroundColor: appTheme.surfaceContainerLow,
+        backgroundColor: appTheme.surfaceContainer,
         iconTheme: themeData.iconTheme.copyWith(
           color: Colors.black,
         ),

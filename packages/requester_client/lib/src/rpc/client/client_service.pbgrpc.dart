@@ -78,6 +78,10 @@ class RequesterClientServiceClient extends $grpc.Client {
       '/client_service.RequesterClientService/TakeScreenshot',
       ($1.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Screenshot.fromBuffer(value));
+  static final _$install = $grpc.ClientMethod<$0.InstallBundle, $1.Empty>(
+      '/client_service.RequesterClientService/Install',
+      ($0.InstallBundle value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
 
   RequesterClientServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -139,6 +143,10 @@ class RequesterClientServiceClient extends $grpc.Client {
 
   $grpc.ResponseFuture<$0.Screenshot> takeScreenshot($1.Empty request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$takeScreenshot, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Empty> install($async.Stream<$0.InstallBundle> request, {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$install, request, options: options).single;
   }
 }
 
@@ -245,6 +253,13 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.Empty.fromBuffer(value),
         ($0.Screenshot value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.InstallBundle, $1.Empty>(
+        'Install',
+        install,
+        true,
+        false,
+        ($core.List<$core.int> value) => $0.InstallBundle.fromBuffer(value),
+        ($1.Empty value) => value.writeToBuffer()));
   }
 
   $async.Future<$1.Empty> setClientId_Pre($grpc.ServiceCall call, $async.Future<$0.ClientId> request) async {
@@ -317,4 +332,5 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
   $async.Stream<$0.DisplayPerformance> observeDisplayPerformance($grpc.ServiceCall call, $1.Empty request);
   $async.Stream<$0.ClientAppState> observeAppState($grpc.ServiceCall call, $1.Empty request);
   $async.Future<$0.Screenshot> takeScreenshot($grpc.ServiceCall call, $1.Empty request);
+  $async.Future<$1.Empty> install($grpc.ServiceCall call, $async.Stream<$0.InstallBundle> request);
 }

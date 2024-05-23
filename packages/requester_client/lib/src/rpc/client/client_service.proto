@@ -49,6 +49,9 @@ service RequesterClientService {
 
   // Requester让给客户端截屏并回传图片
   rpc TakeScreenshot(common.Empty) returns (Screenshot);
+
+  // Requester发送安装包让客户端安装
+  rpc Install(stream InstallBundle) returns (common.Empty);
 }
 
 message ClientId {
@@ -97,8 +100,14 @@ message ClientAppState {
   AppState app_state = 1;
 }
 
-/// 截屏
+// 截屏
 message Screenshot {
   /// 截屏图片数据
   bytes picture = 1;
+}
+
+// 安装包数据
+message InstallBundle {
+  /// 截屏图片数据
+  bytes data = 1;
 }

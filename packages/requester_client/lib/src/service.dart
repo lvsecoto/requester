@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -22,6 +21,7 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
     required this.onClientIdChanged,
     required this.onIdentify,
     required this.onTakeScreenshot,
+    required this.onInstall,
   });
 
   /// 向Requester提供客户端信息
@@ -43,6 +43,9 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
 
   /// 当发起截屏命令
   final Future<Uint8List> Function() onTakeScreenshot;
+
+  /// 当发起截屏命令
+  final Future<void> Function(Stream<List<int>> data) onInstall;
 
   @override
   Future<rpc.Empty> setClientId(ServiceCall call, rpc.ClientId request) async {
@@ -155,5 +158,11 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
       ServiceCall call, rpc.Empty request) async {
     final picture = await onTakeScreenshot();
     return rpc.Screenshot(picture: picture);
+  }
+
+  @override
+  Future<rpc.Empty> install(ServiceCall call, Stream<rpc.InstallBundle> request) async {
+    await onInstall(request.map((it) => it.data));
+    return rpc.Empty();
   }
 }

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:common/common.dart';
+import 'package:requester/common/common.dart';
 import 'package:dartx/dartx.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';

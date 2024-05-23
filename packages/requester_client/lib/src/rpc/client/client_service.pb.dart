@@ -395,7 +395,7 @@ class ClientAppState extends $pb.GeneratedMessage {
   void clearAppState() => clearField(1);
 }
 
-/// / 截屏
+/// 截屏
 class Screenshot extends $pb.GeneratedMessage {
   factory Screenshot({
     $core.List<$core.int>? picture,
@@ -445,6 +445,58 @@ class Screenshot extends $pb.GeneratedMessage {
   $core.bool hasPicture() => $_has(0);
   @$pb.TagNumber(1)
   void clearPicture() => clearField(1);
+}
+
+/// 安装包数据
+class InstallBundle extends $pb.GeneratedMessage {
+  factory InstallBundle({
+    $core.List<$core.int>? data,
+  }) {
+    final $result = create();
+    if (data != null) {
+      $result.data = data;
+    }
+    return $result;
+  }
+  InstallBundle._() : super();
+  factory InstallBundle.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory InstallBundle.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'InstallBundle', package: const $pb.PackageName(_omitMessageNames ? '' : 'client_service'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  InstallBundle clone() => InstallBundle()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  InstallBundle copyWith(void Function(InstallBundle) updates) => super.copyWith((message) => updates(message as InstallBundle)) as InstallBundle;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static InstallBundle create() => InstallBundle._();
+  InstallBundle createEmptyInstance() => create();
+  static $pb.PbList<InstallBundle> createRepeated() => $pb.PbList<InstallBundle>();
+  @$core.pragma('dart2js:noInline')
+  static InstallBundle getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<InstallBundle>(create);
+  static InstallBundle? _defaultInstance;
+
+  /// / 截屏图片数据
+  @$pb.TagNumber(1)
+  $core.List<$core.int> get data => $_getN(0);
+  @$pb.TagNumber(1)
+  set data($core.List<$core.int> v) { $_setBytes(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasData() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearData() => clearField(1);
 }
 
 

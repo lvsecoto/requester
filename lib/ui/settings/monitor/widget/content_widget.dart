@@ -1,4 +1,4 @@
-import 'package:common/common.dart';
+import 'package:requester/common/common.dart';
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

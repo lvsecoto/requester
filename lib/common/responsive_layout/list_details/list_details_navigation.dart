@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
-import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:go_router/go_router.dart';
@@ -11,6 +10,7 @@ import 'package:requester/app/theme/theme.dart';
 
 import '../responsive_layout_navigation.dart';
 import '../window_class.dart';
+import '../../common.dart';
 
 class ListDetailsNavigation extends HookConsumerWidget {
   /// 列表-详情导航响应布局
