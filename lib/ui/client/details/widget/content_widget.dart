@@ -21,6 +21,7 @@ class ContentWidget extends HookConsumerWidget {
             TakeScreenshotAction(),
             RequestOverrideActionWidget(),
             RefreshInfoActionWidget(),
+            MoreActionWidget(),
           ],
         ),
         body: const SizedBox(
