@@ -44,7 +44,7 @@ dependencies:
   # 工具类
   uuid: ^4.4.0
   rxdart: ^0.27.7
-  flutter_app_installer: ^1.0.0
+#  flutter_app_installer: ^1.0.0
   screenshot: ^3.0.0
 
 dev_dependencies:

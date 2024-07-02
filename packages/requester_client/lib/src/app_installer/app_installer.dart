@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter_app_installer/flutter_app_installer.dart';
+// import 'package:flutter_app_installer/flutter_app_installer.dart';
 
 class AppInstallerProvider {
-  late final _installer = FlutterAppInstaller();
+  // late final _installer = FlutterAppInstaller();
 
   /// 从数据流安装应用
   Future<void> installApp(Stream<List<int>> data) async {
@@ -19,7 +19,7 @@ class AppInstallerProvider {
     final fileSink = file.openWrite();
     await fileSink.addStream(data);
     debugPrint('requester: 安装应用安装包');
-    await _installer.installApk(filePath: filePath);
+    // await _installer.installApk(filePath: filePath);
     debugPrint('requester: 安装成功!');
   }
 
