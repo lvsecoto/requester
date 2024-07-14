@@ -13,6 +13,23 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use clientInfoTypeDescriptor instead')
+const ClientInfoType$json = {
+  '1': 'ClientInfoType',
+  '2': [
+    {'1': 'text', '2': 0},
+    {'1': 'counter', '2': 1},
+    {'1': 'number', '2': 2},
+    {'1': 'switcher', '2': 3},
+    {'1': 'action', '2': 4},
+  ],
+};
+
+/// Descriptor for `ClientInfoType`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List clientInfoTypeDescriptor = $convert.base64Decode(
+    'Cg5DbGllbnRJbmZvVHlwZRIICgR0ZXh0EAASCwoHY291bnRlchABEgoKBm51bWJlchACEgwKCH'
+    'N3aXRjaGVyEAMSCgoGYWN0aW9uEAQ=');
+
 @$core.Deprecated('Use appStateDescriptor instead')
 const AppState$json = {
   '1': 'AppState',
@@ -83,13 +100,15 @@ final $typed_data.Uint8List clientInfoEntryDescriptor = $convert.base64Decode(
 const ClientMetaValue$json = {
   '1': 'ClientMetaValue',
   '2': [
-    {'1': 'value', '3': 1, '4': 1, '5': 9, '10': 'value'},
+    {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.client_service.ClientInfoType', '10': 'type'},
+    {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
   ],
 };
 
 /// Descriptor for `ClientMetaValue`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List clientMetaValueDescriptor = $convert.base64Decode(
-    'Cg9DbGllbnRNZXRhVmFsdWUSFAoFdmFsdWUYASABKAlSBXZhbHVl');
+    'Cg9DbGllbnRNZXRhVmFsdWUSMgoEdHlwZRgBIAEoDjIeLmNsaWVudF9zZXJ2aWNlLkNsaWVudE'
+    'luZm9UeXBlUgR0eXBlEhQKBXZhbHVlGAIgASgJUgV2YWx1ZQ==');
 
 @$core.Deprecated('Use logHostPortDescriptor instead')
 const LogHostPort$json = {

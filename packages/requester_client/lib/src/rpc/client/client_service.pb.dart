@@ -113,6 +113,7 @@ class ClientInfo extends $pb.GeneratedMessage {
   $core.Map<$core.String, ClientMetaValue> get meta => $_getMap(0);
 }
 
+/// / 代表一个设备信息条目
 class ClientInfoEntry extends $pb.GeneratedMessage {
   factory ClientInfoEntry({
     $core.String? key,
@@ -181,9 +182,13 @@ class ClientInfoEntry extends $pb.GeneratedMessage {
 
 class ClientMetaValue extends $pb.GeneratedMessage {
   factory ClientMetaValue({
+    ClientInfoType? type,
     $core.String? value,
   }) {
     final $result = create();
+    if (type != null) {
+      $result.type = type;
+    }
     if (value != null) {
       $result.value = value;
     }
@@ -194,7 +199,8 @@ class ClientMetaValue extends $pb.GeneratedMessage {
   factory ClientMetaValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ClientMetaValue', package: const $pb.PackageName(_omitMessageNames ? '' : 'client_service'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'value')
+    ..e<ClientInfoType>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: ClientInfoType.text, valueOf: ClientInfoType.valueOf, enumValues: ClientInfoType.values)
+    ..aOS(2, _omitFieldNames ? '' : 'value')
     ..hasRequiredFields = false
   ;
 
@@ -220,13 +226,22 @@ class ClientMetaValue extends $pb.GeneratedMessage {
   static ClientMetaValue? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get value => $_getSZ(0);
+  ClientInfoType get type => $_getN(0);
   @$pb.TagNumber(1)
-  set value($core.String v) { $_setString(0, v); }
+  set type(ClientInfoType v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasValue() => $_has(0);
+  $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
-  void clearValue() => clearField(1);
+  void clearType() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get value => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set value($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasValue() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearValue() => clearField(2);
 }
 
 /// / Requester日志接收端口，设置/获取

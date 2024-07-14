@@ -6,7 +6,7 @@ import 'actions/actions.dart';
 import 'state.dart';
 import 'log_info_widget.dart';
 import 'client_id_widget.dart';
-import 'client_infos_widget.dart';
+import 'infos/infos.dart';
 
 class ContentWidget extends HookConsumerWidget {
   const ContentWidget({super.key});

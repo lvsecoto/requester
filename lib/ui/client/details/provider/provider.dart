@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:requester/common/common.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/domain/log/log.dart';
@@ -10,6 +11,8 @@ import 'package:requester_client/rpc.dart' as rpc;
 
 part 'provider.g.dart';
 
+part 'client_info.dart';
+
 /// 输入连接的Requester Client服务
 @Riverpod(dependencies: [])
 RequesterClientService? clientService(ClientServiceRef ref) {
@@ -18,7 +21,7 @@ RequesterClientService? clientService(ClientServiceRef ref) {
 
 /// 手动刷新
 void actionRefresh(WidgetRef ref) {
-  ref.invalidate(observeClientInfoProvider);
+  ref.invalidate(_observeClientInfoProvider);
   ref.invalidate(loadClientIdProvider);
   ref.invalidate(loadClientLogHostPortProvider);
   ref.invalidate(loadIsClientLogToSelfProvider);
@@ -47,32 +50,6 @@ Future<void> actionUpdateClientId(
   final client = ref.read(clientServiceProvider)!;
   await client.setClientId(rpc.ClientId(id: clientId));
   ref.invalidate(loadClientIdProvider);
-}
-
-/// 观察Requester客户端信息
-@Riverpod(dependencies: [clientService])
-Stream<Map<String, String>> observeClientInfo(ObserveClientInfoRef ref) async* {
-  final client = ref.watch(clientServiceProvider);
-  if (client == null) yield* Stream.value({});
-  yield* client!.observeClientInfo(rpc.Empty()).map(
-        (it) => it.meta.map(
-          (key, value) => MapEntry(
-            key,
-            value.value,
-          ),
-        ),
-      );
-}
-
-/// 更新设备信息
-void actionUpdateClientInfoEntry(
-  WidgetRef ref, {
-  required String key,
-  required String value,
-}) {
-  ref.read(clientServiceProvider)?.updateClientInfo(
-        rpc.ClientInfoEntry(key: key, value: rpc.ClientMetaValue(value: value)),
-      );
 }
 
 /// 识别设备
@@ -131,7 +108,8 @@ class _DisplayPerformance extends _$DisplayPerformance
 }
 
 /// 观察帧率
-ProviderListenable<(DateTime, double)> provideDisplayPerformanceFps(WidgetRef ref) {
+ProviderListenable<(DateTime, double)> provideDisplayPerformanceFps(
+    WidgetRef ref) {
   return _displayPerformanceProvider.select((it) {
     if (it == null) {
       return (DateTime.now(), 0.0);
@@ -141,8 +119,7 @@ ProviderListenable<(DateTime, double)> provideDisplayPerformanceFps(WidgetRef re
 }
 
 @Riverpod(dependencies: [clientService])
-class _AppState extends _$AppState
-    with StreamValueNotifier {
+class _AppState extends _$AppState with StreamValueNotifier {
   @override
   AppState? build() {
     return onBuild();

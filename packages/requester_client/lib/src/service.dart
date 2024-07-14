@@ -79,7 +79,16 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
     return clientInfoProvider.stream.map(
       (it) => rpc.ClientInfo(
         meta: it.map(
-          (key, value) => MapEntry(key, rpc.ClientMetaValue(value: value)),
+          (key, it) {
+            final (value, type) = it;
+            return MapEntry(
+              key,
+              rpc.ClientMetaValue(
+                value: value,
+                type: type,
+              ),
+            );
+          },
         ),
       ),
     );
@@ -161,7 +170,8 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
   }
 
   @override
-  Future<rpc.Empty> install(ServiceCall call, Stream<rpc.InstallBundle> request) async {
+  Future<rpc.Empty> install(
+      ServiceCall call, Stream<rpc.InstallBundle> request) async {
     await onInstall(request.map((it) => it.data));
     return rpc.Empty();
   }

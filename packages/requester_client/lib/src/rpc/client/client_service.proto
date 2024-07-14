@@ -64,13 +64,29 @@ message ClientInfo {
   map<string, ClientMetaValue> meta = 2;
 }
 
+/// 代表一个设备信息条目
 message ClientInfoEntry {
   string key = 1;
   ClientMetaValue value = 2;
 }
 
+/// 设备信息类型
+enum ClientInfoType {
+  /// 文本类型，直接输入
+  text = 0;
+  /// 自然数字类型
+  counter = 1;
+  /// 数字类型，可输入小数
+  number = 2;
+  /// 开关类型
+  switcher = 3;
+  /// 操作类型，代表一个动作
+  action = 4;
+}
+
 message ClientMetaValue {
-  string value = 1;
+  ClientInfoType type = 1;
+  string value = 2;
 }
 
 /// Requester日志接收端口，设置/获取

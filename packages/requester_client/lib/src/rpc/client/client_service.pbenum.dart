@@ -13,6 +13,28 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+/// / 设备信息类型
+class ClientInfoType extends $pb.ProtobufEnum {
+  static const ClientInfoType text = ClientInfoType._(0, _omitEnumNames ? '' : 'text');
+  static const ClientInfoType counter = ClientInfoType._(1, _omitEnumNames ? '' : 'counter');
+  static const ClientInfoType number = ClientInfoType._(2, _omitEnumNames ? '' : 'number');
+  static const ClientInfoType switcher = ClientInfoType._(3, _omitEnumNames ? '' : 'switcher');
+  static const ClientInfoType action = ClientInfoType._(4, _omitEnumNames ? '' : 'action');
+
+  static const $core.List<ClientInfoType> values = <ClientInfoType> [
+    text,
+    counter,
+    number,
+    switcher,
+    action,
+  ];
+
+  static final $core.Map<$core.int, ClientInfoType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static ClientInfoType? valueOf($core.int value) => _byValue[value];
+
+  const ClientInfoType._($core.int v, $core.String n) : super(v, n);
+}
+
 class AppState extends $pb.ProtobufEnum {
   static const AppState APP_STATE_RESUMED = AppState._(0, _omitEnumNames ? '' : 'APP_STATE_RESUMED');
   static const AppState APP_STATE_INACTIVE = AppState._(1, _omitEnumNames ? '' : 'APP_STATE_INACTIVE');

@@ -27,6 +27,8 @@ class RequesterClientWidget extends HookWidget {
 
     /// 是否启用Requester Client核心
     this.isEnabled = true,
+
+    this.controller,
     required this.child,
   });
 
@@ -36,15 +38,17 @@ class RequesterClientWidget extends HookWidget {
 
   final bool isEnabled;
 
+  final RequesterClientController? controller;
+
   @override
   Widget build(BuildContext context) {
     if (!isEnabled) {
       return child;
     }
     return HookBuilder(builder: (context) {
-      final controller = useMemoized(
+      final controller = (this.controller ?? useMemoized(
         () => RequesterClientController(port: port),
-      );
+      ))!;
       useEffect(
         () => () {
           controller.dispose();
