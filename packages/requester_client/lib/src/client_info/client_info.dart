@@ -19,14 +19,14 @@ class ClientInfoProvider {
   final Map<String, String Function(String value)> _onUpdateListeners = {};
 
   /// 客户端向Requester报告[key]的值，可以指定key的类型
-  void set(String key,
-      String value, {
-        ClientInfoType type = ClientInfoType.text,
-      }) {
+  void set(
+    String key,
+    String value, {
+    ClientInfoType type = ClientInfoType.text,
+  }) {
     _subject.sink.add({
       ..._subject.value,
-    }
-      ..[key] = (value, type));
+    }..[key] = (value, type));
   }
 
   /// 注册key相关数据的回调
@@ -41,5 +41,21 @@ class ClientInfoProvider {
     if (newValue != null) {
       set(key, newValue);
     }
+  }
+}
+
+extension ClientInfoProviderInfoSwitcherEx on ClientInfoProvider {
+  /// 客户端向Requester报告[key]的值，可以指定key的类型
+  void setSwitcher(String key, bool isOn) {
+    set(key, isOn.toString(), type: ClientInfoType.switcher);
+  }
+
+  /// 注册key相关数据的回调
+  ///
+  /// 当Requester让[key]的值改变，client响应[update]，[update]返回更新后的值
+  void onSwitcher(String key, bool Function(bool isOn) update) {
+    on(key, (value) {
+      return update(value == true.toString()).toString();
+    });
   }
 }

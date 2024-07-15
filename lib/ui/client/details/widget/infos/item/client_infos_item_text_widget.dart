@@ -5,7 +5,7 @@ import 'package:requester/ui/client/details/provider/provider.dart' as provider;
 import 'package:requester/ui/common/common.dart';
 
 class ClientInfosItemTextWidget extends ConsumerWidget {
-  /// 文本类的数据
+  /// 文本类的客户端信息
   const ClientInfosItemTextWidget({
     super.key,
     required this.info,

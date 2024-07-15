@@ -5,6 +5,7 @@ typedef ClientInfoValue = MapEntry<String, rpc.ClientMetaValue>;
 extension ClientInfoValueEx on ClientInfoValue {
   String get name => key;
   String get data => this.value.value;
+  bool get isSwitcher => this.value.type == ClientInfoType.switcher;
 }
 
 /// 观察Requester客户端信息
