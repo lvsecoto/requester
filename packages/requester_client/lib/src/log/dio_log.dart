@@ -59,7 +59,12 @@ class RequesterLogDioInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
-    final logId = response.requestOptions.extra[_kLogId]!;
+    final logId = response.requestOptions.extra[_kLogId];
+    if (logId == null) {
+      super.onResponse(response, handler);
+      return;
+    }
+
     DateTime requestTime = response.requestOptions.extra[_kLogTime]!;
     final logResponse = rpc.LogResponse(
         log: await logProvider.createLog(
