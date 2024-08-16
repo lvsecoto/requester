@@ -51,7 +51,7 @@ class RequesterLogDioInterceptor extends Interceptor {
       headers:
           options.headers.map((key, value) => MapEntry(key, value.toString())),
       method: options.method,
-      body: _captureBody(data),
+      body: await _captureBody(data),
       requestOverridden: _captureRequestOverridden(options),
     );
     await logProvider.client?.sendRequest(logRequest);
@@ -72,7 +72,7 @@ class RequesterLogDioInterceptor extends Interceptor {
         ),
         spentTime: DateTime.now().difference(requestTime).inMilliseconds,
         code: response.statusCode,
-        body: _captureBody(response.data),
+        body: await _captureBody(response.data),
         requestOverridden: _captureRequestOverridden(response.requestOptions));
     // 必须先抓取日志，再继续处理，不然抓取的是后面拦截器处理过的数据，不准确
     super.onResponse(response, handler);
@@ -89,21 +89,39 @@ class RequesterLogDioInterceptor extends Interceptor {
         ),
         code: err.response?.statusCode ?? -1,
         body: err.response != null
-            ? _captureBody(err.response!.data)
+            ? await _captureBody(err.response!.data)
             : err.error.toString(),
         error: err.type.toString(),
         requestOverridden: _captureRequestOverridden(err.requestOptions));
     await logProvider.client?.sendResponse(logResponse);
   }
 
-  String _captureBody(data) => switch (data) {
+  /// 捕获报文
+  Future<String> _captureBody(data) async => switch (data) {
         String() ||
         Map<String, dynamic>() ||
         List<dynamic>() =>
           jsonEncode(data),
+        FormData() => await _captureFormData(data),
         null => '',
         _ => data.runtimeType.toString(),
       };
+
+  /// 对于FormData只记录Field类型的小数据，大的文件不处理
+  Future<String> _captureFormData(FormData data) async {
+    // 字段部分的数据
+    final formDataWithOnlyFields = data.clone()..files.clear();
+    formDataWithOnlyFields.fields.addAll(data.files.map(
+      (it) => MapEntry(
+          it.key,
+          ''
+          '[文件: ${it.value.filename}] 大小: ${it.value.length}'),
+    ));
+    return await formDataWithOnlyFields
+        .finalize()
+        .map((event) => String.fromCharCodes(event))
+        .join();
+  }
 
   /// 获取重载配置来日志，如果没有，返回空
   rpc.RpcJson? _captureRequestOverridden(RequestOptions options) {
