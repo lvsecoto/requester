@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:nsd/nsd.dart' as nsd;
 import 'package:requester_client/src/identity/identity.dart';
+import 'package:requester_client/src/layout_inspector/layout_inspector.dart';
 import 'package:requester_common/requester_common.dart';
 import 'package:grpc/grpc.dart' as grpc;
 
@@ -57,8 +58,11 @@ class RequesterClientController extends ChangeNotifier
   /// 当发起截屏命令，要求返回图片数据
   late Future<Uint8List> Function() onTakeScreenshot;
 
-  /// 管理App状态
+  /// 管理App按照
   late final appInstaller = AppInstallerProvider();
+
+  /// 管理App布局检查功能
+  late final layoutInspector = LayoutInspectorController();
 
   /// rpc服务
   grpc.Server? _rpcServer;
@@ -96,6 +100,9 @@ class RequesterClientController extends ChangeNotifier
         onTakeScreenshot: onTakeScreenshot,
         onInstall: (data) async {
           await appInstaller.installApp(data);
+        },
+        onUploadDesignSketch: (data) async {
+          layoutInspector.setDesignSketch(data);
         },
       ),
     ]);

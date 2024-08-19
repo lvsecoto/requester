@@ -52,6 +52,9 @@ service RequesterClientService {
 
   // Requester发送安装包让客户端安装
   rpc Install(stream InstallBundle) returns (common.Empty);
+
+  // Requester发送设计图让客户端显示
+  rpc UploadDesignSketch(DesignSketch) returns (common.Empty);
 }
 
 message ClientId {
@@ -124,6 +127,14 @@ message Screenshot {
 
 // 安装包数据
 message InstallBundle {
-  /// 截屏图片数据
+  /// 安装包数据
   bytes data = 1;
+}
+
+// 设计图数据
+message DesignSketch {
+  /// 设计图数据
+  bytes data = 1;
+  /// 设计图名称
+  string name = 2;
 }

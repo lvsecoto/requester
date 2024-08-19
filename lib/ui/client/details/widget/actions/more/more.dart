@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dartx/dartx_io.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,6 +23,12 @@ class MoreActionWidget extends ConsumerWidget {
           child: const Text('安装应用'),
           onTap: () async {
             await _actionInstallApp(ref);
+          },
+        ),
+        PopupMenuItem(
+          child: const Text('上传设计图'),
+          onTap: () async {
+            await _actionUploadDesignSketch(ref);
           },
         ),
       ],
@@ -51,6 +58,32 @@ class MoreActionWidget extends ConsumerWidget {
             return rpc.InstallBundle(data: data);
           }),
         ),
+      );
+    }
+  }
+
+  /// 操作：上传设计图
+  Future<void> _actionUploadDesignSketch(WidgetRef ref) async {
+    final context = ref.context;
+
+    const typeGroup = XTypeGroup(
+      label: '图片',
+      extensions: <String>['png'],
+    );
+    final file = await openFile(
+      acceptedTypeGroups: [typeGroup],
+    );
+
+    if (file != null && context.mounted) {
+      final bundleFile = File(file.path);
+      final service = ref.read(provider.clientServiceProvider)!;
+
+      handleLoadingState(
+        context,
+        () async => service.uploadDesignSketch(rpc.DesignSketch(
+          name: bundleFile.name,
+          data: (await bundleFile.readAsBytes()).toList(),
+        )),
       );
     }
   }

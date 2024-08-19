@@ -503,7 +503,7 @@ class InstallBundle extends $pb.GeneratedMessage {
   static InstallBundle getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<InstallBundle>(create);
   static InstallBundle? _defaultInstance;
 
-  /// / 截屏图片数据
+  /// / 安装包数据
   @$pb.TagNumber(1)
   $core.List<$core.int> get data => $_getN(0);
   @$pb.TagNumber(1)
@@ -512,6 +512,73 @@ class InstallBundle extends $pb.GeneratedMessage {
   $core.bool hasData() => $_has(0);
   @$pb.TagNumber(1)
   void clearData() => clearField(1);
+}
+
+/// 设计图数据
+class DesignSketch extends $pb.GeneratedMessage {
+  factory DesignSketch({
+    $core.List<$core.int>? data,
+    $core.String? name,
+  }) {
+    final $result = create();
+    if (data != null) {
+      $result.data = data;
+    }
+    if (name != null) {
+      $result.name = name;
+    }
+    return $result;
+  }
+  DesignSketch._() : super();
+  factory DesignSketch.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DesignSketch.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DesignSketch', package: const $pb.PackageName(_omitMessageNames ? '' : 'client_service'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  DesignSketch clone() => DesignSketch()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DesignSketch copyWith(void Function(DesignSketch) updates) => super.copyWith((message) => updates(message as DesignSketch)) as DesignSketch;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static DesignSketch create() => DesignSketch._();
+  DesignSketch createEmptyInstance() => create();
+  static $pb.PbList<DesignSketch> createRepeated() => $pb.PbList<DesignSketch>();
+  @$core.pragma('dart2js:noInline')
+  static DesignSketch getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DesignSketch>(create);
+  static DesignSketch? _defaultInstance;
+
+  /// / 设计图数据
+  @$pb.TagNumber(1)
+  $core.List<$core.int> get data => $_getN(0);
+  @$pb.TagNumber(1)
+  set data($core.List<$core.int> v) { $_setBytes(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasData() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearData() => clearField(1);
+
+  /// / 设计图名称
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
 }
 
 

@@ -22,6 +22,7 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
     required this.onIdentify,
     required this.onTakeScreenshot,
     required this.onInstall,
+    required this.onUploadDesignSketch,
   });
 
   /// 向Requester提供客户端信息
@@ -44,8 +45,11 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
   /// 当发起截屏命令
   final Future<Uint8List> Function() onTakeScreenshot;
 
-  /// 当发起截屏命令
+  /// 当发起按照软件包命令
   final Future<void> Function(Stream<List<int>> data) onInstall;
+
+  /// 当发起上传设计图命令
+  final Future<void> Function(Uint8List data) onUploadDesignSketch;
 
   @override
   Future<rpc.Empty> setClientId(ServiceCall call, rpc.ClientId request) async {
@@ -174,5 +178,11 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
       ServiceCall call, Stream<rpc.InstallBundle> request) async {
     await onInstall(request.map((it) => it.data));
     return rpc.Empty();
+  }
+
+  @override
+  Future<rpc.Empty> uploadDesignSketch(ServiceCall call, rpc.DesignSketch request) async {
+      await onUploadDesignSketch(Uint8List.fromList(request.data));
+      return rpc.Empty();
   }
 }

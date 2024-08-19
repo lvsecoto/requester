@@ -82,6 +82,10 @@ class RequesterClientServiceClient extends $grpc.Client {
       '/client_service.RequesterClientService/Install',
       ($0.InstallBundle value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
+  static final _$uploadDesignSketch = $grpc.ClientMethod<$0.DesignSketch, $1.Empty>(
+      '/client_service.RequesterClientService/UploadDesignSketch',
+      ($0.DesignSketch value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
 
   RequesterClientServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -147,6 +151,10 @@ class RequesterClientServiceClient extends $grpc.Client {
 
   $grpc.ResponseFuture<$1.Empty> install($async.Stream<$0.InstallBundle> request, {$grpc.CallOptions? options}) {
     return $createStreamingCall(_$install, request, options: options).single;
+  }
+
+  $grpc.ResponseFuture<$1.Empty> uploadDesignSketch($0.DesignSketch request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$uploadDesignSketch, request, options: options);
   }
 }
 
@@ -260,6 +268,13 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.InstallBundle.fromBuffer(value),
         ($1.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.DesignSketch, $1.Empty>(
+        'UploadDesignSketch',
+        uploadDesignSketch_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.DesignSketch.fromBuffer(value),
+        ($1.Empty value) => value.writeToBuffer()));
   }
 
   $async.Future<$1.Empty> setClientId_Pre($grpc.ServiceCall call, $async.Future<$0.ClientId> request) async {
@@ -318,6 +333,10 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
     return takeScreenshot(call, await request);
   }
 
+  $async.Future<$1.Empty> uploadDesignSketch_Pre($grpc.ServiceCall call, $async.Future<$0.DesignSketch> request) async {
+    return uploadDesignSketch(call, await request);
+  }
+
   $async.Future<$1.Empty> setClientId($grpc.ServiceCall call, $0.ClientId request);
   $async.Future<$0.ClientId> getClientId($grpc.ServiceCall call, $1.Empty request);
   $async.Future<$1.Empty> identify($grpc.ServiceCall call, $1.Empty request);
@@ -333,4 +352,5 @@ abstract class RequesterClientServiceBase extends $grpc.Service {
   $async.Stream<$0.ClientAppState> observeAppState($grpc.ServiceCall call, $1.Empty request);
   $async.Future<$0.Screenshot> takeScreenshot($grpc.ServiceCall call, $1.Empty request);
   $async.Future<$1.Empty> install($grpc.ServiceCall call, $async.Stream<$0.InstallBundle> request);
+  $async.Future<$1.Empty> uploadDesignSketch($grpc.ServiceCall call, $0.DesignSketch request);
 }

@@ -172,3 +172,16 @@ const InstallBundle$json = {
 final $typed_data.Uint8List installBundleDescriptor = $convert.base64Decode(
     'Cg1JbnN0YWxsQnVuZGxlEhIKBGRhdGEYASABKAxSBGRhdGE=');
 
+@$core.Deprecated('Use designSketchDescriptor instead')
+const DesignSketch$json = {
+  '1': 'DesignSketch',
+  '2': [
+    {'1': 'data', '3': 1, '4': 1, '5': 12, '10': 'data'},
+    {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+  ],
+};
+
+/// Descriptor for `DesignSketch`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List designSketchDescriptor = $convert.base64Decode(
+    'CgxEZXNpZ25Ta2V0Y2gSEgoEZGF0YRgBIAEoDFIEZGF0YRISCgRuYW1lGAIgASgJUgRuYW1l');
+
