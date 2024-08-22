@@ -12,6 +12,11 @@ void showScreenshotEditor(BuildContext context, Uint8List data) {
     MaterialPageRoute(
       builder: (context) => ProImageEditor.memory(
         data,
+        callbacks: ProImageEditorCallbacks(
+          onImageEditingComplete:(bytes) async {
+            await _saveImage(bytes);
+          },
+        ),
         configs: const ProImageEditorConfigs(
           emojiEditorConfigs: EmojiEditorConfigs(
             enabled: false,
@@ -60,10 +65,6 @@ void showScreenshotEditor(BuildContext context, Uint8List data) {
                 loadingDialogMsg: '加载中',
               )),
         ),
-        allowCompleteWithEmptyEditing: true,
-        onImageEditingComplete: (bytes) async {
-          await _saveImage(bytes);
-        },
       ),
     ),
   );

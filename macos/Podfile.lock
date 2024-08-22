@@ -8,9 +8,6 @@ PODS:
   - file_selector_macos (0.0.1):
     - FlutterMacOS
   - FlutterMacOS (1.0.0)
-  - image_editor_common (1.0.0):
-    - Flutter
-    - FlutterMacOS
   - network_info_plus (0.0.1):
     - FlutterMacOS
   - nsd_macos (0.0.1):
@@ -50,7 +47,6 @@ DEPENDENCIES:
   - emoji_picker_flutter (from `Flutter/ephemeral/.symlinks/plugins/emoji_picker_flutter/macos`)
   - file_selector_macos (from `Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
-  - image_editor_common (from `Flutter/ephemeral/.symlinks/plugins/image_editor_common/macos`)
   - network_info_plus (from `Flutter/ephemeral/.symlinks/plugins/network_info_plus/macos`)
   - nsd_macos (from `Flutter/ephemeral/.symlinks/plugins/nsd_macos/macos`)
   - package_info_plus (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos`)
@@ -74,8 +70,6 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
-  image_editor_common:
-    :path: Flutter/ephemeral/.symlinks/plugins/image_editor_common/macos
   network_info_plus:
     :path: Flutter/ephemeral/.symlinks/plugins/network_info_plus/macos
   nsd_macos:
@@ -97,7 +91,6 @@ SPEC CHECKSUMS:
   emoji_picker_flutter: 533634326b1c5de9a181ba14b9758e6dfe967a20
   file_selector_macos: 54fdab7caa3ac3fc43c9fac4d7d8d231277f8cf2
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  image_editor_common: 1b11f59fad8909bafcdaa0f31cc9373425b58600
   network_info_plus: aeb9c4ed699cae128bc94b9d0f04f2389a414cbb
   nsd_macos: 1a38a38a33adbb396b4c6f303bc076073514cadc
   package_info_plus: fa739dd842b393193c5ca93c26798dff6e3d0e0c
