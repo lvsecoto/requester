@@ -73,7 +73,7 @@ class RequesterClientService extends rpc.RequesterClientServiceBase {
   @override
   Future<rpc.Empty> updateClientInfo(
       ServiceCall call, rpc.ClientInfoEntry request) async {
-    clientInfoProvider.onRequesterUpdateValue(request.key, request.value.value);
+    clientInfoProvider.onRequesterUpdateValue(request.key, request.value.value, request.value.type);
     return rpc.Empty();
   }
 

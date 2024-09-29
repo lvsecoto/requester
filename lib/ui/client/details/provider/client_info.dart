@@ -4,8 +4,12 @@ typedef ClientInfoValue = MapEntry<String, rpc.ClientMetaValue>;
 
 extension ClientInfoValueEx on ClientInfoValue {
   String get name => key;
-  String get data => this.value.value;
-  bool get isSwitcher => this.value.type == ClientInfoType.switcher;
+
+  String get data => value.value;
+
+  bool get isSwitcher => value.type == ClientInfoType.switcher;
+
+  bool get isAction => value.type == ClientInfoType.action;
 }
 
 /// 观察Requester客户端信息
@@ -21,15 +25,27 @@ Stream<Map<String, rpc.ClientMetaValue>> _observeClientInfo(
 
 /// 观察设备信息条目
 List<ClientInfoValue> watchClientInfoValues(WidgetRef ref) {
-  return ref.watch(_observeClientInfoProvider).valueOrNull?.entries.toList() ?? [];
+  return ref
+      .watch(_observeClientInfoProvider)
+      .valueOrNull
+      ?.entries
+      .toList() ??
+      [];
 }
 
 /// 更新客户端信息
 void actionUpdateClientInfoEntry(WidgetRef ref, {
   required String key,
   required String value,
+  ClientInfoType type = ClientInfoType.text,
 }) {
   ref.read(clientServiceProvider)?.updateClientInfo(
-    rpc.ClientInfoEntry(key: key, value: rpc.ClientMetaValue(value: value)),
+    rpc.ClientInfoEntry(
+      key: key,
+      value: rpc.ClientMetaValue(
+          value: value,
+          type: type,
+      ),
+    ),
   );
 }

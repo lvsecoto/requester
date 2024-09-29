@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:requester/common/common.dart';
 import 'package:requester/ui/client/details/provider/provider.dart' as provider;
 import 'package:requester/ui/common/common.dart';
+import 'package:requester_client/rpc.dart';
 
 class ClientInfosItemSwitcherWidget extends ConsumerWidget {
   /// 开类的客户端信息
@@ -23,6 +24,7 @@ class ClientInfosItemSwitcherWidget extends ConsumerWidget {
           ref,
           key: info.key,
           value: value.toString(),
+          type: ClientInfoType.action
         );
       },
     );
