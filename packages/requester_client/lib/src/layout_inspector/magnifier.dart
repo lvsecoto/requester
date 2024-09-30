@@ -79,7 +79,6 @@ class _Magnifier extends HookWidget {
           },
           child: RawMagnifier(
             decoration: MagnifierDecoration(
-              shadows: kElevationToShadow[2],
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
                 side: const BorderSide(color: Colors.grey, width: 1),
